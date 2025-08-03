@@ -119,9 +119,6 @@ namespace Escritorio
                 }
                 else
                 {
-                    var statusCode = (int)response.StatusCode;
-                    var contenido = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Error al modificar usuario\nStatus: {statusCode}\nContenido: {contenido}");
                     MessageBox.Show("Error al modificar usuario");
                 }
             }
