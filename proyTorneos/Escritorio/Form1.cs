@@ -108,7 +108,7 @@ namespace Escritorio
 
         private void btnTorneos_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            OpenChildForm(new FormTorneo(), sender);
         }
 
         private void btnCloseChildForm_Click(object sender, EventArgs e)

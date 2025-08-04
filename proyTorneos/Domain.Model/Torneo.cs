@@ -14,12 +14,12 @@
         public string Region { get; set; }
         public string Estado { get; set; }
 
-        public Torneo(int id, string nombre, string descripcionDeReglas, int cantidadDeJugadores, string fechaDeInicio, string fechaFin, string fechaInicioDeInscripciones, string fechaFinDeInscripciones, string resultado, string region, string estado) {
+        public Torneo(int id, string nombre, string descripcionDeReglas, int cantidadDeJugadores, string fechaInicio, string fechaFin, string fechaInicioDeInscripciones, string fechaFinDeInscripciones, string resultado, string region, string estado) {
             Id = id;
             Nombre = nombre;
             DescripcionDeReglas = descripcionDeReglas;
             CantidadDeJugadores = cantidadDeJugadores;
-            FechaInicio = fechaDeInicio;
+            FechaInicio = fechaInicio;
             FechaFin = fechaFin;
             FechaInicioDeInscripciones = fechaInicioDeInscripciones;
             FechaFinDeInscripciones = fechaFinDeInscripciones;

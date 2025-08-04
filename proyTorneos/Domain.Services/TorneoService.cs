@@ -48,7 +48,7 @@ namespace Domain.Services
                 return false;
             }
         }
-        private int GetNextId() {
+        public int GetNextId() {
             int nextId;
             if (TorneoInMemory.Torneos.Count > 0)
             {
