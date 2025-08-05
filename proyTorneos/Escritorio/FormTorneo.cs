@@ -18,7 +18,7 @@ namespace Escritorio
     {
         private readonly HttpClient _httpClient = new()
         {
-            BaseAddress = new Uri("https://localhost:50213")
+            BaseAddress = new Uri("https://localhost:5000")
         };
         public FormTorneo()
         {
@@ -144,10 +144,12 @@ namespace Escritorio
 
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (dgvListaTorneos.CurrentRow?.DataBoundItem is Torneo torneoSeleccionado) {
+            if (dgvListaTorneos.CurrentRow?.DataBoundItem is Torneo torneoSeleccionado)
+            {
                 var confirm = MessageBox.Show($"¿Eliminar al torneo {torneoSeleccionado.Nombre}?", "Confirmar", MessageBoxButtons.YesNo);
 
-                if (confirm == DialogResult.Yes) {
+                if (confirm == DialogResult.Yes)
+                {
                     var response = await _httpClient.DeleteAsync($"torneos/{torneoSeleccionado.Id}");
                     if (response.IsSuccessStatusCode)
                     {
@@ -165,6 +167,15 @@ namespace Escritorio
                 MessageBox.Show("Selecciona un torneo de la grilla");
             }
         }
-        
+
+        private void txtReglas_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvListaTorneos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

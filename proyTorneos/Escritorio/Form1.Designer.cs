@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             panelMenu = new Panel();
-            btnTorneos = new Button();
             btnUsuarios = new Button();
             panelLogo = new Panel();
             label1 = new Label();
@@ -41,6 +40,8 @@
             btnCloseChildForm = new Button();
             lblTitle = new Label();
             panelDesktopPane = new Panel();
+            btnTorneos = new Button();
+            btnTipoTorneos = new Button();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             panelTitleBar.SuspendLayout();
@@ -49,34 +50,16 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(51, 51, 76);
+            panelMenu.Controls.Add(btnTipoTorneos);
             panelMenu.Controls.Add(btnTorneos);
             panelMenu.Controls.Add(btnUsuarios);
             panelMenu.Controls.Add(panelLogo);
             panelMenu.Dock = DockStyle.Left;
             panelMenu.Location = new Point(0, 0);
+            panelMenu.Margin = new Padding(3, 4, 3, 4);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(207, 542);
+            panelMenu.Size = new Size(237, 723);
             panelMenu.TabIndex = 0;
-            // 
-            // btnTorneos
-            // 
-            btnTorneos.Dock = DockStyle.Top;
-            btnTorneos.FlatAppearance.BorderSize = 0;
-            btnTorneos.FlatStyle = FlatStyle.Flat;
-            btnTorneos.Font = new Font("Segoe UI", 10F);
-            btnTorneos.ForeColor = Color.Gainsboro;
-            btnTorneos.Image = (Image)resources.GetObject("btnTorneos.Image");
-            btnTorneos.ImageAlign = ContentAlignment.MiddleLeft;
-            btnTorneos.Location = new Point(0, 140);
-            btnTorneos.Name = "btnTorneos";
-            btnTorneos.Padding = new Padding(12, 0, 0, 0);
-            btnTorneos.Size = new Size(207, 60);
-            btnTorneos.TabIndex = 2;
-            btnTorneos.Text = "  Torneos";
-            btnTorneos.TextAlign = ContentAlignment.MiddleLeft;
-            btnTorneos.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnTorneos.UseVisualStyleBackColor = true;
-            btnTorneos.Click += btnTorneos_Click;
             // 
             // btnUsuarios
             // 
@@ -87,10 +70,11 @@
             btnUsuarios.ForeColor = Color.Gainsboro;
             btnUsuarios.Image = (Image)resources.GetObject("btnUsuarios.Image");
             btnUsuarios.ImageAlign = ContentAlignment.MiddleLeft;
-            btnUsuarios.Location = new Point(0, 80);
+            btnUsuarios.Location = new Point(0, 107);
+            btnUsuarios.Margin = new Padding(3, 4, 3, 4);
             btnUsuarios.Name = "btnUsuarios";
-            btnUsuarios.Padding = new Padding(12, 0, 0, 0);
-            btnUsuarios.Size = new Size(207, 60);
+            btnUsuarios.Padding = new Padding(14, 0, 0, 0);
+            btnUsuarios.Size = new Size(237, 80);
             btnUsuarios.TabIndex = 1;
             btnUsuarios.Text = "  Usuarios";
             btnUsuarios.TextAlign = ContentAlignment.MiddleLeft;
@@ -104,8 +88,9 @@
             panelLogo.Controls.Add(label1);
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(0, 0);
+            panelLogo.Margin = new Padding(3, 4, 3, 4);
             panelLogo.Name = "panelLogo";
-            panelLogo.Size = new Size(207, 80);
+            panelLogo.Size = new Size(237, 107);
             panelLogo.TabIndex = 0;
             // 
             // label1
@@ -113,9 +98,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
             label1.ForeColor = Color.LightGray;
-            label1.Location = new Point(12, 33);
+            label1.Location = new Point(14, 44);
             label1.Name = "label1";
-            label1.Size = new Size(175, 21);
+            label1.Size = new Size(221, 28);
             label1.TabIndex = 0;
             label1.Text = "AGE Gestion de Torneos";
             // 
@@ -128,9 +113,10 @@
             panelTitleBar.Controls.Add(btnCloseChildForm);
             panelTitleBar.Controls.Add(lblTitle);
             panelTitleBar.Dock = DockStyle.Top;
-            panelTitleBar.Location = new Point(207, 0);
+            panelTitleBar.Location = new Point(237, 0);
+            panelTitleBar.Margin = new Padding(3, 4, 3, 4);
             panelTitleBar.Name = "panelTitleBar";
-            panelTitleBar.Size = new Size(694, 80);
+            panelTitleBar.Size = new Size(793, 107);
             panelTitleBar.TabIndex = 1;
             panelTitleBar.MouseDown += panelTitleBar_MouseDown;
             // 
@@ -141,9 +127,10 @@
             btnMinimize.FlatStyle = FlatStyle.Flat;
             btnMinimize.Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnMinimize.ForeColor = Color.White;
-            btnMinimize.Location = new Point(592, 0);
+            btnMinimize.Location = new Point(677, 0);
+            btnMinimize.Margin = new Padding(3, 4, 3, 4);
             btnMinimize.Name = "btnMinimize";
-            btnMinimize.Size = new Size(30, 30);
+            btnMinimize.Size = new Size(34, 40);
             btnMinimize.TabIndex = 4;
             btnMinimize.Text = "O";
             btnMinimize.UseVisualStyleBackColor = true;
@@ -156,9 +143,10 @@
             btnMaximize.FlatStyle = FlatStyle.Flat;
             btnMaximize.Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnMaximize.ForeColor = Color.White;
-            btnMaximize.Location = new Point(628, 0);
+            btnMaximize.Location = new Point(718, 0);
+            btnMaximize.Margin = new Padding(3, 4, 3, 4);
             btnMaximize.Name = "btnMaximize";
-            btnMaximize.Size = new Size(30, 30);
+            btnMaximize.Size = new Size(34, 40);
             btnMaximize.TabIndex = 3;
             btnMaximize.Text = "O";
             btnMaximize.UseVisualStyleBackColor = true;
@@ -171,9 +159,10 @@
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("Microsoft Sans Serif", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(664, 0);
+            btnClose.Location = new Point(759, 0);
+            btnClose.Margin = new Padding(3, 4, 3, 4);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(30, 30);
+            btnClose.Size = new Size(34, 40);
             btnClose.TabIndex = 2;
             btnClose.Text = "O";
             btnClose.UseVisualStyleBackColor = true;
@@ -186,8 +175,9 @@
             btnCloseChildForm.FlatStyle = FlatStyle.Flat;
             btnCloseChildForm.Image = Properties.Resources.cross_out__2_;
             btnCloseChildForm.Location = new Point(0, 0);
+            btnCloseChildForm.Margin = new Padding(3, 4, 3, 4);
             btnCloseChildForm.Name = "btnCloseChildForm";
-            btnCloseChildForm.Size = new Size(75, 80);
+            btnCloseChildForm.Size = new Size(86, 107);
             btnCloseChildForm.TabIndex = 1;
             btnCloseChildForm.UseVisualStyleBackColor = true;
             btnCloseChildForm.Click += btnCloseChildForm_Click;
@@ -196,30 +186,74 @@
             // 
             lblTitle.Anchor = AnchorStyles.None;
             lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Miriam CLM", 16F);
+            lblTitle.Font = new Font("Microsoft Sans Serif", 16F);
             lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(312, 30);
+            lblTitle.Location = new Point(357, 40);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(66, 24);
+            lblTitle.Size = new Size(94, 31);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "MENU";
             // 
             // panelDesktopPane
             // 
             panelDesktopPane.Dock = DockStyle.Fill;
-            panelDesktopPane.Location = new Point(207, 80);
+            panelDesktopPane.Location = new Point(237, 107);
+            panelDesktopPane.Margin = new Padding(3, 4, 3, 4);
             panelDesktopPane.Name = "panelDesktopPane";
-            panelDesktopPane.Size = new Size(694, 462);
+            panelDesktopPane.Size = new Size(793, 616);
             panelDesktopPane.TabIndex = 2;
+            // 
+            // btnTorneos
+            // 
+            btnTorneos.Dock = DockStyle.Top;
+            btnTorneos.FlatAppearance.BorderSize = 0;
+            btnTorneos.FlatStyle = FlatStyle.Flat;
+            btnTorneos.Font = new Font("Segoe UI", 10F);
+            btnTorneos.ForeColor = Color.Gainsboro;
+            btnTorneos.Image = (Image)resources.GetObject("btnTorneos.Image");
+            btnTorneos.ImageAlign = ContentAlignment.MiddleLeft;
+            btnTorneos.Location = new Point(0, 187);
+            btnTorneos.Margin = new Padding(3, 4, 3, 4);
+            btnTorneos.Name = "btnTorneos";
+            btnTorneos.Padding = new Padding(14, 0, 0, 0);
+            btnTorneos.Size = new Size(237, 80);
+            btnTorneos.TabIndex = 2;
+            btnTorneos.Text = "  Torneos";
+            btnTorneos.TextAlign = ContentAlignment.MiddleLeft;
+            btnTorneos.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnTorneos.UseVisualStyleBackColor = true;
+            btnTorneos.Click += btnTorneos_Click;
+            // 
+            // btnTipoTorneos
+            // 
+            btnTipoTorneos.Dock = DockStyle.Top;
+            btnTipoTorneos.FlatAppearance.BorderSize = 0;
+            btnTipoTorneos.FlatStyle = FlatStyle.Flat;
+            btnTipoTorneos.Font = new Font("Segoe UI", 10F);
+            btnTipoTorneos.ForeColor = Color.Gainsboro;
+            btnTipoTorneos.Image = (Image)resources.GetObject("btnTipoTorneos.Image");
+            btnTipoTorneos.ImageAlign = ContentAlignment.MiddleLeft;
+            btnTipoTorneos.Location = new Point(0, 267);
+            btnTipoTorneos.Margin = new Padding(3, 4, 3, 4);
+            btnTipoTorneos.Name = "btnTipoTorneos";
+            btnTipoTorneos.Padding = new Padding(14, 0, 0, 0);
+            btnTipoTorneos.Size = new Size(237, 80);
+            btnTipoTorneos.TabIndex = 3;
+            btnTipoTorneos.Text = "  Tipo Torneos";
+            btnTipoTorneos.TextAlign = ContentAlignment.MiddleLeft;
+            btnTipoTorneos.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnTipoTorneos.UseVisualStyleBackColor = true;
+            btnTipoTorneos.Click += btnTipoTorneos_Click;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(901, 542);
+            ClientSize = new Size(1030, 723);
             Controls.Add(panelDesktopPane);
             Controls.Add(panelTitleBar);
             Controls.Add(panelMenu);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -236,7 +270,6 @@
         private Panel panelMenu;
         private Panel panelLogo;
         private Button btnUsuarios;
-        private Button btnTorneos;
         private Panel panelTitleBar;
         private Label lblTitle;
         private Label label1;
@@ -245,5 +278,7 @@
         private Button btnClose;
         private Button btnMinimize;
         private Button btnMaximize;
+        private Button btnTipoTorneos;
+        private Button btnTorneos;
     }
 }
