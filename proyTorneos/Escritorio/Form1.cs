@@ -153,5 +153,10 @@ namespace Escritorio
         {
             this.WindowState = FormWindowState.Minimized;
         }
+
+        private void btnTipoTorneos_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FormTipoTorneo(), sender);
+        }
     }
 }
