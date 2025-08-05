@@ -17,7 +17,7 @@ namespace Escritorio
     {
         private readonly HttpClient _httpClient = new()
         {
-            BaseAddress = new Uri("https://localhost:7216")
+            BaseAddress = new Uri("https://localhost:5000")
         };
 
         public FormUsuario()
@@ -167,6 +167,16 @@ namespace Escritorio
                 txtGamerTag.Text = usuario.GamerTag;
                 txtRol.Text = usuario.Rol;
             }
+        }
+
+        private void txtId_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

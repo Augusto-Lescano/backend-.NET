@@ -297,5 +297,116 @@ app.MapDelete("/torneos/{id}",(int id) => {
 .WithOpenApi();
 #endregion
 
+#region MetodosHttpTipoTorneo
+
+app.MapGet("/tipoTorneos/{id}", (int id) =>
+{
+    TipoTorneoService tipoTorneoService = new TipoTorneoService();
+    var tipoToreno = tipoTorneoService.Get(id);
+
+    if (tipoToreno is null)
+    {
+        return Results.NotFound();
+    }
+
+    var dtoResult = new DTOs.TipoTorneo
+    {
+        Id = tipoToreno.Id,
+        Nombre = tipoToreno.Nombre,
+        Descripcion = tipoToreno.Descripcion
+    };
+    return Results.Ok(dtoResult);
+})
+.WithName("GetTipoTorneo")
+.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi();
+
+app.MapGet("/tipoTorneos", () =>
+{
+    TipoTorneoService tipoTorneoService = new TipoTorneoService();
+    var tipoTorenos = tipoTorneoService.GetAll();
+
+    var dtosResult = tipoTorenos.Select(tipoTorneo => new DTOs.TipoTorneo
+    {
+        Id = tipoTorneo.Id,
+        Nombre = tipoTorneo.Nombre,
+        Descripcion = tipoTorneo.Descripcion
+    }).ToList();
+    return Results.Ok(dtosResult);
+})
+.WithName("GetAllTipoTorneo")
+.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi();
+
+app.MapPost("/tipoTorneos", (DTOs.TipoTorneo dto) =>
+{
+    try
+    {
+        TipoTorneoService tipoTorneoService = new TipoTorneoService();
+        TipoTorneo tipoTorneo = new TipoTorneo(dto.Id, dto.Nombre, dto.Descripcion);
+        tipoTorneoService.Add(tipoTorneo);
+
+        var dtoResult = new DTOs.TipoTorneo
+        {
+            Id = tipoTorneo.Id,
+            Nombre = tipoTorneo.Nombre,
+            Descripcion = tipoTorneo.Descripcion
+        };
+        return Results.Created($"/tipoTorneos/{dtoResult.Id}", dtoResult);
+    }
+    catch (ArgumentException ex)
+    {
+        return Results.BadRequest(new { error = ex.Message });
+    }
+})
+.WithName("AddTipoTorneo")
+.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi();
+
+app.MapPut("/tipoTorneos/{id}", (int id, DTOs.TipoTorneo dto) =>
+{
+    try
+    {
+        TipoTorneoService tipoTorneoService = new TipoTorneoService();
+        TipoTorneo tipoTorneo = new TipoTorneo(dto.Id, dto.Nombre, dto.Descripcion);
+
+        var found = tipoTorneoService.Update(tipoTorneo);
+        if (!found)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.NoContent();
+    }catch (ArgumentException ex)
+    {
+        return Results.BadRequest(new { error = ex.Message });
+    }
+
+} )
+.WithName("UpdateTipoTorneo")
+.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi();
+
+app.MapDelete("/tipoTorneos/{id}", (int id) =>
+{
+    TipoTorneoService tipoTorneoService = new TipoTorneoService();
+    var tipoTorneoToDelete = tipoTorneoService.Delete(id);
+
+    if(!tipoTorneoToDelete)
+    {
+        return Results.NotFound();
+    }
+    return Results.NoContent();
+})
+.WithName("DeleteTipoTorneo")
+.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status404NotFound)
+.WithOpenApi();
+#endregion
+
 
 app.Run();
