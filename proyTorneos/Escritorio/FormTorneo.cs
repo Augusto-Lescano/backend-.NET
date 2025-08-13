@@ -44,7 +44,9 @@ namespace Escritorio
 
         private async void FormTorneo_Load(object sender, EventArgs e)
         {
+            
             await CargarTorneosAsync();
+            Shared.AjustarDataGridView(dgvListaTorneos);
         }
 
         private async Task CargarTorneosAsync()

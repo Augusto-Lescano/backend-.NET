@@ -45,6 +45,7 @@ namespace Escritorio
         private async void FormUsuario_Load(object sender, EventArgs e)
         {
             await CargarUsuariosAsync();
+            Shared.AjustarDataGridView(dgvUsuarios);
         }
 
         private async Task CargarUsuariosAsync()

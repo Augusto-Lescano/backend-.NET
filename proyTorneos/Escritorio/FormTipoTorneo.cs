@@ -28,6 +28,7 @@ namespace Escritorio
         private async void FormTipoTorneo_Load(object sender, EventArgs e)
         {
             await CargarTipoTorneosAsync();
+            Shared.AjustarDataGridView(dgvListaTipoTorneo);
         }
 
         private async Task CargarTipoTorneosAsync()
@@ -122,6 +123,8 @@ namespace Escritorio
                 txtDescripcion.Text = tipoTorneo.Descripcion;
             }
         }
+
+        
     }
 }
 
