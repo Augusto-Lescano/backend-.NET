@@ -70,10 +70,10 @@ namespace Escritorio
                 txtNombre.Text,
                 txtReglas.Text,
                 Convert.ToInt32(txtCantJugadores.Text),
-                txtFechaInicio.Text,
-                txtFechaFin.Text,
-                txtFechaInicioInscripciones.Text,
-                txtFechaFinInscripciones.Text,
+                dtpFechaInicio.Value,
+                dtpFechaFin.Value,
+                dtpFechaInicioInscripciones.Value,
+                dtpFechaFinInscripciones.Value,
                 txtResultado.Text,
                 txtRegion.Text,
                 txtEstado.Text
@@ -99,10 +99,10 @@ namespace Escritorio
                 torneoSeleccionado.Nombre = txtNombre.Text;
                 torneoSeleccionado.DescripcionDeReglas = txtReglas.Text;
                 torneoSeleccionado.CantidadDeJugadores = Convert.ToInt32(txtCantJugadores.Text);
-                torneoSeleccionado.FechaInicio = txtFechaInicio.Text;
-                torneoSeleccionado.FechaFin = txtFechaFin.Text;
-                torneoSeleccionado.FechaInicioDeInscripciones = txtFechaInicioInscripciones.Text;
-                torneoSeleccionado.FechaFinDeInscripciones = txtFechaFinInscripciones.Text;
+                torneoSeleccionado.FechaInicio = dtpFechaInicio.Value;
+                torneoSeleccionado.FechaFin = dtpFechaFin.Value;
+                torneoSeleccionado.FechaInicioDeInscripciones = dtpFechaInicioInscripciones.Value;
+                torneoSeleccionado.FechaFinDeInscripciones = dtpFechaFinInscripciones.Value;
                 torneoSeleccionado.Resultado = txtResultado.Text;
                 torneoSeleccionado.Region = txtRegion.Text;
                 torneoSeleccionado.Estado = txtEstado.Text;
@@ -134,10 +134,10 @@ namespace Escritorio
                 txtNombre.Text = torneo.Nombre;
                 txtReglas.Text = torneo.DescripcionDeReglas;
                 txtCantJugadores.Text = torneo.CantidadDeJugadores.ToString();
-                txtFechaInicio.Text = torneo.FechaInicio;
-                txtFechaFin.Text = torneo.FechaFin;
-                txtFechaInicioInscripciones.Text = torneo.FechaInicioDeInscripciones;
-                txtFechaFinInscripciones.Text = torneo.FechaFinDeInscripciones;
+                dtpFechaInicio.Value = torneo.FechaInicio;
+                dtpFechaFin.Value = torneo.FechaFin;
+                dtpFechaInicioInscripciones.Value = torneo.FechaInicioDeInscripciones;
+                dtpFechaFinInscripciones.Value = torneo.FechaFinDeInscripciones;
                 txtResultado.Text = torneo.Resultado;
                 txtRegion.Text = torneo.Region;
                 txtEstado.Text = torneo.Estado;
@@ -168,16 +168,6 @@ namespace Escritorio
             {
                 MessageBox.Show("Selecciona un torneo de la grilla");
             }
-        }
-
-        private void txtReglas_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvListaTorneos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
