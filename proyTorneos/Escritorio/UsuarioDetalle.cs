@@ -1,4 +1,5 @@
-﻿using DTOs;
+using DTOs;
+using API.Clients;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static Escritorio.FormTipoTorneos;

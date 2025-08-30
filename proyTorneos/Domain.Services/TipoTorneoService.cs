@@ -1,4 +1,4 @@
-﻿using Data;
+using Data;
 using Domain.Model;
 using DTOs;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -49,17 +49,14 @@ namespace Domain.Services
         public bool Update(TipoTorneoDTO dto)
         {
             var tipoTorneoRepository = new TipoTorneoRepository();
+
             if (tipoTorneoRepository != null)
             {
                 TipoTorneo tipoTorneo = new TipoTorneo(dto.Id, dto.Nombre, dto.Descripcion);
                 return tipoTorneoRepository.Update(tipoTorneo);
 
-            }else { return false; }
+            }
+            else { return false; }
         }
-
-
-
-    }
-
-    
+    }  
 }

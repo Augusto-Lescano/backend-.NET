@@ -1,5 +1,6 @@
-﻿using Domain.Model;
+using Domain.Model;
 using DTOs;
+using API.Clients;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
