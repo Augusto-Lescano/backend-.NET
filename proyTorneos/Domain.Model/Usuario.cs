@@ -11,6 +11,7 @@ namespace Domain.Model
         public string Pais {  get; set; }
         public string GamerTag { get; set; }
         public string Rol {  get; set; }
+        public DateTime FechaAlta { get; set; }
 
         public Usuario() { }
 
@@ -23,6 +24,10 @@ namespace Domain.Model
             SetPais(pais);
             SetGamerTag(gamerTag);
             SetRol(rol);
+        }
+
+        public Usuario(int id, string nombre, string apellido, string email, string pais, string gamerTag, string rol, DateTime fechaAlta) : this(id, nombre, apellido, email, pais, gamerTag, rol)
+        {
         }
 
         public void SetId(int id)
