@@ -14,13 +14,13 @@ using Domain.Services;
 
 namespace Escritorio
 {
-    public partial class FormTorneo : Form
+    public partial class FormTorneos : Form
     {
         private readonly HttpClient _httpClient = new()
         {
             BaseAddress = new Uri("https://localhost:5000")
         };
-        public FormTorneo()
+        public FormTorneos()
         {
             InitializeComponent();
             //LoadTheme(); se desactiva porque causa problemas con los colores de los botones
@@ -46,6 +46,7 @@ namespace Escritorio
         {
             
             await CargarTorneosAsync();
+            MejorarCabeceras();
             Shared.AjustarDataGridView(dgvListaTorneos);
         }
 
@@ -168,6 +169,15 @@ namespace Escritorio
             {
                 MessageBox.Show("Selecciona un torneo de la grilla");
             }
+        }
+        private void MejorarCabeceras() {
+            dgvListaTorneos.Columns[2].HeaderText = "Descripcion de reglas";
+            dgvListaTorneos.Columns[3].HeaderText = "Cantidad de jugadores";
+            dgvListaTorneos.Columns[4].HeaderText = "Fecha de Inicio";
+            dgvListaTorneos.Columns[5].HeaderText = "Fecha de Fin";
+            dgvListaTorneos.Columns[6].HeaderText = "Fecha de Inicio de Inscripciones";
+            dgvListaTorneos.Columns[7].HeaderText = "Fecha de Fin de Inscripciones";
+
         }
     }
 }

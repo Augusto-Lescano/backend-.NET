@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Model;
+using Microsoft.EntityFrameworkCore;
 using Domain.Model;
 using Microsoft.Extensions.Configuration;
 
@@ -9,6 +10,7 @@ namespace Data
     {
         public DbSet<Usuario> Usuarios { get; set; }
 
+        public DbSet<TipoTorneo> TipoTorneos { get; set; }
         internal TPIContext()
         {
             this.Database.EnsureCreated();
@@ -65,10 +67,27 @@ namespace Data
 
                 entity.Property(e => e.Rol)
                     .IsRequired()
-                    .HasMaxLength(10);
+                    .HasMaxLength(25);
 
                 entity.Property(e => e.FechaAlta)
-                    .IsRequired();
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TipoTorneo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(800);
             });
         }
     }

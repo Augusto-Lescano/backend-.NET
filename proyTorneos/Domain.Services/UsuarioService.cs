@@ -8,7 +8,7 @@ namespace Domain.Services
     {
         public UsuarioDTO Add(UsuarioDTO dto)
         {
-            var usuarioRepository = new usuarioRepository();
+            var usuarioRepository = new UsuarioRepository();
 
             // Validar que el email no esté duplicado
             if (usuarioRepository.EmailExists(dto.Email))
@@ -17,7 +17,7 @@ namespace Domain.Services
             }
 
             var fechaAlta = DateTime.Now;
-            Usuario cliente = new Usuario(0, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol, fechaAlta);
+            Usuario usuario = new Usuario(0, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol, fechaAlta);
 
             usuarioRepository.Add(usuario);
 
@@ -74,7 +74,7 @@ namespace Domain.Services
 
         public bool Update(UsuarioDTO dto)
         {
-            var clienteRepository = new UsuarioRepository();
+            var usuarioRepository = new UsuarioRepository();
 
             // Validar que el email no esté duplicado (excluyendo el usuario actual)
             if (usuarioRepository.EmailExists(dto.Email, dto.Id))
@@ -84,30 +84,6 @@ namespace Domain.Services
 
             Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol, dto.FechaAlta);
             return usuarioRepository.Update(usuario);
-        }
-
-        public IEnumerable<UsuarioDTO> GetByCriteria(UsuarioCriteriaDTO criteriaDTO)
-        {
-            var usuarioRepository = new UsuarioRepository();
-
-            // Mapear DTO a Domain Model
-            var criteria = new UsuarioCriteria(criteriaDTO.Texto);
-
-            // Llamar al repositorio
-            var usuarios = usuarioRepository.GetByCriteria(criteria);
-
-            // Mapear Domain Model a DTO
-            return usuarios.Select(c => new UsuarioDTO
-            {
-                Id = usuario.Id,
-                Nombre = usuario.Nombre,
-                Apellido = usuario.Apellido,
-                Email = usuario.Email,
-                Pais = usuario.Pais,
-                GamerTag = usuario.GamerTag,
-                Rol = usuario.Rol,
-                FechaAlta = usuario.FechaAlta
-            });
         }
     }
 }

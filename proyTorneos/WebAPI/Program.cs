@@ -27,7 +27,7 @@ app.UseHttpsRedirection();
 #region MetodosHttpUsuario
 app.MapGet("/usuarios/{id}", (int id) =>
 {
-    UsuarioService usuarioService = new UsuarioService(); 
+    UsuarioService usuarioService = new UsuarioService();
 
     Usuario usuario = usuarioService.Get(id);
 
@@ -35,8 +35,8 @@ app.MapGet("/usuarios/{id}", (int id) =>
     {
         return Results.NotFound();
     }
-        
-    var dto = new DTOs.Usuario
+
+    var dto = new DTOs.UsuarioDTO
     {
         Id = usuario.Id,
         Nombre = usuario.Nombre,
@@ -44,13 +44,14 @@ app.MapGet("/usuarios/{id}", (int id) =>
         Email = usuario.Email,
         Pais = usuario.Pais,
         GamerTag = usuario.GamerTag,
-        Rol = usuario.Rol
+        Rol = usuario.Rol,
+        FechaAlta = usuario.FechaAlta
     };
 
     return Results.Ok(dto);
 })
 .WithName("GetUsuario")
-.Produces<DTOs.Usuario>(StatusCodes.Status200OK)
+.Produces<DTOs.UsuarioDTO>(StatusCodes.Status200OK)
 .Produces(StatusCodes.Status404NotFound)
 .WithOpenApi();
 
@@ -60,7 +61,7 @@ app.MapGet("/usuarios", () =>
 
     var usuarios = usuarioService1.GetAll();
 
-    var dtos = usuarios.Select(usuario => new DTOs.Usuario
+    var dtos = usuarios.Select(usuario => new DTOs.UsuarioDTO
     {
         Id = usuario.Id,
         Nombre = usuario.Nombre,
@@ -74,20 +75,20 @@ app.MapGet("/usuarios", () =>
     return Results.Ok(dtos);
 })
 .WithName("GetAllUsuarios")
-.Produces<List<DTOs.Usuario>>(StatusCodes.Status200OK)
+.Produces<List<DTOs.UsuarioDTO>>(StatusCodes.Status200OK)
 .WithOpenApi();
 
-app.MapPost("/usuarios", (DTOs.Usuario dto) =>
+app.MapPost("/usuarios", (DTOs.UsuarioDTO dto) =>
 {
     try
     {
         UsuarioService usuarioService = new UsuarioService();
 
-        Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol);
+        Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol, dto.FechaAlta);
 
         usuarioService.Add(usuario);
 
-        var dtoResultado = new DTOs.Usuario
+        var dtoResultado = new DTOs.UsuarioDTO
         {
             Id = usuario.Id,
             Nombre = usuario.Nombre,
@@ -95,7 +96,8 @@ app.MapPost("/usuarios", (DTOs.Usuario dto) =>
             Email = usuario.Email,
             Pais = usuario.Pais,
             GamerTag = usuario.GamerTag,
-            Rol = usuario.Rol
+            Rol = usuario.Rol,
+            FechaAlta = usuario.FechaAlta
         };
 
         return Results.Created($"/usuarios/{dtoResultado.Id}", dtoResultado);
@@ -106,11 +108,11 @@ app.MapPost("/usuarios", (DTOs.Usuario dto) =>
     }
 })
 .WithName("AddUsuario")
-.Produces<DTOs.Usuario>(StatusCodes.Status201Created)
+.Produces<DTOs.UsuarioDTO>(StatusCodes.Status201Created)
 .Produces(StatusCodes.Status400BadRequest)
 .WithOpenApi();
 
-app.MapPut("/usuarios/{id}", (int id, DTOs.Usuario dto) =>
+app.MapPut("/usuarios/{id}", (int id, DTOs.UsuarioDTO dto) =>
 {
     try
     {
@@ -309,7 +311,7 @@ app.MapGet("/tipoTorneos/{id}", (int id) =>
         return Results.NotFound();
     }
 
-    var dtoResult = new DTOs.TipoTorneo
+    var dtoResult = new DTOs.TipoTorneoDTO
     {
         Id = tipoToreno.Id,
         Nombre = tipoToreno.Nombre,
@@ -318,7 +320,7 @@ app.MapGet("/tipoTorneos/{id}", (int id) =>
     return Results.Ok(dtoResult);
 })
 .WithName("GetTipoTorneo")
-.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces<DTOs.TipoTorneoDTO>(StatusCodes.Status200OK)
 .Produces(StatusCodes.Status404NotFound)
 .WithOpenApi();
 
@@ -327,7 +329,7 @@ app.MapGet("/tipoTorneos", () =>
     TipoTorneoService tipoTorneoService = new TipoTorneoService();
     var tipoTorenos = tipoTorneoService.GetAll();
 
-    var dtosResult = tipoTorenos.Select(tipoTorneo => new DTOs.TipoTorneo
+    var dtosResult = tipoTorenos.Select(tipoTorneo => new DTOs.TipoTorneoDTO
     {
         Id = tipoTorneo.Id,
         Nombre = tipoTorneo.Nombre,
@@ -336,11 +338,11 @@ app.MapGet("/tipoTorneos", () =>
     return Results.Ok(dtosResult);
 })
 .WithName("GetAllTipoTorneo")
-.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces<DTOs.TipoTorneoDTO>(StatusCodes.Status200OK)
 .Produces(StatusCodes.Status404NotFound)
 .WithOpenApi();
 
-app.MapPost("/tipoTorneos", (DTOs.TipoTorneo dto) =>
+app.MapPost("/tipoTorneos", (DTOs.TipoTorneoDTO dto) =>
 {
     try
     {
@@ -348,7 +350,7 @@ app.MapPost("/tipoTorneos", (DTOs.TipoTorneo dto) =>
         TipoTorneo tipoTorneo = new TipoTorneo(dto.Id, dto.Nombre, dto.Descripcion);
         tipoTorneoService.Add(tipoTorneo);
 
-        var dtoResult = new DTOs.TipoTorneo
+        var dtoResult = new DTOs.TipoTorneoDTO
         {
             Id = tipoTorneo.Id,
             Nombre = tipoTorneo.Nombre,
@@ -362,18 +364,18 @@ app.MapPost("/tipoTorneos", (DTOs.TipoTorneo dto) =>
     }
 })
 .WithName("AddTipoTorneo")
-.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces<DTOs.TipoTorneoDTO>(StatusCodes.Status200OK)
 .Produces(StatusCodes.Status404NotFound)
 .WithOpenApi();
 
-app.MapPut("/tipoTorneos/{id}", (int id, DTOs.TipoTorneo dto) =>
+app.MapPut("/tipoTorneos/{id}", (int id, DTOs.TipoTorneoDTO dto) =>
 {
     try
     {
         TipoTorneoService tipoTorneoService = new TipoTorneoService();
         TipoTorneo tipoTorneo = new TipoTorneo(dto.Id, dto.Nombre, dto.Descripcion);
 
-        var found = tipoTorneoService.Update(tipoTorneo);
+        var found = tipoTorneoService.Update(dto);
         if (!found)
         {
             return Results.NotFound();
@@ -387,7 +389,7 @@ app.MapPut("/tipoTorneos/{id}", (int id, DTOs.TipoTorneo dto) =>
 
 } )
 .WithName("UpdateTipoTorneo")
-.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces<DTOs.TipoTorneoDTO>(StatusCodes.Status200OK)
 .Produces(StatusCodes.Status404NotFound)
 .WithOpenApi();
 
@@ -403,7 +405,7 @@ app.MapDelete("/tipoTorneos/{id}", (int id) =>
     return Results.NoContent();
 })
 .WithName("DeleteTipoTorneo")
-.Produces<DTOs.TipoTorneo>(StatusCodes.Status200OK)
+.Produces<DTOs.TipoTorneoDTO>(StatusCodes.Status200OK)
 .Produces(StatusCodes.Status404NotFound)
 .WithOpenApi();
 #endregion

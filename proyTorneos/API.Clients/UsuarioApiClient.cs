@@ -27,7 +27,7 @@ namespace API.Clients
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsAsync<UsuarioDTO>();
+                    return await response.Content.ReadFromJsonAsync<UsuarioDTO>();
                 }
                 else
                 {
@@ -53,7 +53,7 @@ namespace API.Clients
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsAsync<IEnumerable<UsuarioDTO>>();
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<UsuarioDTO>>();
                 }
                 else
                 {
