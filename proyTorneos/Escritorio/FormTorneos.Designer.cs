@@ -1,6 +1,6 @@
 ﻿namespace Escritorio
 {
-    partial class FormTorneo
+    partial class FormTorneos
     {
         /// <summary>
         /// Required designer variable.
