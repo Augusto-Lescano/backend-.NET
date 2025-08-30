@@ -14,13 +14,13 @@ using Domain.Services;
 
 namespace Escritorio
 {
-    public partial class FormTorneo : Form
+    public partial class FormTorneos : Form
     {
         private readonly HttpClient _httpClient = new()
         {
             BaseAddress = new Uri("https://localhost:5000")
         };
-        public FormTorneo()
+        public FormTorneos()
         {
             InitializeComponent();
             //LoadTheme(); se desactiva porque causa problemas con los colores de los botones
