@@ -27,7 +27,7 @@ app.UseHttpsRedirection();
 #region MetodosHttpUsuario
 app.MapGet("/usuarios/{id}", (int id) =>
 {
-    UsuarioService usuarioService = new UsuarioService();
+    UsuarioService usuarioService = new UsuarioService(); 
 
     Usuario usuario = usuarioService.Get(id);
 
@@ -35,7 +35,7 @@ app.MapGet("/usuarios/{id}", (int id) =>
     {
         return Results.NotFound();
     }
-
+        
     var dto = new DTOs.UsuarioDTO
     {
         Id = usuario.Id,
@@ -44,8 +44,7 @@ app.MapGet("/usuarios/{id}", (int id) =>
         Email = usuario.Email,
         Pais = usuario.Pais,
         GamerTag = usuario.GamerTag,
-        Rol = usuario.Rol,
-        FechaAlta = usuario.FechaAlta
+        Rol = usuario.Rol
     };
 
     return Results.Ok(dto);
@@ -84,7 +83,7 @@ app.MapPost("/usuarios", (DTOs.UsuarioDTO dto) =>
     {
         UsuarioService usuarioService = new UsuarioService();
 
-        Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol, dto.FechaAlta);
+        Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol);
 
         usuarioService.Add(usuario);
 
@@ -96,8 +95,7 @@ app.MapPost("/usuarios", (DTOs.UsuarioDTO dto) =>
             Email = usuario.Email,
             Pais = usuario.Pais,
             GamerTag = usuario.GamerTag,
-            Rol = usuario.Rol,
-            FechaAlta = usuario.FechaAlta
+            Rol = usuario.Rol
         };
 
         return Results.Created($"/usuarios/{dtoResultado.Id}", dtoResultado);

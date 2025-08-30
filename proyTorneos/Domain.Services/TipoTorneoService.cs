@@ -1,4 +1,4 @@
-﻿using Data;
+using Data;
 using Domain.Model;
 using DTOs;
 using static System.Runtime.InteropServices.JavaScript.JSType;

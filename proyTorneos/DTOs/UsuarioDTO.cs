@@ -10,5 +10,3 @@
         public string GamerTag { get; set; }
         public string Rol { get; set; }
         public DateTime FechaAlta { get; set; }
-    }
-}
