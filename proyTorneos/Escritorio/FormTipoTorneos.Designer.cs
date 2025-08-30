@@ -1,6 +1,6 @@
 ﻿namespace Escritorio
 {
-    partial class FormTipoTorneo
+    partial class FormTipoTorneos
     {
         /// <summary>
         /// Required designer variable.
@@ -30,9 +30,9 @@
         {
             label1 = new Label();
             label2 = new Label();
-            label3 = new Label();
+            nombreLabel = new Label();
             label4 = new Label();
-            label5 = new Label();
+            descLabel = new Label();
             btnAgregar = new Button();
             btnActualizar = new Button();
             btnEliminar = new Button();
@@ -59,14 +59,14 @@
             label2.Size = new Size(0, 20);
             label2.TabIndex = 1;
             // 
-            // label3
+            // nombreLabel
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(23, 108);
-            label3.Name = "label3";
-            label3.Size = new Size(64, 20);
-            label3.TabIndex = 2;
-            label3.Text = "Nombre";
+            nombreLabel.AutoSize = true;
+            nombreLabel.Location = new Point(23, 175);
+            nombreLabel.Name = "nombreLabel";
+            nombreLabel.Size = new Size(64, 20);
+            nombreLabel.TabIndex = 2;
+            nombreLabel.Text = "Nombre";
             // 
             // label4
             // 
@@ -77,14 +77,14 @@
             label4.TabIndex = 3;
             label4.Text = "Lista de Tipos de Torneos";
             // 
-            // label5
+            // descLabel
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(23, 189);
-            label5.Name = "label5";
-            label5.Size = new Size(87, 20);
-            label5.TabIndex = 4;
-            label5.Text = "Descripcion";
+            descLabel.AutoSize = true;
+            descLabel.Location = new Point(23, 243);
+            descLabel.Name = "descLabel";
+            descLabel.Size = new Size(87, 20);
+            descLabel.TabIndex = 4;
+            descLabel.Text = "Descripcion";
             // 
             // btnAgregar
             // 
@@ -94,7 +94,6 @@
             btnAgregar.TabIndex = 5;
             btnAgregar.Text = "Agregar";
             btnAgregar.UseVisualStyleBackColor = true;
-            btnAgregar.Click += btnAgregar_Click;
             // 
             // btnActualizar
             // 
@@ -129,14 +128,14 @@
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(116, 108);
+            txtNombre.Location = new Point(116, 175);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(136, 27);
             txtNombre.TabIndex = 9;
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(116, 186);
+            txtDescripcion.Location = new Point(116, 240);
             txtDescripcion.Name = "txtDescripcion";
             txtDescripcion.Size = new Size(136, 27);
             txtDescripcion.TabIndex = 10;
@@ -152,9 +151,9 @@
             Controls.Add(btnEliminar);
             Controls.Add(btnActualizar);
             Controls.Add(btnAgregar);
-            Controls.Add(label5);
+            Controls.Add(descLabel);
             Controls.Add(label4);
-            Controls.Add(label3);
+            Controls.Add(nombreLabel);
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "FormTipoTorneo";
@@ -169,9 +168,9 @@
 
         private Label label1;
         private Label label2;
-        private Label label3;
+        private Label nombreLabel;
         private Label label4;
-        private Label label5;
+        private Label descLabel;
         private Button btnAgregar;
         private Button btnActualizar;
         private Button btnEliminar;

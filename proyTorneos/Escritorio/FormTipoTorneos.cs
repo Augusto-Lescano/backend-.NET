@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Domain.Model;
+using Domain.Services;
+using DTOs;
+using Microsoft.Data.SqlClient.DataClassification;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,18 +13,64 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Domain.Model;
-using Domain.Services;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Escritorio
 {
-    public partial class FormTipoTorneo : Form
+    public partial class FormTipoTorneos : Form
     {
+
+        #region TipoTorneoDetalle
+        public enum FormMode
+        {
+            Add,
+            Update
+        }
+        private TipoTorneoDTO cliente;
+        private FormMode mode;
+        public FormMode Mode
+        {
+            get
+            {
+                return mode;
+            }
+            set
+            {
+                SetFormMode(value);
+            }
+        }
+
+        private void SetTipoTorneo()
+        {
+            //this.txtNombre;
+        }
+        private void SetFormMode(FormMode value)
+        {
+            mode = value;
+
+            if (Mode == FormMode.Add)
+            {
+                nombreLabel.Visible = true;
+                txtNombre.Visible = true;
+                descLabel.Visible = true;
+                txtDescripcion.Visible = true;
+            }
+
+            if (Mode == FormMode.Update)
+            {
+                nombreLabel.Visible = true;
+                txtNombre.Visible = true;
+                descLabel.Visible = true;
+                txtDescripcion.Visible = true; ;
+            }
+        }
+        #endregion
+
         private readonly HttpClient _httpClient = new()
         {
             BaseAddress = new Uri("https://localhost:5000")
         };
-        public FormTipoTorneo()
+        public FormTipoTorneos()
         {
             InitializeComponent();
         }
@@ -43,27 +93,28 @@ namespace Escritorio
                 MessageBox.Show("Error cargando tipo de torneo: " + ex.Message);
             }
         }
-        private async void btnAgregar_Click(object sender, EventArgs e)
-        {
-            TipoTorneoService tipoTorneoService = new TipoTorneoService();
-            var tipoTorneo = new TipoTorneo(
-                tipoTorneoService.GetNextId(),
-                txtNombre.Text,
-                txtDescripcion.Text
-                );
+        // private async void btnAgregar_Click(object sender, EventArgs e)
+        // {
+        //    TipoTorneoService tipoTorneoService = new TipoTorneoService();
+        //TipoTorneoDTO tipoTorneoNuevo = new TipoTorneoDTO;
+        //var tipoTorneo = new TipoTorneo(
+        //tipoTorneoService.GetNextId(),
+        // txtNombre.Text,
+        //txtDescripcion.Text
+        //     );
 
-            var response = await _httpClient.PostAsJsonAsync("tipoTorneos", tipoTorneo);
+        //var response = await _httpClient.PostAsJsonAsync("tipoTorneos", tipoTorneo);
 
-            if (response.IsSuccessStatusCode)
-            {
-                MessageBox.Show("Tipo de torneo agregado con éxito");
-                await CargarTipoTorneosAsync();
-            }
-            else
-            {
-                MessageBox.Show("Error al agregar el tipo de torneo");
-            }
-        }
+        // if (response.IsSuccessStatusCode)
+        //   {
+        //   MessageBox.Show("Tipo de torneo agregado con éxito");
+        //         await CargarTipoTorneosAsync();
+        //  }
+        //  else
+        //{
+        //    MessageBox.Show("Error al agregar el tipo de torneo");
+        //       }
+        //  }
 
         private async void btnActualizar_Click(object sender, EventArgs e)
         {

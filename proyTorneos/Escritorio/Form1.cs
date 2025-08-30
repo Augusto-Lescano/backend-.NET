@@ -100,15 +100,28 @@ namespace Escritorio
             childForm.Show();
             lblTitle.Text = childForm.Text;
         }
+        private void AbrirFormularioEnPanel(Form childForm)
+        {
+            // Elimina el contenido actual del panel
+            if (this.panelContenedor.Controls.Count > 0)
+                this.panelContenedor.Controls.RemoveAt(0);
+
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            this.panelContenedor.Controls.Add(childForm);
+            this.panelContenedor.Tag = childForm;
+            childForm.Show();
+        }
 
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormUsuario(), sender);
+            AbrirFormularioEnPanel(new FormUsuarios());
         }
 
         private void btnTorneos_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormTorneo(), sender);
+            AbrirFormularioEnPanel(new FormTorneos());
         }
 
         private void btnCloseChildForm_Click(object sender, EventArgs e)
@@ -156,7 +169,7 @@ namespace Escritorio
 
         private void btnTipoTorneos_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormTipoTorneo(), sender);
+            AbrirFormularioEnPanel(new FormTipoTorneos());
         }
     }
 }

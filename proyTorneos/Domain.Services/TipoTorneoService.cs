@@ -1,63 +1,60 @@
 ﻿using Data;
 using Domain.Model;
+using DTOs;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Domain.Services
 {
     public class TipoTorneoService
     {
         public void Add(TipoTorneo tipoTorneo)
-        {
-            tipoTorneo.Id = GetNextId();
-            TipoTorneoInMemory.TiposTorneos.Add(tipoTorneo);
+        {   
+            var tipoTorneoRepository = new TipoTorneoRepository();
+            tipoTorneoRepository.Add(tipoTorneo);
         }
 
         public bool Delete(int id)
         {
-            TipoTorneo tipoTorneoToDelete = TipoTorneoInMemory.TiposTorneos.Find(x => x.Id == id);
-            
-            if(tipoTorneoToDelete != null)
+            var tipoTorneoRepository = new TipoTorneoRepository();
+            return tipoTorneoRepository.Delete(id);
+        }
+
+        public TipoTorneoDTO Get(int id)
+        {
+            var tipoTorneoRepository = new TipoTorneoRepository();
+            TipoTorneo? tipoTorneo = tipoTorneoRepository.Get(id);
+
+            if (tipoTorneo == null)
+                return null;
+
+            return new TipoTorneoDTO
             {
-                TipoTorneoInMemory.TiposTorneos.Remove(tipoTorneoToDelete);
-                return true;
+                Id = tipoTorneo.Id,
+                Nombre = tipoTorneo.Nombre,
+                Descripcion = tipoTorneo.Descripcion,
+            };
+        }
+
+        public IEnumerable<TipoTorneoDTO> GetAll()
+        {
+            var tipoTorneoRepository = new TipoTorneoRepository();
+            return tipoTorneoRepository.GetAll().Select(tipoTorneo => new TipoTorneoDTO
+            {
+                Id = tipoTorneo.Id,
+                Nombre = tipoTorneo.Nombre,
+                Descripcion = tipoTorneo.Descripcion,
+            }).ToList();
+        }
+
+        public bool Update(TipoTorneoDTO dto)
+        {
+            var tipoTorneoRepository = new TipoTorneoRepository();
+            if (tipoTorneoRepository != null)
+            {
+                TipoTorneo tipoTorneo = new TipoTorneo(dto.Id, dto.Nombre, dto.Descripcion);
+                return tipoTorneoRepository.Update(tipoTorneo);
+
             }else { return false; }
-        }
-
-        public TipoTorneo Get(int id)
-        {
-            return TipoTorneoInMemory.TiposTorneos.Find(x => x.Id == id);
-
-        }
-
-        public IEnumerable<TipoTorneo> GetAll()
-        {
-            return TipoTorneoInMemory.TiposTorneos.ToList();
-        }
-
-        public bool Update(TipoTorneo tipoTorneo)
-        {
-            TipoTorneo tipoTorneoToUpdate = TipoTorneoInMemory.TiposTorneos.Find(x => x.Id == tipoTorneo.Id);
-            if (tipoTorneoToUpdate != null)
-            {
-                tipoTorneoToUpdate.Id = tipoTorneo.Id;
-                tipoTorneoToUpdate.Nombre = tipoTorneo.Nombre;
-                tipoTorneoToUpdate.Descripcion = tipoTorneo.Descripcion;
-
-                return true;
-            }else { return false; }
-        }
-        public int GetNextId()
-        {
-            int nextId;
-            if (TipoTorneoInMemory.TiposTorneos.Count > 0)
-            {
-                nextId = TipoTorneoInMemory.TiposTorneos.Max(x => x.Id) + 1;
-            }
-            else
-            {
-                nextId = 1;
-            }
-
-            return nextId;
         }
 
 
