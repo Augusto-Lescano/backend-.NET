@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.OpenApi;
 using System.ComponentModel.DataAnnotations;
 using Domain.Model;
 using Domain.Services;
+using DTOs;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
@@ -29,7 +30,7 @@ app.MapGet("/usuarios/{id}", (int id) =>
 {
     UsuarioService usuarioService = new UsuarioService(); 
 
-    Usuario usuario = usuarioService.Get(id);
+    UsuarioDTO usuario = usuarioService.Get(id);
 
     if (usuario == null)
     {
@@ -83,22 +84,9 @@ app.MapPost("/usuarios", (DTOs.UsuarioDTO dto) =>
     {
         UsuarioService usuarioService = new UsuarioService();
 
-        Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol);
+        UsuarioDTO usuarioDTO = usuarioService.Add(dto);
 
-        usuarioService.Add(usuario);
-
-        var dtoResultado = new DTOs.UsuarioDTO
-        {
-            Id = usuario.Id,
-            Nombre = usuario.Nombre,
-            Apellido = usuario.Apellido,
-            Email = usuario.Email,
-            Pais = usuario.Pais,
-            GamerTag = usuario.GamerTag,
-            Rol = usuario.Rol
-        };
-
-        return Results.Created($"/usuarios/{dtoResultado.Id}", dtoResultado);
+        return Results.Created($"/usuarios/{usuarioDTO.Id}", usuarioDTO);
     }
     catch (ArgumentException ex)
     {
@@ -116,9 +104,9 @@ app.MapPut("/usuarios/{id}", (int id, DTOs.UsuarioDTO dto) =>
     {
         UsuarioService usuarioService = new UsuarioService();
 
-        Usuario usuario = new Usuario(id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol);
+        UsuarioDTO usuarioDTO = usuarioService.Add(dto);
 
-        var found = usuarioService.Update(usuario);
+        var found = usuarioService.Update(usuarioDTO);
 
         if (!found)
         {
@@ -160,8 +148,9 @@ app.MapDelete("/usuarios/{id}", (int id) =>
 #region MetodosHttpTorneo
 app.MapGet("/torneos/{id}", (int id) => {
     TorneoService torneoService = new TorneoService();
-    Torneo torneo = torneoService.Get(id);
-    if (torneo == null) {
+    Domain.Model.Torneo torneo = torneoService.Get(id);
+    if (torneo == null)
+    {
         return Results.NotFound();
     }
     var dto = new DTOs.Torneo
@@ -211,7 +200,7 @@ app.MapPost("/torneos", (DTOs.Torneo dto) => {
     try
     {
         TorneoService torneoService = new TorneoService();
-        Torneo torneo = new Torneo(
+        Domain.Model.Torneo torneo = new Domain.Model.Torneo(
             dto.Id,
             dto.Nombre,
             dto.DescripcionDeReglas,
@@ -254,7 +243,7 @@ app.MapPut("/torneos/{id}",(int id, DTOs.Torneo dto) => {
     try
     {
         TorneoService torneoService = new TorneoService();
-        Torneo torneo = new Torneo(
+        Domain.Model.Torneo torneo = new Domain.Model.Torneo(
             id,
             dto.Nombre,
             dto.DescripcionDeReglas,

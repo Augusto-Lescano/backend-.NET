@@ -1,17 +1,18 @@
 ﻿using Data;
 using Domain.Model;
+using DTOs;
 
 
 namespace Domain.Services
 {
     public class TorneoService
     {
-        public void Add(Torneo torneo) {
+        public void Add(Model.Torneo torneo) {
             torneo.Id = GetNextId();
             TorneoInMemory.Torneos.Add(torneo);
         }
         public bool Delete(int id) {
-            Torneo torneoToDelete = TorneoInMemory.Torneos.Find(x => x.Id == id);
+            Model.Torneo torneoToDelete = TorneoInMemory.Torneos.Find(x => x.Id == id);
             if (torneoToDelete != null)
             {
                 TorneoInMemory.Torneos.Remove(torneoToDelete);
@@ -21,14 +22,14 @@ namespace Domain.Services
                 return false;
             }
         }
-        public Torneo Get(int id) {
+        public Model.Torneo Get(int id) {
             return TorneoInMemory.Torneos.Find(x => x.Id == id);
         }
-        public IEnumerable<Torneo> GetAll() {
+        public IEnumerable<Model.Torneo> GetAll() {
             return TorneoInMemory.Torneos.ToList();
         }
-        public bool Update(Torneo torneo) {
-            Torneo torneoToUpdate = TorneoInMemory.Torneos.Find(x=>x.Id==torneo.Id);
+        public bool Update(Model.Torneo torneo) {
+            Model.Torneo torneoToUpdate = TorneoInMemory.Torneos.Find(x=> x.Id == torneo.Id);
             if (torneoToUpdate != null)
             {
                 torneoToUpdate.Id = torneo.Id;
