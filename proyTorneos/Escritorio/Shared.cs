@@ -23,5 +23,11 @@ namespace Escritorio
             //Hace que las columnas ocupen todo el ancho del datagridview
             tabla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
         }
+        public static void AjustarFormMDI(Form formulario) {
+            formulario.MinimizeBox = false;
+            formulario.MaximizeBox = false;
+            formulario.FormBorderStyle = FormBorderStyle.FixedSingle;
+            formulario.StartPosition=FormStartPosition.CenterParent;
+        }
     }
 }
