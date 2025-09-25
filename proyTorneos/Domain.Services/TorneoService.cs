@@ -7,60 +7,69 @@ namespace Domain.Services
 {
     public class TorneoService
     {
-        public void Add(Model.Torneo torneo) {
-            torneo.Id = GetNextId();
-            TorneoInMemory.Torneos.Add(torneo);
-        }
-        public bool Delete(int id) {
-            Model.Torneo torneoToDelete = TorneoInMemory.Torneos.Find(x => x.Id == id);
-            if (torneoToDelete != null)
-            {
-                TorneoInMemory.Torneos.Remove(torneoToDelete);
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        public Model.Torneo Get(int id) {
-            return TorneoInMemory.Torneos.Find(x => x.Id == id);
-        }
-        public IEnumerable<Model.Torneo> GetAll() {
-            return TorneoInMemory.Torneos.ToList();
-        }
-        public bool Update(Model.Torneo torneo) {
-            Model.Torneo torneoToUpdate = TorneoInMemory.Torneos.Find(x=> x.Id == torneo.Id);
-            if (torneoToUpdate != null)
-            {
-                torneoToUpdate.Id = torneo.Id;
-                torneoToUpdate.Nombre = torneo.Nombre;
-                torneoToUpdate.DescripcionDeReglas = torneo.DescripcionDeReglas;
-                torneoToUpdate.CantidadDeJugadores = torneo.CantidadDeJugadores;
-                torneoToUpdate.FechaInicio = torneo.FechaInicio;
-                torneoToUpdate.FechaFin = torneo.FechaFin;
-                torneoToUpdate.FechaInicioDeInscripciones = torneo.FechaInicioDeInscripciones;
-                torneoToUpdate.FechaFinDeInscripciones = torneo.FechaFinDeInscripciones;
-                torneoToUpdate.Resultado = torneo.Resultado;
-                torneoToUpdate.Region = torneo.Region;
-                torneoToUpdate.Estado = torneo.Estado;
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        public int GetNextId() {
-            int nextId;
-            if (TorneoInMemory.Torneos.Count > 0)
-            {
-                nextId = TorneoInMemory.Torneos.Max(x => x.Id) + 1;
-                
-            }
-            else {
-                nextId = 1;
-            }
+        public TorneoDTO Add(TorneoDTO dto) {
+            
+            var torneoRepository = new TorneoRepository();
 
-            return nextId;
+            var torneo = new Torneo(0, dto.Nombre, dto.DescripcionDeReglas,dto.CantidadDeJugadores, dto.FechaInicio, dto.FechaFin, dto.FechaInicioDeInscripciones, dto.FechaFinDeInscripciones, dto.Resultado, dto.Region, dto.Estado);
+
+            torneoRepository.Add(torneo);
+
+            dto.Id = torneo.Id;
+
+            return dto;
+        }
+
+        public bool Delete(int id) {
+            var torneoRepository = new TorneoRepository();
+            return torneoRepository.Delete(id);
+        }
+
+        public bool Update(TorneoDTO dto) {
+            var torneoRepository = new TorneoRepository();
+
+            var torneo = new Torneo(dto.Id, dto.Nombre, dto.DescripcionDeReglas, dto.CantidadDeJugadores, dto.FechaInicio, dto.FechaFin, dto.FechaInicioDeInscripciones, dto.FechaFinDeInscripciones, dto.Resultado, dto.Region, dto.Estado);
+
+            return torneoRepository.Update(torneo);
+        }
+
+        public TorneoDTO GetOne(int id) {
+            var torneoRepository = new TorneoRepository();
+            var dto = torneoRepository.GetOne(id);
+            return new TorneoDTO {
+                Id=dto.Id,
+                Nombre=dto.Nombre,
+                DescripcionDeReglas=dto.DescripcionDeReglas,
+                CantidadDeJugadores=dto.CantidadDeJugadores,
+                FechaInicio=dto.FechaInicio,
+                FechaFin=dto.FechaFin,
+                FechaInicioDeInscripciones=dto.FechaInicioDeInscripciones,
+                FechaFinDeInscripciones=dto.FechaFinDeInscripciones,
+                Resultado=dto.Resultado,
+                Region=dto.Region,
+                Estado=dto.Estado,
+            };
+        }
+
+        public IEnumerable<TorneoDTO> GetAll() {
+            var torneoRepository = new TorneoRepository();
+            var torneos = torneoRepository.GetAll();
+            return (from dto in torneos
+                   select new TorneoDTO
+                   {
+                       Id = dto.Id,
+                       Nombre = dto.Nombre,
+                       DescripcionDeReglas = dto.DescripcionDeReglas,
+                       CantidadDeJugadores = dto.CantidadDeJugadores,
+                       FechaInicio = dto.FechaInicio,
+                       FechaFin = dto.FechaFin,
+                       FechaInicioDeInscripciones = dto.FechaInicioDeInscripciones,
+                       FechaFinDeInscripciones = dto.FechaFinDeInscripciones,
+                       Resultado = dto.Resultado,
+                       Region = dto.Region,
+                       Estado = dto.Estado,
+                   }).ToList();
+
         }
     }
 }

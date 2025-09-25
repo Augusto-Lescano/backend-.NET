@@ -1,6 +1,5 @@
 using Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using Domain.Model;
 using Microsoft.Extensions.Configuration;
 
 
@@ -9,7 +8,7 @@ namespace Data
     public class TPIContext : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
-
+        public DbSet<Torneo> Torneos { get; set; }
         public DbSet<TipoTorneo> TipoTorneos { get; set; }
         internal TPIContext()
         {
@@ -88,6 +87,35 @@ namespace Data
                 entity.Property(e => e.Descripcion)
                     .IsRequired()
                     .HasMaxLength(800);
+            });
+
+            modelBuilder.Entity<Torneo>(entity => {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id) 
+                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+                entity.Property(e => e.DescripcionDeReglas)
+                    .IsRequired()
+                    .HasMaxLength(255);
+                entity.Property(e => e.CantidadDeJugadores)
+                    .IsRequired();
+                entity.Property(e => e.FechaInicio)
+                    .IsRequired();
+                entity.Property(e=>e.FechaFin)
+                    .IsRequired();
+                entity.Property(e=>e.FechaInicioDeInscripciones)
+                    .IsRequired();
+                entity.Property(e=>e.FechaFinDeInscripciones)
+                    .IsRequired();
+                entity.Property(e => e.Resultado)
+                    .IsRequired();
+                entity.Property(e=>e.Region)
+                    .IsRequired();
+                entity.Property(e=>e.Estado)
+                    .IsRequired();
+                
             });
         }
     }
