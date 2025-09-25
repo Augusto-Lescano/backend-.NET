@@ -1,6 +1,6 @@
 ﻿namespace DTOs
 {
-    public class Torneo
+    public class TorneoDTO
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

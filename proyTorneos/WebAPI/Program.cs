@@ -148,119 +148,61 @@ app.MapDelete("/usuarios/{id}", (int id) =>
 #region MetodosHttpTorneo
 app.MapGet("/torneos/{id}", (int id) => {
     TorneoService torneoService = new TorneoService();
-    Domain.Model.Torneo torneo = torneoService.Get(id);
-    if (torneo == null)
+    TorneoDTO dto = torneoService.GetOne(id);
+    if (dto == null)
     {
-        return Results.NotFound();
+        Results.NotFound();
     }
-    var dto = new DTOs.Torneo
-    {
-        Id = torneo.Id,
-        Nombre = torneo.Nombre,
-        DescripcionDeReglas = torneo.DescripcionDeReglas,
-        CantidadDeJugadores = torneo.CantidadDeJugadores,
-        FechaInicio = torneo.FechaInicio,
-        FechaFin = torneo.FechaFin,
-        FechaInicioDeInscripciones = torneo.FechaInicioDeInscripciones,
-        FechaFinDeInscripciones = torneo.FechaFinDeInscripciones,
-        Resultado = torneo.Resultado,
-        Region = torneo.Region,
-        Estado = torneo.Estado
-    };
-    return Results.Ok(dto);
-})
-.WithName("GetTorneo")
-.Produces<DTOs.Torneo>(StatusCodes.Status200OK)
-.Produces(StatusCodes.Status404NotFound)
-.WithOpenApi();
+    else {
+        Results.Ok(dto);
+    }
+    })
+    .WithName("GetTorneo")
+    .Produces<TorneoDTO>(StatusCodes.Status200OK)
+    .Produces(StatusCodes.Status404NotFound)
+    .WithOpenApi();
+    
 
 app.MapGet("/torneos", () => {
     TorneoService torneoService = new TorneoService();
-    var torneos = torneoService.GetAll();
-    var dtos = torneos.Select(torneo => new DTOs.Torneo {
-        Id = torneo.Id,
-        Nombre = torneo.Nombre,
-        DescripcionDeReglas = torneo.DescripcionDeReglas,
-        CantidadDeJugadores = torneo.CantidadDeJugadores,
-        FechaInicio = torneo.FechaInicio,
-        FechaFin = torneo.FechaFin,
-        FechaInicioDeInscripciones = torneo.FechaInicioDeInscripciones,
-        FechaFinDeInscripciones = torneo.FechaFinDeInscripciones,
-        Resultado = torneo.Resultado,
-        Region = torneo.Region,
-        Estado = torneo.Estado
-    }).ToList();
+    var dtos = torneoService.GetAll();
     return Results.Ok(dtos);
 })
 .WithName("GetAllTorneos")
-.Produces<List<DTOs.Torneo>>(StatusCodes.Status200OK)
+.Produces<List<TorneoDTO>>(StatusCodes.Status200OK)
 .WithOpenApi();
 
-app.MapPost("/torneos", (DTOs.Torneo dto) => {
+app.MapPost("/torneos", (TorneoDTO dto) => {
     try
     {
         TorneoService torneoService = new TorneoService();
-        Domain.Model.Torneo torneo = new Domain.Model.Torneo(
-            dto.Id,
-            dto.Nombre,
-            dto.DescripcionDeReglas,
-            dto.CantidadDeJugadores,
-            dto.FechaInicio,
-            dto.FechaFin,
-            dto.FechaInicioDeInscripciones,
-            dto.FechaFinDeInscripciones,
-            dto.Resultado,
-            dto.Region,
-            dto.Estado
-        );
-        torneoService.Add(torneo);
-        var dtoResultado = new DTOs.Torneo
-        {
-            Id = torneo.Id,
-            Nombre = torneo.Nombre,
-            DescripcionDeReglas = torneo.DescripcionDeReglas,
-            CantidadDeJugadores = torneo.CantidadDeJugadores,
-            FechaInicio = torneo.FechaInicio,
-            FechaFin = torneo.FechaFin,
-            FechaInicioDeInscripciones = torneo.FechaInicioDeInscripciones,
-            FechaFinDeInscripciones = torneo.FechaFinDeInscripciones,
-            Resultado = torneo.Resultado,
-            Region = torneo.Region,
-            Estado = torneo.Estado
-        };
-        return Results.Created($"/usuarios/{dtoResultado.Id}", dtoResultado);
+
+        TorneoDTO torneoDTO = torneoService.Add(dto);
+        
+        return Results.Created($"/usuarios/{torneoDTO.Id}", torneoDTO);
     }
     catch (ArgumentException ex) {
         return Results.BadRequest(new { error = ex.Message });
     }
 })
 .WithName("AddTorneo")
-.Produces<DTOs.Torneo>(StatusCodes.Status201Created)
+.Produces<TorneoDTO>(StatusCodes.Status201Created)
 .Produces(StatusCodes.Status400BadRequest)
 .WithOpenApi();
 
-app.MapPut("/torneos/{id}",(int id, DTOs.Torneo dto) => {
+app.MapPut("/torneos",(TorneoDTO dto) => {
     try
     {
         TorneoService torneoService = new TorneoService();
-        Domain.Model.Torneo torneo = new Domain.Model.Torneo(
-            id,
-            dto.Nombre,
-            dto.DescripcionDeReglas,
-            dto.CantidadDeJugadores,
-            dto.FechaInicio,
-            dto.FechaFin,
-            dto.FechaInicioDeInscripciones,
-            dto.FechaFinDeInscripciones,
-            dto.Resultado,
-            dto.Region,
-            dto.Estado
-        );
-        var found = torneoService.Update( torneo );
-        if (!found) {
+        var found = torneoService.Update(dto);
+        if (!found)
+        {
             return Results.NotFound();
         }
-        return Results.NoContent();
+        else {
+        
+            return Results.NoContent();
+        }
 
     }
     catch (ArgumentException ex) {
@@ -274,11 +216,14 @@ app.MapPut("/torneos/{id}",(int id, DTOs.Torneo dto) => {
 
 app.MapDelete("/torneos/{id}",(int id) => {
     TorneoService torneoService = new TorneoService();
-    var deleted = torneoService.Delete( id );
-    if (!deleted) {
+    var deleted = torneoService.Delete(id);
+    if (!deleted)
+    {
         return Results.NotFound();
     }
-    return Results.NoContent();
+    else {
+        return Results.NoContent();
+    }
 })
 .WithName("DeleteTorneo")
 .Produces(StatusCodes.Status204NoContent)
