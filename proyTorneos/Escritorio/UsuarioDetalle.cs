@@ -8,163 +8,67 @@ namespace Escritorio
 {
     public partial class UsuarioDetalle : Form
     {
+        public UsuarioDTO UsuarioCreado { get; set; }
 
-        private UsuarioDTO usuario;
-        private FormMode mode;
-        // Agrega el campo errorProvider como miembro de la clase UsuarioDetalle
-        private ErrorProvider errorProvider = new ErrorProvider();
-        public UsuarioDTO Usuario
-        {
-            get { return usuario; }
-            set
-            {
-                usuario = value;
-                this.SetUsuario();
-            }
-        }
-
-        public FormMode Mode
-        {
-            get
-            {
-                return mode;
-            }
-            set
-            {
-                SetFormMode(value);
-            }
-        }
-
+        // Constructor para AGREGAR
         public UsuarioDetalle()
         {
             InitializeComponent();
-
-            Mode = FormMode.Add;
+            this.Text = "Agregar Usuario";
         }
 
-        private void SetUsuario()
+        // Constructor para MODIFICAR
+        public UsuarioDetalle(UsuarioDTO dto)
         {
-            this.txtId.Text = this.Usuario.Id.ToString();
-            this.txtNombre.Text = this.Usuario.Nombre;
-            this.txtApellido.Text = this.Usuario.Apellido;
-            this.txtEmail.Text = this.Usuario.Email;
-            this.txtPais.Text = this.Usuario.Pais;
-            this.txtGamerTag.Text = this.Usuario.GamerTag;
-            this.txtRol.Text = this.Usuario.Rol;
+            InitializeComponent();
+            Text = "Modificar Usuario";
+            btnAceptar.Text = "Modificar";
+            txtNombre.Text = dto.Nombre;
+            txtApellido.Text = dto.Apellido;
+            txtEmail.Text = dto.Email;
+            txtClave.Text = dto.Clave;
+            txtPais.Text = dto.Pais;
+            txtNombreUsuario.Text = dto.NombreUsuario;
+            txtRol.Text = dto.Rol;
+            UsuarioCreado = dto;
         }
-        private void SetFormMode(FormMode value)
+
+        public async Task AgregaryActualizarUsuario()
         {
-            mode = value;
-
-            if (Mode == FormMode.Add)
+            UsuarioDTO dto = new UsuarioDTO
             {
-                IdLabel.Visible = false;
-                txtId.Visible = false;
-                RolLabel.Visible = false;
-                txtRol.Visible = false;
-            }
+                Id = 0,
+                Nombre = txtNombre.Text,
+                Apellido = txtApellido.Text,
+                Email = txtEmail.Text,
+                Clave = txtClave.Text,
+                Pais = txtPais.Text,
+                NombreUsuario = txtNombreUsuario.Text,
+                Rol = txtRol.Text,
 
-            if (Mode == FormMode.Update)
+            };
+            if (btnAceptar.Text == "Modificar")
             {
-                IdLabel.Visible = true;
-                txtId.Visible = true;
-                RolLabel.Visible = true;
-                txtRol.Visible = true;
+                dto.Id = UsuarioCreado.Id;
+                await UsuarioApiClient.UpdateAsync(dto);
+                MessageBox.Show("Usuario modificado exitosamente", "Exito al modificar");
             }
+            else
+            {
+                await UsuarioApiClient.AddAsync(dto);
+                MessageBox.Show("Usuario agregado exitosamente", "Exito al agregar");
+            }
+            this.DialogResult = DialogResult.OK;
         }
 
         private async void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (this.ValidarUsuario())
-            {
-                try
-                {
-                    this.Usuario.Nombre = txtNombre.Text;
-                    this.Usuario.Apellido = txtApellido.Text;
-                    this.Usuario.Email = txtEmail.Text;
-                    this.Usuario.Pais = txtPais.Text;
-                    this.Usuario.GamerTag = txtGamerTag.Text;
-
-                    if (this.Mode == FormMode.Update)
-                    {
-                        await UsuarioApiClient.UpdateAsync(this.Usuario);
-                    }
-                    else
-                    {
-                        await UsuarioApiClient.AddAsync(this.Usuario);
-                    }
-
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            await AgregaryActualizarUsuario();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
-        }
-
-        private bool ValidarUsuario()
-        {
-            bool isValid = true;
-
-            errorProvider.SetError(txtNombre, string.Empty);
-            errorProvider.SetError(txtApellido, string.Empty);
-            errorProvider.SetError(txtEmail, string.Empty);
-            errorProvider.SetError(txtPais, string.Empty);
-            errorProvider.SetError(txtGamerTag, string.Empty);
-            errorProvider.SetError(txtRol, string.Empty);
-
-            if (this.txtNombre.Text == string.Empty)
-            {
-                isValid = false;
-                errorProvider.SetError(txtNombre, "El Nombre es requerido");
-            }
-
-            if (this.txtApellido.Text == string.Empty)
-            {
-                isValid = false;
-                errorProvider.SetError(txtApellido, "El Apellido es requerido");
-            }
-
-            if (this.txtEmail.Text == string.Empty)
-            {
-                isValid = false;
-                errorProvider.SetError(txtEmail, "El Email es requerido");
-            }
-            else if (!EsEmailValido(this.txtEmail.Text))
-            {
-                isValid = false;
-                errorProvider.SetError(txtEmail, "El formato del Email no es válido");
-            }
-            else if (this.txtPais.Text == string.Empty)
-            {
-                isValid = false;
-                errorProvider.SetError(txtPais, "El Pais es requerido");
-            }
-            else if (this.txtGamerTag.Text == string.Empty)
-            {
-                isValid = false;
-                errorProvider.SetError(txtGamerTag, "El Tag es requerido");
-            }
-            else if (this.txtRol.Text == string.Empty)
-            {
-                isValid = false;
-                errorProvider.SetError(txtRol, "El Rol es requerido");
-            }
-
-            return isValid;
-        }
-
-        private static bool EsEmailValido(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                return false;
-            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+            this.Dispose();
         }
     }
 }
