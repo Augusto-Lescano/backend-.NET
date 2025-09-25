@@ -26,7 +26,6 @@ namespace Escritorio
         public UsuarioLista()
         {
             InitializeComponent();
-            //LoadTheme(); por alguna razon no funciona como corresponde por lo tanto lo dejo así
         }
 
         private void LoadTheme()

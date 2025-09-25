@@ -81,21 +81,6 @@ namespace Data
 
                 entity.HasIndex(e => e.NombreUsuario)
                     .IsUnique();
-
-                // Usuario administrador inicial
-                var adminUser = new Usuario(1, "admin", "admin", "admin@tpi.com", "admin123", "Argentina", "admin", "Admin", DateTime.Now, true);
-                entity.HasData(new
-                {
-                    Id = adminUser.Id,
-                    Nombre = adminUser.Nombre,
-                    Apellido = adminUser.Apellido,
-                    Email = adminUser.Email,
-                    Pais = adminUser.Pais,
-                    NombreUsuario = adminUser.NombreUsuario,
-                    Rol = adminUser.Rol,
-                    FechaAlta = adminUser.FechaAlta,
-                    Activo = adminUser.Activo
-                });
             });
 
             modelBuilder.Entity<TipoTorneo>(entity =>
@@ -153,9 +138,8 @@ namespace Data
                     .IsRequired();
                 entity.Property(e => e.Region)
                     .IsRequired();
-                entity.Property(e => e.Estado)
-                    .IsRequired();
-
+                entity.Property(e=>e.Estado)
+                    .IsRequired();                
             });
 
 
