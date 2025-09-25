@@ -11,6 +11,8 @@ namespace Data
         public DbSet<Torneo> Torneos { get; set; }
         public DbSet<TipoTorneo> TipoTorneos { get; set; }
 
+        public DbSet<Juego> Juegos { get; set; }
+
         internal TPIContext()
         {
             this.Database.EnsureCreated();
@@ -97,9 +99,24 @@ namespace Data
                     .HasMaxLength(800);
             });
 
-            modelBuilder.Entity<Torneo>(entity => {
+
+            modelBuilder.Entity<Juego>(entity =>
+            {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id) 
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+                entity.Property(e => e.Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Torneo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
                     .ValueGeneratedOnAdd();
                 entity.Property(e => e.Nombre)
                     .IsRequired()
@@ -111,19 +128,21 @@ namespace Data
                     .IsRequired();
                 entity.Property(e => e.FechaInicio)
                     .IsRequired();
-                entity.Property(e=>e.FechaFin)
+                entity.Property(e => e.FechaFin)
                     .IsRequired();
-                entity.Property(e=>e.FechaInicioDeInscripciones)
+                entity.Property(e => e.FechaInicioDeInscripciones)
                     .IsRequired();
-                entity.Property(e=>e.FechaFinDeInscripciones)
+                entity.Property(e => e.FechaFinDeInscripciones)
                     .IsRequired();
                 entity.Property(e => e.Resultado)
                     .IsRequired();
-                entity.Property(e=>e.Region)
+                entity.Property(e => e.Region)
                     .IsRequired();
                 entity.Property(e=>e.Estado)
                     .IsRequired();                
             });
+
+
         }
     }
 }
