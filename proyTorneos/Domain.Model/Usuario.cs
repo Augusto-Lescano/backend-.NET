@@ -12,8 +12,8 @@ namespace Domain.Model
         public string Nombre { get; private set; }
         public string Apellido { get; private set; }
         public string Email { get; private set; }
-        public string ClaveHash { get; private set; }
-        public string Salt { get; private set; }
+        public string Clave { get; private set; }
+       // public string Salt { get; private set; }
         public string Pais {  get; private set; }
         public string NombreUsuario { get; private set; }
         public string Rol {  get; private set; }
@@ -84,8 +84,8 @@ namespace Domain.Model
             if (clave.Length < 6)
                 throw new ArgumentException("La clave debe tener al menos 6 caracteres.", nameof(clave));
 
-            Salt = GenerateSalt();
-            ClaveHash = HashPassword(clave, Salt);
+            //Salt = GenerateSalt();
+            //ClaveHash = HashPassword(clave, Salt);
         }
 
         public void SetPais(string pais)
@@ -127,40 +127,40 @@ namespace Domain.Model
             Activo = activo;
         }
 
-        public bool ValidarClave(string clave) // Verifica si la contraseña es correcta durante el login
-        {
-            if (string.IsNullOrWhiteSpace(clave))
-                return false;
+        /* public bool ValidarClave(string clave) // Verifica si la contraseña es correcta durante el login
+         {
+             if (string.IsNullOrWhiteSpace(clave))
+                 return false;
 
-            // Hashear la contraseña ingresada con el SALT almacenado
-            string hashedInput = HashPassword(clave, Salt);
+             // Hashear la contraseña ingresada con el SALT almacenado
+             string hashedInput = HashPassword(clave, Salt);
 
-            // Comparar con el hash almacenado en la base de datos
-            return ClaveHash == hashedInput;
-        }
+             // Comparar con el hash almacenado en la base de datos
+             return ClaveHash == hashedInput;
+         }
 
-        private static string GenerateSalt() // Generador de Sal
-        {
-            byte[] saltBytes = new byte[32]; // Crea un array de 32 bytes(256 bits)
+         private static string GenerateSalt() // Generador de Sal
+         {
+             byte[] saltBytes = new byte[32]; // Crea un array de 32 bytes(256 bits)
 
-            RandomNumberGenerator.Fill(saltBytes); // Se llena con números aleatorios criptográficamente seguros
+             RandomNumberGenerator.Fill(saltBytes); // Se llena con números aleatorios criptográficamente seguros
 
-            return Convert.ToBase64String(saltBytes); // Convierte a string Base64 para almacenamiento
+             return Convert.ToBase64String(saltBytes); // Convierte a string Base64 para almacenamiento
 
-            // Resultado ejemplo: "aB3x9mLpQrStUvWxYz1AbCdEfGhIjKlMnOpQrStUvWxYz1=="
-        }
+             // Resultado ejemplo: "aB3x9mLpQrStUvWxYz1AbCdEfGhIjKlMnOpQrStUvWxYz1=="
+         }
 
-        private static string HashPassword(string clave, string salt) // Hasheador seguro
-        {
-            using var pbkdf2 = new Rfc2898DeriveBytes(
-                clave,                               // Contraseña en texto plano
-                Convert.FromBase64String(salt),      // Salt convertido de vuelta a bytes
-                10000,                               // Nro de iteraciones
-                HashAlgorithmName.SHA256);           // Algoritmo de hash
+         private static string HashPassword(string clave, string salt) // Hasheador seguro
+         {
+             using var pbkdf2 = new Rfc2898DeriveBytes(
+                 clave,                               // Contraseña en texto plano
+                 Convert.FromBase64String(salt),      // Salt convertido de vuelta a bytes
+                 10000,                               // Nro de iteraciones
+                 HashAlgorithmName.SHA256);           // Algoritmo de hash
 
-            byte[] hashBytes = pbkdf2.GetBytes(32); // Genera 32 bytes (256 bits) de hash
+             byte[] hashBytes = pbkdf2.GetBytes(32); // Genera 32 bytes (256 bits) de hash
 
-            return Convert.ToBase64String(hashBytes); // Convierte a string para almacenar
-        }
+             return Convert.ToBase64String(hashBytes); // Convierte a string para almacenar
+         }*/
     }
 }
