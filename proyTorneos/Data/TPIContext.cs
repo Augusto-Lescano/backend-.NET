@@ -53,14 +53,6 @@ namespace Data
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.Property(e => e.ClaveHash)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Salt)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
                 entity.Property(e => e.Pais)
                     .IsRequired()
                     .HasMaxLength(20);
@@ -87,23 +79,6 @@ namespace Data
 
                 entity.HasIndex(e => e.NombreUsuario)
                     .IsUnique();
-
-                // Usuario administrador inicial
-                var adminUser = new Usuario(1, "admin", "admin", "admin@tpi.com", "admin123", "Argentina", "admin", "Admin", DateTime.Now, true);
-                entity.HasData(new
-                {
-                    Id = adminUser.Id,
-                    Nombre = adminUser.Nombre,
-                    Apellido = adminUser.Apellido,
-                    Email = adminUser.Email,
-                    ClaveHash = adminUser.ClaveHash, // Se va a generar automáticamente
-                    Salt = adminUser.Salt,           // Se va a generar automáticamente
-                    Pais = adminUser.Pais,
-                    NombreUsuario = adminUser.NombreUsuario,
-                    Rol = adminUser.Rol,
-                    FechaAlta = adminUser.FechaAlta,
-                    Activo = adminUser.Activo
-                });
             });
 
             modelBuilder.Entity<TipoTorneo>(entity =>
@@ -147,8 +122,7 @@ namespace Data
                 entity.Property(e=>e.Region)
                     .IsRequired();
                 entity.Property(e=>e.Estado)
-                    .IsRequired();
-                
+                    .IsRequired();                
             });
         }
     }
