@@ -1,4 +1,4 @@
-﻿namespace Escritorio
+namespace Escritorio
 {
     partial class UsuarioDetalle
     {
