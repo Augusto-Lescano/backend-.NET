@@ -18,132 +18,86 @@ namespace Escritorio
 {
     public partial class UsuarioLista : Form
     {
-        private readonly HttpClient _httpClient = new()
-        {
-            BaseAddress = new Uri("https://localhost:5000")
-        };
-
         public UsuarioLista()
         {
             InitializeComponent();
         }
 
-        private void LoadTheme()
+        public async Task CargarUsuarios()
         {
-            foreach (Control btns in this.Controls)
+            dgvUsuarios.DataSource = await UsuarioApiClient.GetAllAsync();
+        }
+
+        public UsuarioDTO SeleccionarUsuario()
+        {
+
+            UsuarioDTO dto = (UsuarioDTO)dgvUsuarios.SelectedRows[0].DataBoundItem;
+            return dto;
+        }
+
+        public async Task AgregarUsuario()
+        {
+            UsuarioDetalle detalle = new UsuarioDetalle();
+            Shared.AjustarFormMDI(detalle);
+
+            if (detalle.ShowDialog() == DialogResult.OK)
             {
-                if (btns.GetType() == typeof(Button))
+                await CargarUsuarios();
+            }
+        }
+
+        public async Task ActualizarUsuario()
+        {
+            var usuario = SeleccionarUsuario();
+            if (usuario == null)
+            {
+                MessageBox.Show("No puede modificar un usuario sin haber seleccionado uno anteriormente", "Error al modificar usuario");
+            }
+            else
+            {
+                var detalle = new UsuarioDetalle(usuario);
+                Shared.AjustarFormMDI(detalle);
+                if (detalle.ShowDialog() == DialogResult.OK)
                 {
-                    Button btn = (Button)btns;
-                    btns.BackColor = ThemeColor.PrimaryColor;
-                    btns.ForeColor = Color.White;
-                    btn.FlatAppearance.BorderColor = ThemeColor.SecondaryColor;
+                    await CargarUsuarios();
                 }
             }
-            label5.ForeColor = ThemeColor.SecondaryColor;
-            label6.ForeColor = ThemeColor.PrimaryColor;
         }
 
-        private async void FormUsuario_Load(object sender, EventArgs e)
+        public async Task BorrarUsuario()
         {
-            await CargarUsuariosAsync();
+            var usuario = SeleccionarUsuario();
+            if (usuario == null)
+            {
+                MessageBox.Show("No puede borrar un usuario sin haber seleccionado uno anteriormente", "Error al borrar usuario");
+            }
+            else
+            {
+                await UsuarioApiClient.DeleteAsync(usuario.Id);
+                MessageBox.Show("Usuario borrado exitosamente", "Exito al borrar");
+            }
+            await CargarUsuarios();
+        }
+
+        private async void Usuarios_Load(object sender, EventArgs e)
+        {
             Shared.AjustarDataGridView(dgvUsuarios);
-        }
-
-        private async Task CargarUsuariosAsync()
-        {
-            try
-            {
-                var usuarios = await _httpClient.GetFromJsonAsync<IEnumerable<Usuario>>("usuarios");
-                dgvUsuarios.DataSource = usuarios.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error cargando usuarios: " + ex.Message);
-            }
+            await CargarUsuarios();
         }
 
         private async void btnAgregar_Click(object sender, EventArgs e)
         {
-            UsuarioDetalle usuarioDetalle = new UsuarioDetalle();
-
-            UsuarioDTO usuarioNuevo = new UsuarioDTO();
-
-            usuarioDetalle.Mode = FormMode.Add;
-            usuarioDetalle.Usuario = usuarioNuevo;
-
-            if (usuarioDetalle.ShowDialog() == DialogResult.OK)
-            {
-                MessageBox.Show("Usuario agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
+            await AgregarUsuario();
         }
 
         private async void btnActualizar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                UsuarioDetalle usuarioDetalle = new UsuarioDetalle();
-
-                int id = this.SelectedItem().Id;
-
-                UsuarioDTO usuario = await UsuarioApiClient.GetAsync(id);
-
-                usuarioDetalle.Mode = FormMode.Update;
-                usuarioDetalle.Usuario = usuario;
-
-                if (usuarioDetalle.ShowDialog() == DialogResult.OK)
-                {
-                    MessageBox.Show("Usuario actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al cargar usuario para modificar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            await ActualizarUsuario();
         }
 
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                UsuarioDTO usuario = this.SelectedItem();
-
-                var result = MessageBox.Show($"¿Está seguro que desea eliminar el usuario {usuario.Nombre} {usuario.Apellido}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
-                {
-                    await UsuarioApiClient.DeleteAsync(usuario.Id);
-                    MessageBox.Show("Usuario eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al eliminar usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private UsuarioDTO SelectedItem()
-        {
-            UsuarioDTO usuario;
-
-            usuario = (UsuarioDTO)dgvUsuarios.SelectedRows[0].DataBoundItem;
-
-            return usuario;
-        }
-        private void dgvUsuarios_SelectionChanged(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void txtId_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
+            await BorrarUsuario();
         }
     }
 }

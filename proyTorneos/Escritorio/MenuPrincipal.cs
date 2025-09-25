@@ -29,8 +29,8 @@ namespace Escritorio
         }
         private void mnuUsuarios_Click(object sender, EventArgs e)
         {
-            FormUsuarios formUsuario = new FormUsuarios();
-            mostrarFormularios(formUsuario);
+            UsuarioLista usuarioLista = new UsuarioLista();
+            mostrarFormularios(usuarioLista);
         }
 
         private void mnuTorneos_Click(object sender, EventArgs e)

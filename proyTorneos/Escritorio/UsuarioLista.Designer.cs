@@ -40,7 +40,7 @@
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
-            buscarTextBox = new TextBox();
+            txtBusqueda = new TextBox();
             buscarButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             SuspendLayout();
@@ -109,8 +109,6 @@
             dgvUsuarios.RowHeadersWidth = 51;
             dgvUsuarios.Size = new Size(740, 332);
             dgvUsuarios.TabIndex = 15;
-            dgvUsuarios.CellContentClick += dgvUsuarios_CellContentClick;
-            dgvUsuarios.SelectionChanged += dgvUsuarios_SelectionChanged;
             // 
             // button2
             // 
@@ -161,13 +159,13 @@
             label9.Size = new Size(0, 15);
             label9.TabIndex = 22;
             // 
-            // buscarTextBox
+            // txtBusqueda
             // 
-            buscarTextBox.Location = new Point(48, 23);
-            buscarTextBox.Name = "buscarTextBox";
-            buscarTextBox.PlaceholderText = "Buscar por nombre, apellido o email...";
-            buscarTextBox.Size = new Size(208, 23);
-            buscarTextBox.TabIndex = 23;
+            txtBusqueda.Location = new Point(48, 23);
+            txtBusqueda.Name = "txtBusqueda";
+            txtBusqueda.PlaceholderText = "Buscar por nombre, apellido o email...";
+            txtBusqueda.Size = new Size(208, 23);
+            txtBusqueda.TabIndex = 23;
             // 
             // buscarButton
             // 
@@ -184,7 +182,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(buscarButton);
-            Controls.Add(buscarTextBox);
+            Controls.Add(txtBusqueda);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -199,7 +197,7 @@
             Controls.Add(btnAgregar);
             Name = "UsuarioLista";
             Text = "Usuarios";
-            Load += FormUsuario_Load;
+            Load += Usuarios_Load;
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -219,7 +217,7 @@
         private Label label7;
         private Label label8;
         private Label label9;
-        private TextBox buscarTextBox;
+        private TextBox txtBusqueda;
         private Button buscarButton;
     }
 }

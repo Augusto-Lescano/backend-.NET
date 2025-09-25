@@ -1,4 +1,4 @@
-﻿namespace Escritorio
+namespace Escritorio
 {
     partial class UsuarioDetalle
     {
@@ -32,7 +32,7 @@
             txtApellido = new TextBox();
             txtEmail = new TextBox();
             txtPais = new TextBox();
-            txtGamerTag = new TextBox();
+            txtNombreUsuario = new TextBox();
             txtRol = new TextBox();
             NombreLabel = new Label();
             ApellidoLabel = new Label();
@@ -42,11 +42,13 @@
             RolLabel = new Label();
             btnAceptar = new Button();
             btnCancelar = new Button();
+            label1 = new Label();
+            txtClave = new TextBox();
             SuspendLayout();
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(274, 56);
+            txtNombre.Location = new Point(274, 27);
             txtNombre.Margin = new Padding(3, 2, 3, 2);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(157, 23);
@@ -54,7 +56,7 @@
             // 
             // txtApellido
             // 
-            txtApellido.Location = new Point(274, 95);
+            txtApellido.Location = new Point(274, 72);
             txtApellido.Margin = new Padding(3, 2, 3, 2);
             txtApellido.Name = "txtApellido";
             txtApellido.Size = new Size(157, 23);
@@ -62,7 +64,7 @@
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(274, 134);
+            txtEmail.Location = new Point(274, 120);
             txtEmail.Margin = new Padding(3, 2, 3, 2);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(157, 23);
@@ -70,23 +72,23 @@
             // 
             // txtPais
             // 
-            txtPais.Location = new Point(274, 175);
+            txtPais.Location = new Point(274, 207);
             txtPais.Margin = new Padding(3, 2, 3, 2);
             txtPais.Name = "txtPais";
             txtPais.Size = new Size(157, 23);
             txtPais.TabIndex = 4;
             // 
-            // txtGamerTag
+            // txtNombreUsuario
             // 
-            txtGamerTag.Location = new Point(274, 217);
-            txtGamerTag.Margin = new Padding(3, 2, 3, 2);
-            txtGamerTag.Name = "txtGamerTag";
-            txtGamerTag.Size = new Size(157, 23);
-            txtGamerTag.TabIndex = 5;
+            txtNombreUsuario.Location = new Point(273, 251);
+            txtNombreUsuario.Margin = new Padding(3, 2, 3, 2);
+            txtNombreUsuario.Name = "txtNombreUsuario";
+            txtNombreUsuario.Size = new Size(157, 23);
+            txtNombreUsuario.TabIndex = 5;
             // 
             // txtRol
             // 
-            txtRol.Location = new Point(274, 259);
+            txtRol.Location = new Point(274, 299);
             txtRol.Margin = new Padding(3, 2, 3, 2);
             txtRol.Name = "txtRol";
             txtRol.Size = new Size(157, 23);
@@ -95,7 +97,7 @@
             // NombreLabel
             // 
             NombreLabel.AutoSize = true;
-            NombreLabel.Location = new Point(148, 58);
+            NombreLabel.Location = new Point(148, 35);
             NombreLabel.Name = "NombreLabel";
             NombreLabel.Size = new Size(51, 15);
             NombreLabel.TabIndex = 8;
@@ -104,7 +106,7 @@
             // ApellidoLabel
             // 
             ApellidoLabel.AutoSize = true;
-            ApellidoLabel.Location = new Point(148, 100);
+            ApellidoLabel.Location = new Point(148, 80);
             ApellidoLabel.Name = "ApellidoLabel";
             ApellidoLabel.Size = new Size(51, 15);
             ApellidoLabel.TabIndex = 9;
@@ -113,7 +115,7 @@
             // EmailLabel
             // 
             EmailLabel.AutoSize = true;
-            EmailLabel.Location = new Point(148, 139);
+            EmailLabel.Location = new Point(148, 128);
             EmailLabel.Name = "EmailLabel";
             EmailLabel.Size = new Size(36, 15);
             EmailLabel.TabIndex = 10;
@@ -122,7 +124,7 @@
             // PaisLabel
             // 
             PaisLabel.AutoSize = true;
-            PaisLabel.Location = new Point(148, 180);
+            PaisLabel.Location = new Point(148, 215);
             PaisLabel.Name = "PaisLabel";
             PaisLabel.Size = new Size(28, 15);
             PaisLabel.TabIndex = 11;
@@ -131,7 +133,7 @@
             // TagLabel
             // 
             TagLabel.AutoSize = true;
-            TagLabel.Location = new Point(148, 222);
+            TagLabel.Location = new Point(148, 259);
             TagLabel.Name = "TagLabel";
             TagLabel.Size = new Size(109, 15);
             TagLabel.TabIndex = 12;
@@ -140,7 +142,7 @@
             // RolLabel
             // 
             RolLabel.AutoSize = true;
-            RolLabel.Location = new Point(148, 265);
+            RolLabel.Location = new Point(148, 307);
             RolLabel.Name = "RolLabel";
             RolLabel.Size = new Size(24, 15);
             RolLabel.TabIndex = 13;
@@ -166,13 +168,30 @@
             btnCancelar.TabIndex = 15;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
-            btnCancelar.Click += btnCancelar_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(148, 172);
+            label1.Name = "label1";
+            label1.Size = new Size(67, 15);
+            label1.TabIndex = 16;
+            label1.Text = "Contraseña";
+            // 
+            // txtClave
+            // 
+            txtClave.Location = new Point(274, 164);
+            txtClave.Name = "txtClave";
+            txtClave.Size = new Size(156, 23);
+            txtClave.TabIndex = 17;
             // 
             // UsuarioDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 338);
+            Controls.Add(txtClave);
+            Controls.Add(label1);
             Controls.Add(btnCancelar);
             Controls.Add(btnAceptar);
             Controls.Add(RolLabel);
@@ -182,14 +201,13 @@
             Controls.Add(ApellidoLabel);
             Controls.Add(NombreLabel);
             Controls.Add(txtRol);
-            Controls.Add(txtGamerTag);
+            Controls.Add(txtNombreUsuario);
             Controls.Add(txtPais);
             Controls.Add(txtEmail);
             Controls.Add(txtApellido);
             Controls.Add(txtNombre);
             Margin = new Padding(3, 2, 3, 2);
             Name = "UsuarioDetalle";
-            Text = "Form2";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -199,7 +217,7 @@
         private TextBox txtApellido;
         private TextBox txtEmail;
         private TextBox txtPais;
-        private TextBox txtGamerTag;
+        private TextBox txtNombreUsuario;
         private TextBox txtRol;
         private Label NombreLabel;
         private Label ApellidoLabel;
@@ -209,5 +227,7 @@
         private Label RolLabel;
         private Button btnAceptar;
         private Button btnCancelar;
+        private Label label1;
+        private TextBox txtClave;
     }
 }
