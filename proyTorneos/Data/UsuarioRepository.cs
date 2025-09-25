@@ -1,4 +1,6 @@
 ﻿using Domain.Model;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Data
@@ -37,6 +39,18 @@ namespace Data
                 .FirstOrDefault(u => u.Id == id);
         }
 
+        public Usuario? GetByUsername(string username)
+        {
+            using var context = CreateContext();
+            return context.Usuarios.FirstOrDefault(u => u.NombreUsuario == username && u.Activo);
+        }
+
+        public Usuario? GetByEmail(string email)
+        {
+            using var context = CreateContext();
+            return context.Usuarios.FirstOrDefault(u => u.Email == email && u.Activo);
+        }
+
         public IEnumerable<Usuario> GetAll()
         {
             using var context = CreateContext();
@@ -54,24 +68,15 @@ namespace Data
                 existingUsuario.SetApellido(usuario.Apellido);
                 existingUsuario.SetEmail(usuario.Email);
                 existingUsuario.SetPais(usuario.Pais);
-                existingUsuario.SetGamerTag(usuario.GamerTag);
+                existingUsuario.SetNombreUsuario(usuario.NombreUsuario);
                 existingUsuario.SetRol(usuario.Rol);
+                existingUsuario.SetFechaAlta(usuario.FechaAlta);
+                existingUsuario.SetActivo(usuario.Activo);
 
                 context.SaveChanges();
                 return true;
             }
             return false;
-        }
-
-        public bool EmailExists(string email, int? excludeId = null)
-        {
-            using var context = CreateContext();
-            var query = context.Usuarios.Where(c => c.Email.ToLower() == email.ToLower());
-            if (excludeId.HasValue)
-            {
-                query = query.Where(c => c.Id != excludeId.Value);
-            }
-            return query.Any();
         }
     }
 }

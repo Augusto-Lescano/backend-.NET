@@ -4,6 +4,7 @@ using Domain.Model;
 using Domain.Services;
 using DTOs;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using WebAPI;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,126 +25,6 @@ if (app.Environment.IsDevelopment())
     app.UseHttpLogging();
 }
 app.UseHttpsRedirection();
-
-#region MetodosHttpUsuario
-app.MapGet("/usuarios/{id}", (int id) =>
-{
-    UsuarioService usuarioService = new UsuarioService(); 
-
-    UsuarioDTO usuario = usuarioService.Get(id);
-
-    if (usuario == null)
-    {
-        return Results.NotFound();
-    }
-        
-    var dto = new DTOs.UsuarioDTO
-    {
-        Id = usuario.Id,
-        Nombre = usuario.Nombre,
-        Apellido = usuario.Apellido,
-        Email = usuario.Email,
-        Pais = usuario.Pais,
-        GamerTag = usuario.GamerTag,
-        Rol = usuario.Rol
-    };
-
-    return Results.Ok(dto);
-})
-.WithName("GetUsuario")
-.Produces<DTOs.UsuarioDTO>(StatusCodes.Status200OK)
-.Produces(StatusCodes.Status404NotFound)
-.WithOpenApi();
-
-app.MapGet("/usuarios", () =>
-{
-    UsuarioService usuarioService1 = new UsuarioService();
-
-    var usuarios = usuarioService1.GetAll();
-
-    var dtos = usuarios.Select(usuario => new DTOs.UsuarioDTO
-    {
-        Id = usuario.Id,
-        Nombre = usuario.Nombre,
-        Apellido = usuario.Apellido,
-        Email = usuario.Email,
-        Pais = usuario.Pais,
-        GamerTag = usuario.GamerTag,
-        Rol = usuario.Rol
-    }).ToList();
-
-    return Results.Ok(dtos);
-})
-.WithName("GetAllUsuarios")
-.Produces<List<DTOs.UsuarioDTO>>(StatusCodes.Status200OK)
-.WithOpenApi();
-
-app.MapPost("/usuarios", (DTOs.UsuarioDTO dto) =>
-{
-    try
-    {
-        UsuarioService usuarioService = new UsuarioService();
-
-        UsuarioDTO usuarioDTO = usuarioService.Add(dto);
-
-        return Results.Created($"/usuarios/{usuarioDTO.Id}", usuarioDTO);
-    }
-    catch (ArgumentException ex)
-    {
-        return Results.BadRequest(new { error = ex.Message });
-    }
-})
-.WithName("AddUsuario")
-.Produces<DTOs.UsuarioDTO>(StatusCodes.Status201Created)
-.Produces(StatusCodes.Status400BadRequest)
-.WithOpenApi();
-
-app.MapPut("/usuarios/{id}", (int id, DTOs.UsuarioDTO dto) =>
-{
-    try
-    {
-        UsuarioService usuarioService = new UsuarioService();
-
-        UsuarioDTO usuarioDTO = usuarioService.Add(dto);
-
-        var found = usuarioService.Update(usuarioDTO);
-
-        if (!found)
-        {
-            return Results.NotFound();
-        }
-
-        return Results.NoContent();
-    }
-    catch (ArgumentException ex)
-    {
-        return Results.BadRequest(new { error = ex.Message });
-    }
-})
-.WithName("UpdateUsuario")
-.Produces(StatusCodes.Status404NotFound)
-.Produces(StatusCodes.Status400BadRequest)
-.WithOpenApi();
-
-app.MapDelete("/usuarios/{id}", (int id) =>
-{
-    UsuarioService usuarioService = new UsuarioService();
-
-    var deleted = usuarioService.Delete(id);
-
-    if (!deleted)
-    {
-        return Results.NotFound();
-    }
-
-    return Results.NoContent();
-
-})
-.WithName("DeleteUsuario")
-.Produces(StatusCodes.Status204NoContent)
-.Produces(StatusCodes.Status404NotFound)
-.WithOpenApi();
-#endregion
 
 #region MetodosHttpTorneo
 app.MapGet("/torneos/{id}", (int id) => {
@@ -342,5 +223,6 @@ app.MapDelete("/tipoTorneos/{id}", (int id) =>
 .WithOpenApi();
 #endregion
 
-
+// Map endpoints
+app.MapUsuarioEndpoints();
 app.Run();

@@ -32,16 +32,16 @@ namespace API.Clients
                 else
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error al obtener el usuario con Id {id}. Status: {response.StatusCode}, detalle: {errorContent}");
+                    throw new Exception($"Error al obtener el usuario con Id {id}. Status: {response.StatusCode}, Detalle: {errorContent}");
                 }
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception($"Error de conexión al obtener cliente con Id {id}: {ex.Message}", ex);
+                throw new Exception($"Error de conexión al obtener usuario con Id {id}: {ex.Message}", ex);
             }
             catch (TaskCanceledException ex)
             {
-                throw new Exception($"Timeout al obtener cliente con Id {id}: {ex.Message}", ex);
+                throw new Exception($"Timeout al obtener usuario con Id {id}: {ex.Message}", ex);
             }
         }
 
