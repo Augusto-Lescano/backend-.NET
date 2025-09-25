@@ -116,7 +116,7 @@ namespace Escritorio
 
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnPanel(new FormUsuarios());
+            AbrirFormularioEnPanel(new UsuarioLista());
         }
 
         private void btnTorneos_Click(object sender, EventArgs e)

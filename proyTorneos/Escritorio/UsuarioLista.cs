@@ -16,14 +16,14 @@ using static Escritorio.FormTipoTorneos;
 
 namespace Escritorio
 {
-    public partial class FormUsuarios : Form
+    public partial class UsuarioLista : Form
     {
         private readonly HttpClient _httpClient = new()
         {
             BaseAddress = new Uri("https://localhost:5000")
         };
 
-        public FormUsuarios()
+        public UsuarioLista()
         {
             InitializeComponent();
             //LoadTheme(); por alguna razon no funciona como corresponde por lo tanto lo dejo así

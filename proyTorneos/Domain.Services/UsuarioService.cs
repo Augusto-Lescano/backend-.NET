@@ -6,25 +6,27 @@ namespace Domain.Services
 {
     public class UsuarioService
     {
-        public UsuarioDTO Add(UsuarioDTO dto)
+        public UsuarioDTO Add(UsuarioCreateDTO createDto)
         {
             var usuarioRepository = new UsuarioRepository();
 
-            // Validar que el email no esté duplicado
-            if (usuarioRepository.EmailExists(dto.Email))
-            {
-                throw new ArgumentException($"Ya existe un usuario con el Email '{dto.Email}'.");
-            }
-
             var fechaAlta = DateTime.Now;
-            Usuario usuario = new Usuario(0, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol, fechaAlta);
+            Usuario usuario = new Usuario(0, createDto.Nombre, createDto.Apellido, createDto.Email, createDto.Clave, createDto.Pais, createDto.NombreUsuario, createDto.Rol, fechaAlta, true);
 
             usuarioRepository.Add(usuario);
 
-            dto.Id = usuario.Id;
-            dto.FechaAlta = usuario.FechaAlta;
-
-            return dto;
+            return new UsuarioDTO
+            {
+                Id = usuario.Id,
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                Email = usuario.Email,
+                Pais = usuario.Pais,
+                NombreUsuario = usuario.NombreUsuario,
+                Rol = usuario.Rol,
+                FechaAlta = usuario.FechaAlta,
+                Activo = usuario.Activo
+            };
         }
 
         public bool Delete(int id)
@@ -33,7 +35,7 @@ namespace Domain.Services
             return usuarioRepository.Delete(id);
         }
 
-        public UsuarioDTO Get(int id)
+        public UsuarioDTO? Get(int id)
         {
             var usuarioRepository = new UsuarioRepository();
             Usuario? usuario = usuarioRepository.Get(id);
@@ -48,9 +50,10 @@ namespace Domain.Services
                 Apellido = usuario.Apellido,
                 Email = usuario.Email,
                 Pais = usuario.Pais,
-                GamerTag = usuario.GamerTag,
+                NombreUsuario = usuario.NombreUsuario,
                 Rol = usuario.Rol,
-                FechaAlta = usuario.FechaAlta
+                FechaAlta = usuario.FechaAlta,
+                Activo = usuario.Activo
             };
         }
 
@@ -66,23 +69,53 @@ namespace Domain.Services
                 Apellido = usuario.Apellido,
                 Email = usuario.Email,
                 Pais = usuario.Pais,
-                GamerTag = usuario.GamerTag,
+                NombreUsuario = usuario.NombreUsuario,
                 Rol = usuario.Rol,
-                FechaAlta = usuario.FechaAlta
-            }).ToList();
+                FechaAlta = usuario.FechaAlta,
+                Activo = usuario.Activo
+            });
         }
 
-        public bool Update(UsuarioDTO dto)
+        public bool Update(UsuarioUpdateDTO updateDto)
         {
             var usuarioRepository = new UsuarioRepository();
+            var usuario = usuarioRepository.Get(updateDto.Id);
+            if (usuario == null)
+                return false;
 
-            // Validar que el email no esté duplicado (excluyendo el usuario actual)
-            if (usuarioRepository.EmailExists(dto.Email, dto.Id))
-            {
-                throw new ArgumentException($"Ya existe otro usuario con el Email '{dto.Email}'.");
-            }
+            #region comentarios
+            /*
+            Flexibilidad: El usuario actualiza solo lo que necesita
+            Seguridad: No se sobrescriben datos accidentalmente
+            Performance: Solo se actualizan los campos modificados
+            UX: Mejor experiencia para el usuario final
+             */
+            #endregion
+            // Actualizar SOLO si se proporciona valor
+            if (!string.IsNullOrWhiteSpace(updateDto.Nombre))
+                usuario.SetNombre(updateDto.Nombre);
 
-            Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Pais, dto.GamerTag, dto.Rol, dto.FechaAlta);
+            if (!string.IsNullOrWhiteSpace(updateDto.Apellido))
+                usuario.SetApellido(updateDto.Apellido);
+
+            if (!string.IsNullOrWhiteSpace(updateDto.Email))
+                usuario.SetEmail(updateDto.Email);
+
+            if (!string.IsNullOrWhiteSpace(updateDto.Clave))
+                usuario.SetClave(updateDto.Clave);
+
+            if (!string.IsNullOrWhiteSpace(updateDto.Pais))
+                usuario.SetPais(updateDto.Pais);
+
+            if (!string.IsNullOrWhiteSpace(updateDto.NombreUsuario))
+                usuario.SetNombreUsuario(updateDto.NombreUsuario);
+
+            if (!string.IsNullOrWhiteSpace(updateDto.Rol))
+                usuario.SetRol(updateDto.Rol);
+
+            if (updateDto.Activo.HasValue)
+                usuario.SetActivo(updateDto.Activo.Value);
+
             return usuarioRepository.Update(usuario);
         }
     }
