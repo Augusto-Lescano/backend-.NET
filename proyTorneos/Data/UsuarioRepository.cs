@@ -54,8 +54,7 @@ namespace Data
         public IEnumerable<Usuario> GetAll()
         {
             using var context = CreateContext();
-            return context.Usuarios
-                .ToList();
+            return context.Usuarios.ToList();
         }
 
         public bool Update(Usuario usuario)

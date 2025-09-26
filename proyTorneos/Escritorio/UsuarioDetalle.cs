@@ -41,12 +41,27 @@ namespace Escritorio
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 Email = txtEmail.Text,
-                Clave = txtClave.Text,
+                Clave = txtClave.Text?.Trim(),
                 Pais = txtPais.Text,
                 NombreUsuario = txtNombreUsuario.Text,
                 Rol = txtRol.Text,
 
             };
+
+            if (string.IsNullOrWhiteSpace(dto.Clave))
+            {
+                MessageBox.Show("La contraseña es obligatoria y no puede estar vacía.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtClave.Focus();  // Enfoca el campo
+                return;
+            }
+
+            if (dto.Clave.Length < 8)  // Basado en tu MaxLength(8)
+            {
+                MessageBox.Show("La contraseña debe tener al menos 8 caracteres.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
             if (btnAceptar.Text == "Modificar")
             {
                 dto.Id = UsuarioCreado.Id;

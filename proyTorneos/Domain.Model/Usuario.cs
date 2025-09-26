@@ -79,13 +79,16 @@ namespace Domain.Model
         public void SetClave(string clave)
         {
             if (string.IsNullOrWhiteSpace(clave))
-                throw new ArgumentException("La clave no puede ser nula o vacía.", nameof(clave));
 
-            if (clave.Length < 6)
-                throw new ArgumentException("La clave debe tener al menos 6 caracteres.", nameof(clave));
+            
+            if (string.IsNullOrWhiteSpace(clave))
+                throw new ArgumentException("La clave no puede ser nula o vacía.", nameof(clave));
+            if (clave.Length < 8)  
+                throw new ArgumentException("La clave debe tener al menos 8 caracteres.", nameof(clave));
 
             //Salt = GenerateSalt();
             //ClaveHash = HashPassword(clave, Salt);
+            Clave = clave; 
         }
 
         public void SetPais(string pais)
