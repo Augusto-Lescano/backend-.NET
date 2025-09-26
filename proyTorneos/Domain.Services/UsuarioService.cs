@@ -6,7 +6,7 @@ namespace Domain.Services
 {
     public class UsuarioService
     {
-        public UsuarioDTO Add(UsuarioCreateDTO createDto)
+        public UsuarioDTO Add(UsuarioDTO createDto)
         {
             var usuarioRepository = new UsuarioRepository();
 
@@ -21,6 +21,7 @@ namespace Domain.Services
                 Nombre = usuario.Nombre,
                 Apellido = usuario.Apellido,
                 Email = usuario.Email,
+                Clave = usuario.Clave,
                 Pais = usuario.Pais,
                 NombreUsuario = usuario.NombreUsuario,
                 Rol = usuario.Rol,
@@ -76,7 +77,7 @@ namespace Domain.Services
             });
         }
 
-        public bool Update(UsuarioUpdateDTO updateDto)
+        public bool Update(UsuarioDTO updateDto)
         {
             var usuarioRepository = new UsuarioRepository();
             var usuario = usuarioRepository.Get(updateDto.Id);
@@ -113,8 +114,7 @@ namespace Domain.Services
             if (!string.IsNullOrWhiteSpace(updateDto.Rol))
                 usuario.SetRol(updateDto.Rol);
 
-            if (updateDto.Activo.HasValue)
-                usuario.SetActivo(updateDto.Activo.Value);
+          
 
             return usuarioRepository.Update(usuario);
         }
