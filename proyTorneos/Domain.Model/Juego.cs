@@ -14,11 +14,11 @@ namespace Domain.Model
         public string Descripcion { get; set;  }
 
 
-        public Juego (int id, string nombre, string desc)
+        public Juego (int id, string nombre, string descripcion)
         {
             Id = id;
             Nombre = nombre;
-            Descripcion = desc; 
+            Descripcion = descripcion; 
         }
 
     }

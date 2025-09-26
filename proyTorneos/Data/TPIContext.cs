@@ -15,6 +15,7 @@ namespace Data
 
         internal TPIContext()
         {
+            //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
 
@@ -54,6 +55,10 @@ namespace Data
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(100);
+
+                entity.Property(e=>e.Clave)
+                    .IsRequired()
+                    .HasMaxLength(8);
 
                 entity.Property(e => e.Pais)
                     .IsRequired()

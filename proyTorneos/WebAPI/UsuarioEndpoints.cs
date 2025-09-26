@@ -38,7 +38,7 @@ namespace WebAPI
             .Produces<List<UsuarioDTO>>(StatusCodes.Status200OK)
             .WithOpenApi();
 
-            app.MapPost("/usuarios", (UsuarioCreateDTO dto) =>
+            app.MapPost("/usuarios", (UsuarioDTO dto) =>
             {
                 try
                 {
@@ -58,7 +58,7 @@ namespace WebAPI
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi();
 
-            app.MapPut("/usuarios", (UsuarioUpdateDTO dto) =>
+            app.MapPut("/usuarios", (UsuarioDTO dto) =>
             {
                 try
                 {
