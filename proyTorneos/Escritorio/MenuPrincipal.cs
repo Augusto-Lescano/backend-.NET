@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Escritorio.Juego;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,6 +44,12 @@ namespace Escritorio
         {
             FormTipoTorneos formTipoTorneo = new FormTipoTorneos();
             mostrarFormularios(formTipoTorneo);
+        }
+
+        private void mnuJuegos_Click(object sender, EventArgs e)
+        {
+            JuegoLista juegoLista = new JuegoLista();
+            mostrarFormularios(juegoLista);
         }
     }
 }

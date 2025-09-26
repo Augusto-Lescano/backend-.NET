@@ -35,15 +35,18 @@
             mnuUsuarios = new ToolStripMenuItem();
             mnuTorneos = new ToolStripMenuItem();
             mnuTipoDeTorneo = new ToolStripMenuItem();
+            mnuJuegos = new ToolStripMenuItem();
             mnsPrincipal.SuspendLayout();
             SuspendLayout();
             // 
             // mnsPrincipal
             // 
+            mnsPrincipal.ImageScalingSize = new Size(20, 20);
             mnsPrincipal.Items.AddRange(new ToolStripItem[] { mnuArchivo, opcionesToolStripMenuItem });
             mnsPrincipal.Location = new Point(0, 0);
             mnsPrincipal.Name = "mnsPrincipal";
-            mnsPrincipal.Size = new Size(800, 24);
+            mnsPrincipal.Padding = new Padding(7, 3, 0, 3);
+            mnsPrincipal.Size = new Size(914, 30);
             mnsPrincipal.TabIndex = 1;
             mnsPrincipal.Text = "menuStrip1";
             // 
@@ -51,52 +54,60 @@
             // 
             mnuArchivo.DropDownItems.AddRange(new ToolStripItem[] { mnuSalir });
             mnuArchivo.Name = "mnuArchivo";
-            mnuArchivo.Size = new Size(60, 20);
+            mnuArchivo.Size = new Size(73, 24);
             mnuArchivo.Text = "Archivo";
             // 
             // mnuSalir
             // 
             mnuSalir.Name = "mnuSalir";
-            mnuSalir.Size = new Size(96, 22);
+            mnuSalir.Size = new Size(121, 26);
             mnuSalir.Text = "Salir";
             mnuSalir.Click += mnuSalir_Click;
             // 
             // opcionesToolStripMenuItem
             // 
-            opcionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuUsuarios, mnuTorneos, mnuTipoDeTorneo });
+            opcionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuUsuarios, mnuTorneos, mnuTipoDeTorneo, mnuJuegos });
             opcionesToolStripMenuItem.Name = "opcionesToolStripMenuItem";
-            opcionesToolStripMenuItem.Size = new Size(69, 20);
+            opcionesToolStripMenuItem.Size = new Size(85, 24);
             opcionesToolStripMenuItem.Text = "Opciones";
             // 
             // mnuUsuarios
             // 
             mnuUsuarios.Name = "mnuUsuarios";
-            mnuUsuarios.Size = new Size(180, 22);
+            mnuUsuarios.Size = new Size(224, 26);
             mnuUsuarios.Text = "Usuarios";
             mnuUsuarios.Click += mnuUsuarios_Click;
             // 
             // mnuTorneos
             // 
             mnuTorneos.Name = "mnuTorneos";
-            mnuTorneos.Size = new Size(180, 22);
+            mnuTorneos.Size = new Size(224, 26);
             mnuTorneos.Text = "Torneos";
             mnuTorneos.Click += mnuTorneos_Click;
             // 
             // mnuTipoDeTorneo
             // 
             mnuTipoDeTorneo.Name = "mnuTipoDeTorneo";
-            mnuTipoDeTorneo.Size = new Size(180, 22);
+            mnuTipoDeTorneo.Size = new Size(224, 26);
             mnuTipoDeTorneo.Text = "Tipos de Torneo";
             mnuTipoDeTorneo.Click += mnuTipoDeTorneo_Click;
             // 
+            // mnuJuegos
+            // 
+            mnuJuegos.Name = "mnuJuegos";
+            mnuJuegos.Size = new Size(224, 26);
+            mnuJuegos.Text = "Juegos";
+            mnuJuegos.Click += mnuJuegos_Click;
+            // 
             // MenuPrincipal
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(mnsPrincipal);
             IsMdiContainer = true;
             MainMenuStrip = mnsPrincipal;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "MenuPrincipal";
             Text = "Torneo de videojuegos";
             WindowState = FormWindowState.Maximized;
@@ -115,5 +126,6 @@
         private ToolStripMenuItem mnuUsuarios;
         private ToolStripMenuItem mnuTorneos;
         private ToolStripMenuItem mnuTipoDeTorneo;
+        private ToolStripMenuItem mnuJuegos;
     }
 }
