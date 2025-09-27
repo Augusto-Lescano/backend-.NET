@@ -1,4 +1,5 @@
-﻿using Escritorio.Juego;
+﻿using DTOs;
+using Escritorio.Juego;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace Escritorio
 {
     public partial class MenuPrincipal : Form
     {
+        private UsuarioDTO usuarioActual { get; set; }
+
         public MenuPrincipal()
         {
             InitializeComponent();
@@ -30,26 +33,46 @@ namespace Escritorio
         }
         private void mnuUsuarios_Click(object sender, EventArgs e)
         {
-            UsuarioLista usuarioLista = new UsuarioLista();
+            UsuarioLista usuarioLista = new UsuarioLista(usuarioActual.Admin);
             mostrarFormularios(usuarioLista);
         }
 
         private void mnuTorneos_Click(object sender, EventArgs e)
         {
-            TorneoLista torneoLista = new TorneoLista();
+            TorneoLista torneoLista = new TorneoLista(usuarioActual.Admin);
             mostrarFormularios(torneoLista);
         }
 
         private void mnuTipoDeTorneo_Click(object sender, EventArgs e)
         {
-            FormTipoTorneos formTipoTorneo = new FormTipoTorneos();
-            mostrarFormularios(formTipoTorneo);
+            TipoTorneoLista formTipoTorneoLista = new TipoTorneoLista();
+            mostrarFormularios(formTipoTorneoLista);
         }
 
         private void mnuJuegos_Click(object sender, EventArgs e)
         {
-            JuegoLista juegoLista = new JuegoLista();
+            JuegoLista juegoLista = new JuegoLista(usuarioActual.Admin);
             mostrarFormularios(juegoLista);
+        }
+
+        private void mnuActualizarPerfil_Click(object sender, EventArgs e)
+        {
+            UsuarioDetalle detalle = new UsuarioDetalle(usuarioActual, true);
+            Shared.AjustarFormMDI(detalle);
+            detalle.ShowDialog();
+        }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            Shared.AjustarFormMDI(login);
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                this.usuarioActual = login.usuarioActual;
+            }
+            else {
+                this.Dispose();
+            }
         }
     }
 }

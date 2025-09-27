@@ -15,9 +15,16 @@ namespace Escritorio.Juego
 {
     public partial class JuegoLista : Form
     {
-        public JuegoLista()
+        private bool Admin { get; set; }
+        public JuegoLista(bool admin)
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            Admin = admin;
+            if (!admin) {
+                btnActualizar.Visible = false;
+                btnAgregar.Visible = false;
+                btnEliminar.Visible = false;
+            }
         }
 
 

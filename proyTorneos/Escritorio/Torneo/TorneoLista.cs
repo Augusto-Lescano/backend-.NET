@@ -15,9 +15,16 @@ namespace Escritorio
 {
     public partial class TorneoLista : Form
     {
-        public TorneoLista()
+        private bool Admin { get; set; }
+        public TorneoLista(bool admin)
         {
             InitializeComponent();
+            Admin = admin;
+            if (!admin) {
+                btnActualizar.Visible = false;
+                btnAgregar.Visible = false;
+                btnEliminar.Visible = false;
+            }
         }
 
         public async Task CargarTorneos()

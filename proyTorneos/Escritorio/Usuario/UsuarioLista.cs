@@ -1,30 +1,45 @@
-using Domain.Model;
 using DTOs;
 using API.Clients;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using static Escritorio.FormTipoTorneos;
 
 namespace Escritorio
 {
     public partial class UsuarioLista : Form
     {
-        public UsuarioLista()
+        private bool Admin { get; set; }
+        public UsuarioLista(bool admin)
         {
             InitializeComponent();
+            Admin = admin;
+            if (!admin) {
+                btnAgregar.Visible = false;
+                btnModificar.Visible = false;
+                btnEliminar.Visible = false;
+            }
         }
 
+        public async Task TablaSimple(DataGridView usuarios) {
+
+            usuarios.AutoGenerateColumns = false;
+
+            DataGridViewTextBoxColumn colNickName = new DataGridViewTextBoxColumn();
+            colNickName.HeaderText = "NickName";
+            colNickName.DataPropertyName = "NombreUsuario";
+            usuarios.Columns.Add(colNickName);
+
+            DataGridViewTextBoxColumn colEmail = new DataGridViewTextBoxColumn();
+            colEmail.HeaderText = "Email";
+            colEmail.DataPropertyName = "Email";
+            usuarios.Columns.Add(colEmail);
+
+            usuarios.DataSource = await UsuarioApiClient.GetAllAsync();
+
+        }
         public async Task CargarUsuarios()
         {
+            if (!Admin) {
+                await TablaSimple(dgvUsuarios);
+            }
             dgvUsuarios.DataSource = await UsuarioApiClient.GetAllAsync();
         }
 
@@ -56,7 +71,7 @@ namespace Escritorio
             }
             else
             {
-                var detalle = new UsuarioDetalle(usuario);
+                var detalle = new UsuarioDetalle(usuario, false);
                 Shared.AjustarFormMDI(detalle);
                 if (detalle.ShowDialog() == DialogResult.OK)
                 {
