@@ -52,7 +52,7 @@ namespace Escritorio
 
         public async Task AgregarUsuario()
         {
-            UsuarioDetalle detalle = new UsuarioDetalle();
+            UsuarioDetalle detalle = new UsuarioDetalle(true);
             Shared.AjustarFormMDI(detalle);
 
             if (detalle.ShowDialog() == DialogResult.OK)
@@ -71,8 +71,7 @@ namespace Escritorio
             }
             else
             {
-                var detalle = new UsuarioDetalle(usuario);
-                detalle.PermitirAdmin = true;
+                var detalle = new UsuarioDetalle(usuario, true);
                 Shared.AjustarFormMDI(detalle);
                 if (detalle.ShowDialog() == DialogResult.OK)
                 {
