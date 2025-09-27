@@ -9,16 +9,22 @@ namespace Escritorio
     public partial class UsuarioDetalle : Form
     {
         public UsuarioDTO UsuarioCreado { get; set; }
+        public bool PermitirAdmin { get; set; }
 
         // Constructor para AGREGAR
         public UsuarioDetalle()
         {
             InitializeComponent();
             this.Text = "Agregar Usuario";
+            if (PermitirAdmin == false)
+            {
+                checkBoxAdmin.Visible = false;
+            }
+
         }
 
         // Constructor para MODIFICAR
-        public UsuarioDetalle(UsuarioDTO dto, bool fromMenuPrincipal)
+        public UsuarioDetalle(UsuarioDTO dto)
         {
 
             InitializeComponent();
@@ -30,11 +36,12 @@ namespace Escritorio
             txtClave.Text = dto.Clave;
             txtPais.Text = dto.Pais;
             txtNombreUsuario.Text = dto.NombreUsuario;
-            
-            if (fromMenuPrincipal) {
+
+            if (PermitirAdmin == false)
+            {
                 checkBoxAdmin.Visible = false;
             }
-            
+
             UsuarioCreado = dto;
         }
 
