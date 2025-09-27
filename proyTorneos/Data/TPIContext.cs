@@ -15,6 +15,10 @@ namespace Data
 
         internal TPIContext()
         {
+            //ante cambios en la estructura de la base de datos
+            //descomentar la linea de codigo "this.Database.EnsureDeleted();"
+            //luego correr el programa
+            //y en la proxima ejecucion volver a comentar la linea "this.Database.EnsureDeleted();"
             //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
@@ -68,17 +72,15 @@ namespace Data
                     .IsRequired()
                     .HasMaxLength(25);
 
-                entity.Property(e => e.Rol)
-                    .IsRequired()
-                    .HasMaxLength(25);
+                
+                    
 
                 entity.Property(e => e.FechaAlta)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Activo)
-                    .IsRequired()
-                    .HasMaxLength(2);
+                entity.Property(e => e.Admin)
+                     .IsRequired();
 
                 // Restricción únicas
                 entity.HasIndex(e => e.Email)
@@ -86,6 +88,8 @@ namespace Data
 
                 entity.HasIndex(e => e.NombreUsuario)
                     .IsUnique();
+
+
             });
 
             modelBuilder.Entity<TipoTorneo>(entity =>

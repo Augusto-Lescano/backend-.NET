@@ -11,7 +11,7 @@ namespace Domain.Services
             var usuarioRepository = new UsuarioRepository();
 
             var fechaAlta = DateTime.Now;
-            Usuario usuario = new Usuario(0, createDto.Nombre, createDto.Apellido, createDto.Email, createDto.Clave, createDto.Pais, createDto.NombreUsuario, createDto.Rol, fechaAlta, true);
+            Usuario usuario = new Usuario(0, createDto.Nombre, createDto.Apellido, createDto.Email, createDto.Clave, createDto.Pais, createDto.NombreUsuario, fechaAlta, false);
 
             usuarioRepository.Add(usuario);
 
@@ -24,9 +24,9 @@ namespace Domain.Services
                 Clave = usuario.Clave,
                 Pais = usuario.Pais,
                 NombreUsuario = usuario.NombreUsuario,
-                Rol = usuario.Rol,
+                
                 FechaAlta = usuario.FechaAlta,
-                Activo = usuario.Activo
+                Admin = usuario.Admin,
             };
         }
 
@@ -53,9 +53,9 @@ namespace Domain.Services
                 Clave = usuario.Clave,
                 Pais = usuario.Pais,
                 NombreUsuario = usuario.NombreUsuario,
-                Rol = usuario.Rol,
+                
                 FechaAlta = usuario.FechaAlta,
-                Activo = usuario.Activo
+                Admin = usuario.Admin,
             };
         }
 
@@ -73,9 +73,9 @@ namespace Domain.Services
                 Clave = usuario.Clave,
                 Pais = usuario.Pais,
                 NombreUsuario = usuario.NombreUsuario,
-                Rol = usuario.Rol,
+                
                 FechaAlta = usuario.FechaAlta,
-                Activo = usuario.Activo
+                Admin = usuario.Admin,
             });
         }
 
@@ -85,7 +85,7 @@ namespace Domain.Services
 
             if (usuarioRepository != null)
             {
-                Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Clave, dto.Pais, dto.NombreUsuario, dto.Rol, dto.FechaAlta, dto.Activo);
+                Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Clave, dto.Pais, dto.NombreUsuario, dto.FechaAlta, dto.Admin);
                 return usuarioRepository.Update(usuario);
             }
             else { return false; }

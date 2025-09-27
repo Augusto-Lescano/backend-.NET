@@ -56,9 +56,10 @@ namespace Data
                 existingUsuario.SetClave(usuario.Clave);
                 existingUsuario.SetPais(usuario.Pais);
                 existingUsuario.SetNombreUsuario(usuario.NombreUsuario);
-                existingUsuario.SetRol(usuario.Rol);
+                
                 existingUsuario.SetFechaAlta(usuario.FechaAlta);
-                existingUsuario.SetActivo(usuario.Activo);
+                existingUsuario.SetAdmin(usuario.Admin);
+
 
                 context.SaveChanges();
                 return true;

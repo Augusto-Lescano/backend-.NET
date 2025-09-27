@@ -13,11 +13,12 @@ namespace Domain.Model
         public string Clave { get; private set; }
         public string Pais {  get; private set; }
         public string NombreUsuario { get; private set; }
-        public string Rol {  get; private set; }
+       
         public DateTime FechaAlta { get; private set; }
-        public bool Activo { get; private set; }
+        
+        public bool Admin { get; private set; }
 
-        public Usuario(int id, string nombre, string apellido, string email, string clave, string pais, string nombreUsuario, string rol, DateTime fechaAlta, bool activo = true)
+        public Usuario(int id, string nombre, string apellido, string email, string clave, string pais, string nombreUsuario, DateTime fechaAlta, bool admin = false)
         {
             SetId(id);
             SetNombre(nombre);
@@ -26,9 +27,9 @@ namespace Domain.Model
             SetClave(clave);
             SetPais(pais);
             SetNombreUsuario(nombreUsuario);
-            SetRol(rol);
+            
             SetFechaAlta(fechaAlta);
-            SetActivo(activo);
+            SetAdmin(admin);
         }
 
         // Constructor privado sin parámetros requerido por Entity Framework
@@ -105,12 +106,9 @@ namespace Domain.Model
             NombreUsuario = nombreUsuario;
         }
 
-        public void SetRol(string rol)
+        public void SetAdmin(bool admin)
         {
-            if (string.IsNullOrWhiteSpace(rol))
-                throw new ArgumentException("El rol no puede ser nulo o vacío.", nameof(rol));
-
-            Rol = rol;
+            Admin = admin;
         }
 
         public void SetFechaAlta(DateTime fechaAlta)
@@ -123,9 +121,6 @@ namespace Domain.Model
             FechaAlta = fechaAlta;
         }
 
-        public void SetActivo(bool activo)
-        {
-            Activo = activo;
-        }
+      
     }
 }
