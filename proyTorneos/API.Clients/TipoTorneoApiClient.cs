@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace API.TipoTorneo
 {
 
-    public class TipoTorneoApi
+    public class TipoTorneoApiClient
     {
         private static HttpClient client = new HttpClient();
 
-        static TipoTorneoApi()
+        static TipoTorneoApiClient()
         {
             client.BaseAddress = new Uri("http://localhost:3000/");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -123,20 +123,19 @@ namespace API.TipoTorneo
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("tipoTorneos", tipoTorneo);
-
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error al actualizar el tipo de torneo con Id {tipoTorneo.Id}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                    throw new Exception($"Error al actualizar el tipo de torneo con Id: {tipoTorneo.Id}. Status: {response.StatusCode}. Detalle: {errorContent}");
                 }
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception($"Error de conexión al actualizar el tipo de torneo con Id {tipoTorneo.Id}: {ex.Message}", ex);
+                throw new Exception($"Error de conexion al actualizar el tipo de torneo con Id:{tipoTorneo.Id}. Mensaje: {ex.Message}", ex);
             }
             catch (TaskCanceledException ex)
             {
-                throw new Exception($"Timeout al actualizar el tipo de torneo con Id {tipoTorneo.Id}: {ex.Message}", ex);
+                throw new Exception($"Timeout al actualizar el tipo de torneo con Id:{tipoTorneo.Id}. Mensaje: {ex.Message}", ex);
             }
         }
     }

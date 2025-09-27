@@ -42,8 +42,8 @@ namespace Escritorio
 
         private void mnuTipoDeTorneo_Click(object sender, EventArgs e)
         {
-            FormTipoTorneos formTipoTorneo = new FormTipoTorneos();
-            mostrarFormularios(formTipoTorneo);
+            TipoTorneoLista formTipoTorneoLista = new TipoTorneoLista();
+            mostrarFormularios(formTipoTorneoLista);
         }
 
         private void mnuJuegos_Click(object sender, EventArgs e)
