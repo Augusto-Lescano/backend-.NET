@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Escritorio.FormTipoTorneos;
+using static Escritorio.TipoTorneoDetalle;
 
 namespace Escritorio
 {

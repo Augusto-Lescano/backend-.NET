@@ -2,7 +2,7 @@ using DTOs;
 using API.Clients;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using static Escritorio.FormTipoTorneos;
+using static Escritorio.TipoTorneoDetalle;
 
 namespace Escritorio
 {
