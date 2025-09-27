@@ -58,7 +58,7 @@ namespace Data
 
                 entity.Property(e=>e.Clave)
                     .IsRequired()
-                    .HasMaxLength(8);
+                    .HasMaxLength(15);
 
                 entity.Property(e => e.Pais)
                     .IsRequired()

@@ -29,7 +29,7 @@ namespace Escritorio
             txtClave.Text = dto.Clave;
             txtPais.Text = dto.Pais;
             txtNombreUsuario.Text = dto.NombreUsuario;
-            txtRol.Text = dto.Rol;
+            //txtRol.Text = dto.Rol;
             UsuarioCreado = dto;
         }
 
@@ -44,27 +44,39 @@ namespace Escritorio
                 Clave = txtClave.Text?.Trim(),
                 Pais = txtPais.Text,
                 NombreUsuario = txtNombreUsuario.Text,
-                Rol = txtRol.Text,
-
+                Rol = "Usuario"
             };
 
             if (string.IsNullOrWhiteSpace(dto.Clave))
             {
                 MessageBox.Show("La contraseña es obligatoria y no puede estar vacía.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtClave.Focus();  // Enfoca el campo
+                txtClave.Focus();
                 return;
             }
 
-            if (dto.Clave.Length < 8)  // Basado en tu MaxLength(8)
+            if (dto.Clave.Length < 8 || dto.Clave.Length > 15)  
             {
-                MessageBox.Show("La contraseña debe tener al menos 8 caracteres.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("La contraseña debe contener entre 8 y 15 caracteres.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtClave.Focus();
                 return;
             }
 
+            if (!txtEmail.Text.Contains("@"))
+            {
+                MessageBox.Show(
+                    "El email debe contener '@' y un dominio válido (ej: usuario@dominio.com).",
+                    "Advertencia",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                txtEmail.Focus();
+                return;
+            }
 
             if (btnAceptar.Text == "Modificar")
             {
                 dto.Id = UsuarioCreado.Id;
+                dto.FechaAlta = UsuarioCreado.FechaAlta;
                 await UsuarioApiClient.UpdateAsync(dto);
                 MessageBox.Show("Usuario modificado exitosamente", "Exito al modificar");
             }

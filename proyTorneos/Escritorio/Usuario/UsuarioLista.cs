@@ -52,6 +52,7 @@ namespace Escritorio
             if (usuario == null)
             {
                 MessageBox.Show("No puede modificar un usuario sin haber seleccionado uno anteriormente", "Error al modificar usuario");
+                return;
             }
             else
             {
@@ -73,8 +74,22 @@ namespace Escritorio
             }
             else
             {
-                await UsuarioApiClient.DeleteAsync(usuario.Id);
-                MessageBox.Show("Usuario borrado exitosamente", "Exito al borrar");
+                DialogResult result = MessageBox.Show(
+                    "¿Desea eliminar el usuario seleccionado?",
+                    "Confirmación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    await UsuarioApiClient.DeleteAsync(usuario.Id);
+                    MessageBox.Show("Usuario borrado exitosamente", "Exito al borrar");
+                }
+                else
+                {
+                    MessageBox.Show("Operación cancelada", "Confirmacion");
+                }
             }
             await CargarUsuarios();
         }
@@ -82,6 +97,7 @@ namespace Escritorio
         private async void Usuarios_Load(object sender, EventArgs e)
         {
             Shared.AjustarDataGridView(dgvUsuarios);
+            dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             await CargarUsuarios();
         }
 

@@ -33,13 +33,11 @@ namespace Escritorio
             txtEmail = new TextBox();
             txtPais = new TextBox();
             txtNombreUsuario = new TextBox();
-            txtRol = new TextBox();
             NombreLabel = new Label();
             ApellidoLabel = new Label();
             EmailLabel = new Label();
             PaisLabel = new Label();
             TagLabel = new Label();
-            RolLabel = new Label();
             btnAceptar = new Button();
             btnCancelar = new Button();
             label1 = new Label();
@@ -86,14 +84,6 @@ namespace Escritorio
             txtNombreUsuario.Size = new Size(157, 23);
             txtNombreUsuario.TabIndex = 5;
             // 
-            // txtRol
-            // 
-            txtRol.Location = new Point(274, 299);
-            txtRol.Margin = new Padding(3, 2, 3, 2);
-            txtRol.Name = "txtRol";
-            txtRol.Size = new Size(157, 23);
-            txtRol.TabIndex = 6;
-            // 
             // NombreLabel
             // 
             NombreLabel.AutoSize = true;
@@ -139,18 +129,9 @@ namespace Escritorio
             TagLabel.TabIndex = 12;
             TagLabel.Text = "Nombre de usuario";
             // 
-            // RolLabel
-            // 
-            RolLabel.AutoSize = true;
-            RolLabel.Location = new Point(148, 307);
-            RolLabel.Name = "RolLabel";
-            RolLabel.Size = new Size(24, 15);
-            RolLabel.TabIndex = 13;
-            RolLabel.Text = "Rol";
-            // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(454, 300);
+            btnAceptar.Location = new Point(148, 300);
             btnAceptar.Margin = new Padding(3, 2, 3, 2);
             btnAceptar.Name = "btnAceptar";
             btnAceptar.Size = new Size(82, 22);
@@ -161,13 +142,14 @@ namespace Escritorio
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(565, 300);
+            btnCancelar.Location = new Point(349, 300);
             btnCancelar.Margin = new Padding(3, 2, 3, 2);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(82, 22);
             btnCancelar.TabIndex = 15;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // label1
             // 
@@ -182,6 +164,7 @@ namespace Escritorio
             // 
             txtClave.Location = new Point(274, 164);
             txtClave.Name = "txtClave";
+            txtClave.PasswordChar = '*';
             txtClave.Size = new Size(156, 23);
             txtClave.TabIndex = 17;
             // 
@@ -194,13 +177,11 @@ namespace Escritorio
             Controls.Add(label1);
             Controls.Add(btnCancelar);
             Controls.Add(btnAceptar);
-            Controls.Add(RolLabel);
             Controls.Add(TagLabel);
             Controls.Add(PaisLabel);
             Controls.Add(EmailLabel);
             Controls.Add(ApellidoLabel);
             Controls.Add(NombreLabel);
-            Controls.Add(txtRol);
             Controls.Add(txtNombreUsuario);
             Controls.Add(txtPais);
             Controls.Add(txtEmail);
@@ -218,13 +199,11 @@ namespace Escritorio
         private TextBox txtEmail;
         private TextBox txtPais;
         private TextBox txtNombreUsuario;
-        private TextBox txtRol;
         private Label NombreLabel;
         private Label ApellidoLabel;
         private Label EmailLabel;
         private Label PaisLabel;
         private Label TagLabel;
-        private Label RolLabel;
         private Button btnAceptar;
         private Button btnCancelar;
         private Label label1;

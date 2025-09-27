@@ -35,20 +35,7 @@ namespace Data
         public Usuario? Get(int id)
         {
             using var context = CreateContext();
-            return context.Usuarios
-                .FirstOrDefault(u => u.Id == id);
-        }
-
-        public Usuario? GetByUsername(string username)
-        {
-            using var context = CreateContext();
-            return context.Usuarios.FirstOrDefault(u => u.NombreUsuario == username && u.Activo);
-        }
-
-        public Usuario? GetByEmail(string email)
-        {
-            using var context = CreateContext();
-            return context.Usuarios.FirstOrDefault(u => u.Email == email && u.Activo);
+            return context.Usuarios.Find(id);
         }
 
         public IEnumerable<Usuario> GetAll()
@@ -66,6 +53,7 @@ namespace Data
                 existingUsuario.SetNombre(usuario.Nombre);
                 existingUsuario.SetApellido(usuario.Apellido);
                 existingUsuario.SetEmail(usuario.Email);
+                existingUsuario.SetClave(usuario.Clave);
                 existingUsuario.SetPais(usuario.Pais);
                 existingUsuario.SetNombreUsuario(usuario.NombreUsuario);
                 existingUsuario.SetRol(usuario.Rol);
