@@ -35,8 +35,8 @@
             label4 = new Label();
             label6 = new Label();
             dgvUsuarios = new DataGridView();
-            button2 = new Button();
-            button3 = new Button();
+            btnModificar = new Button();
+            btnEliminar = new Button();
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
@@ -106,31 +106,32 @@
             dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsuarios.Location = new Point(48, 52);
             dgvUsuarios.Name = "dgvUsuarios";
+            dgvUsuarios.ReadOnly = true;
             dgvUsuarios.RowHeadersWidth = 51;
             dgvUsuarios.Size = new Size(740, 332);
             dgvUsuarios.TabIndex = 15;
             // 
-            // button2
+            // btnModificar
             // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button2.Location = new Point(303, 390);
-            button2.Name = "button2";
-            button2.Size = new Size(208, 34);
-            button2.TabIndex = 16;
-            button2.Text = "Modificar";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += btnActualizar_Click;
+            btnModificar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnModificar.Location = new Point(303, 390);
+            btnModificar.Name = "btnModificar";
+            btnModificar.Size = new Size(208, 34);
+            btnModificar.TabIndex = 16;
+            btnModificar.Text = "Modificar";
+            btnModificar.UseVisualStyleBackColor = true;
+            btnModificar.Click += btnActualizar_Click;
             // 
-            // button3
+            // btnEliminar
             // 
-            button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button3.Location = new Point(570, 390);
-            button3.Name = "button3";
-            button3.Size = new Size(219, 34);
-            button3.TabIndex = 17;
-            button3.Text = "Eliminar";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += btnEliminar_Click;
+            btnEliminar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEliminar.Location = new Point(570, 390);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(219, 34);
+            btnEliminar.TabIndex = 17;
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // label7
             // 
@@ -186,8 +187,8 @@
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(button3);
-            Controls.Add(button2);
+            Controls.Add(btnEliminar);
+            Controls.Add(btnModificar);
             Controls.Add(dgvUsuarios);
             Controls.Add(label6);
             Controls.Add(label4);
@@ -212,8 +213,8 @@
         private Label label4;
         private Label label6;
         private DataGridView dgvUsuarios;
-        private Button button2;
-        private Button button3;
+        private Button btnModificar;
+        private Button btnEliminar;
         private Label label7;
         private Label label8;
         private Label label9;

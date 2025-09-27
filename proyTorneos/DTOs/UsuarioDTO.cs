@@ -11,8 +11,9 @@ namespace DTOs
         public string Clave {  get; set; } = string.Empty;
         public string Pais { get; set; } = string.Empty;
         public string NombreUsuario { get; set; } = string.Empty;
-        public string Rol { get; set; } = string.Empty;
+        
         public DateTime FechaAlta { get; set; }
-        public bool Activo { get; set; }
+        public bool Admin { get; set; }
+
     }
 }

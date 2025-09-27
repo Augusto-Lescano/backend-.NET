@@ -18,8 +18,9 @@ namespace Escritorio
         }
 
         // Constructor para MODIFICAR
-        public UsuarioDetalle(UsuarioDTO dto)
+        public UsuarioDetalle(UsuarioDTO dto, bool fromMenuPrincipal)
         {
+
             InitializeComponent();
             Text = "Modificar Usuario";
             btnAceptar.Text = "Modificar";
@@ -29,7 +30,11 @@ namespace Escritorio
             txtClave.Text = dto.Clave;
             txtPais.Text = dto.Pais;
             txtNombreUsuario.Text = dto.NombreUsuario;
-            //txtRol.Text = dto.Rol;
+            
+            if (fromMenuPrincipal) {
+                checkBoxAdmin.Visible = false;
+            }
+            
             UsuarioCreado = dto;
         }
 
@@ -44,7 +49,7 @@ namespace Escritorio
                 Clave = txtClave.Text?.Trim(),
                 Pais = txtPais.Text,
                 NombreUsuario = txtNombreUsuario.Text,
-                Rol = "Usuario"
+                
             };
 
             if (string.IsNullOrWhiteSpace(dto.Clave))
@@ -77,6 +82,7 @@ namespace Escritorio
             {
                 dto.Id = UsuarioCreado.Id;
                 dto.FechaAlta = UsuarioCreado.FechaAlta;
+                dto.Admin=checkBoxAdmin.Checked;
                 await UsuarioApiClient.UpdateAsync(dto);
                 MessageBox.Show("Usuario modificado exitosamente", "Exito al modificar");
             }

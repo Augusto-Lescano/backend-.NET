@@ -42,11 +42,12 @@ namespace Escritorio
             btnCancelar = new Button();
             label1 = new Label();
             txtClave = new TextBox();
+            checkBoxAdmin = new CheckBox();
             SuspendLayout();
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(274, 27);
+            txtNombre.Location = new Point(274, 11);
             txtNombre.Margin = new Padding(3, 2, 3, 2);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(157, 23);
@@ -54,7 +55,7 @@ namespace Escritorio
             // 
             // txtApellido
             // 
-            txtApellido.Location = new Point(274, 72);
+            txtApellido.Location = new Point(274, 56);
             txtApellido.Margin = new Padding(3, 2, 3, 2);
             txtApellido.Name = "txtApellido";
             txtApellido.Size = new Size(157, 23);
@@ -62,7 +63,7 @@ namespace Escritorio
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(274, 120);
+            txtEmail.Location = new Point(274, 104);
             txtEmail.Margin = new Padding(3, 2, 3, 2);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(157, 23);
@@ -70,7 +71,7 @@ namespace Escritorio
             // 
             // txtPais
             // 
-            txtPais.Location = new Point(274, 207);
+            txtPais.Location = new Point(274, 191);
             txtPais.Margin = new Padding(3, 2, 3, 2);
             txtPais.Name = "txtPais";
             txtPais.Size = new Size(157, 23);
@@ -78,7 +79,7 @@ namespace Escritorio
             // 
             // txtNombreUsuario
             // 
-            txtNombreUsuario.Location = new Point(273, 251);
+            txtNombreUsuario.Location = new Point(273, 235);
             txtNombreUsuario.Margin = new Padding(3, 2, 3, 2);
             txtNombreUsuario.Name = "txtNombreUsuario";
             txtNombreUsuario.Size = new Size(157, 23);
@@ -87,7 +88,7 @@ namespace Escritorio
             // NombreLabel
             // 
             NombreLabel.AutoSize = true;
-            NombreLabel.Location = new Point(148, 35);
+            NombreLabel.Location = new Point(148, 19);
             NombreLabel.Name = "NombreLabel";
             NombreLabel.Size = new Size(51, 15);
             NombreLabel.TabIndex = 8;
@@ -96,7 +97,7 @@ namespace Escritorio
             // ApellidoLabel
             // 
             ApellidoLabel.AutoSize = true;
-            ApellidoLabel.Location = new Point(148, 80);
+            ApellidoLabel.Location = new Point(148, 64);
             ApellidoLabel.Name = "ApellidoLabel";
             ApellidoLabel.Size = new Size(51, 15);
             ApellidoLabel.TabIndex = 9;
@@ -105,7 +106,7 @@ namespace Escritorio
             // EmailLabel
             // 
             EmailLabel.AutoSize = true;
-            EmailLabel.Location = new Point(148, 128);
+            EmailLabel.Location = new Point(148, 112);
             EmailLabel.Name = "EmailLabel";
             EmailLabel.Size = new Size(36, 15);
             EmailLabel.TabIndex = 10;
@@ -114,7 +115,7 @@ namespace Escritorio
             // PaisLabel
             // 
             PaisLabel.AutoSize = true;
-            PaisLabel.Location = new Point(148, 215);
+            PaisLabel.Location = new Point(148, 199);
             PaisLabel.Name = "PaisLabel";
             PaisLabel.Size = new Size(28, 15);
             PaisLabel.TabIndex = 11;
@@ -123,7 +124,7 @@ namespace Escritorio
             // TagLabel
             // 
             TagLabel.AutoSize = true;
-            TagLabel.Location = new Point(148, 259);
+            TagLabel.Location = new Point(148, 243);
             TagLabel.Name = "TagLabel";
             TagLabel.Size = new Size(109, 15);
             TagLabel.TabIndex = 12;
@@ -131,7 +132,7 @@ namespace Escritorio
             // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(148, 300);
+            btnAceptar.Location = new Point(148, 291);
             btnAceptar.Margin = new Padding(3, 2, 3, 2);
             btnAceptar.Name = "btnAceptar";
             btnAceptar.Size = new Size(82, 22);
@@ -142,7 +143,7 @@ namespace Escritorio
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(349, 300);
+            btnCancelar.Location = new Point(348, 291);
             btnCancelar.Margin = new Padding(3, 2, 3, 2);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(82, 22);
@@ -154,7 +155,7 @@ namespace Escritorio
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(148, 172);
+            label1.Location = new Point(148, 156);
             label1.Name = "label1";
             label1.Size = new Size(67, 15);
             label1.TabIndex = 16;
@@ -162,17 +163,28 @@ namespace Escritorio
             // 
             // txtClave
             // 
-            txtClave.Location = new Point(274, 164);
+            txtClave.Location = new Point(274, 148);
             txtClave.Name = "txtClave";
             txtClave.PasswordChar = '*';
             txtClave.Size = new Size(156, 23);
             txtClave.TabIndex = 17;
+            // 
+            // checkBoxAdmin
+            // 
+            checkBoxAdmin.AutoSize = true;
+            checkBoxAdmin.Location = new Point(508, 150);
+            checkBoxAdmin.Name = "checkBoxAdmin";
+            checkBoxAdmin.Size = new Size(118, 34);
+            checkBoxAdmin.TabIndex = 18;
+            checkBoxAdmin.Text = "Otorgar permisos\r\nde administrador\r\n";
+            checkBoxAdmin.UseVisualStyleBackColor = true;
             // 
             // UsuarioDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 338);
+            Controls.Add(checkBoxAdmin);
             Controls.Add(txtClave);
             Controls.Add(label1);
             Controls.Add(btnCancelar);
@@ -208,5 +220,6 @@ namespace Escritorio
         private Button btnCancelar;
         private Label label1;
         private TextBox txtClave;
+        private CheckBox checkBoxAdmin;
     }
 }
