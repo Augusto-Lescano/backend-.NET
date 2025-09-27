@@ -41,7 +41,7 @@ namespace Escritorio.Juego
 
         public async Task AgregarJuego()
         {
-            JuegoDetalle detalle = new JuegoDetalle();
+            JuegoDetalle detalle = new();
             Shared.AjustarFormMDI(detalle);
 
             if (detalle.ShowDialog() == DialogResult.OK)
@@ -76,8 +76,22 @@ namespace Escritorio.Juego
             }
             else
             {
-                await JuegoApiClient.DeleteAsync(juego.Id);
-                MessageBox.Show("Juego borrado exitosamente", "Exito al borrar");
+                DialogResult result = MessageBox.Show(
+                    "¿Desea eliminar el juego seleccionado?",
+                    "Confirmación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    await JuegoApiClient.DeleteAsync(juego.Id);
+                    MessageBox.Show("JUego borrado exitosamente", "Exito al borrar");
+                }
+                else
+                {
+                    MessageBox.Show("Operación cancelada", "Confirmacion");
+                }
             }
             await CargarJuegos();
         }
@@ -96,6 +110,13 @@ namespace Escritorio.Juego
         {
             await BorrarJuego();
         }
+
+        private async void JuegoLista_Load(object sender, EventArgs e)
+        {
+            Shared.AjustarDataGridView(dgvListaJuegos);
+            dgvListaJuegos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            await CargarJuegos();
+        }
     }
-    
+
 }

@@ -141,5 +141,6 @@ app.MapDelete("/tipoTorneos/{id}", (int id) =>
 
 // Map endpoints
 app.MapUsuarioEndpoints();
+app.MapJuegoEndpoints();
 app.MapTorneoEndpoints();
 app.Run();

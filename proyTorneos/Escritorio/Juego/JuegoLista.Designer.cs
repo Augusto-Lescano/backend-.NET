@@ -53,7 +53,7 @@
             btnAgregar.TabIndex = 1;
             btnAgregar.Text = "Agregar";
             btnAgregar.UseVisualStyleBackColor = true;
-            btnAgregar.Click += this.btnAgregar_Click; 
+            btnAgregar.Click += btnAgregar_Click;
             // 
             // btnActualizar
             // 
@@ -63,7 +63,7 @@
             btnActualizar.TabIndex = 2;
             btnActualizar.Text = "Actualizar";
             btnActualizar.UseVisualStyleBackColor = true;
-            btnActualizar.Click += this.btnActualizar_Click;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // btnEliminar
             // 
@@ -73,7 +73,7 @@
             btnEliminar.TabIndex = 3;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
-            btnEliminar.Click += this.btnEliminar_Click;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // JuegoLista
             // 
@@ -86,6 +86,7 @@
             Controls.Add(dgvListaJuegos);
             Name = "JuegoLista";
             Text = "Lista de Juegos";
+            Load += JuegoLista_Load;
             ((System.ComponentModel.ISupportInitialize)dgvListaJuegos).EndInit();
             ResumeLayout(false);
         }

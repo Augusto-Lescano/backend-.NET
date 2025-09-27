@@ -33,9 +33,8 @@ namespace Domain.Services
         public bool Update(JuegoDTO dto)
         {
             var juegoRepository = new JuegoRepository();
-            var juego = new Juego(0, dto.Nombre, dto.Descripcion);
-            juegoRepository.Add(juego);
-            return juegoRepository.Update(juego);
+            var juego = new Juego(dto.Id, dto.Nombre, dto.Descripcion);
+            return juegoRepository.Update(juego); 
         }
 
         public JuegoDTO GetOne(int id)
