@@ -50,6 +50,7 @@ namespace Domain.Services
                 Nombre = usuario.Nombre,
                 Apellido = usuario.Apellido,
                 Email = usuario.Email,
+                Clave = usuario.Clave,
                 Pais = usuario.Pais,
                 NombreUsuario = usuario.NombreUsuario,
                 Rol = usuario.Rol,
@@ -69,6 +70,7 @@ namespace Domain.Services
                 Nombre = usuario.Nombre,
                 Apellido = usuario.Apellido,
                 Email = usuario.Email,
+                Clave = usuario.Clave,
                 Pais = usuario.Pais,
                 NombreUsuario = usuario.NombreUsuario,
                 Rol = usuario.Rol,
@@ -77,46 +79,16 @@ namespace Domain.Services
             });
         }
 
-        public bool Update(UsuarioDTO updateDto)
+        public bool Update(UsuarioDTO dto)
         {
             var usuarioRepository = new UsuarioRepository();
-            var usuario = usuarioRepository.Get(updateDto.Id);
-            if (usuario == null)
-                return false;
 
-            #region comentarios
-            /*
-            Flexibilidad: El usuario actualiza solo lo que necesita
-            Seguridad: No se sobrescriben datos accidentalmente
-            Performance: Solo se actualizan los campos modificados
-            UX: Mejor experiencia para el usuario final
-             */
-            #endregion
-            // Actualizar SOLO si se proporciona valor
-            if (!string.IsNullOrWhiteSpace(updateDto.Nombre))
-                usuario.SetNombre(updateDto.Nombre);
-
-            if (!string.IsNullOrWhiteSpace(updateDto.Apellido))
-                usuario.SetApellido(updateDto.Apellido);
-
-            if (!string.IsNullOrWhiteSpace(updateDto.Email))
-                usuario.SetEmail(updateDto.Email);
-
-            if (!string.IsNullOrWhiteSpace(updateDto.Clave))
-                usuario.SetClave(updateDto.Clave);
-
-            if (!string.IsNullOrWhiteSpace(updateDto.Pais))
-                usuario.SetPais(updateDto.Pais);
-
-            if (!string.IsNullOrWhiteSpace(updateDto.NombreUsuario))
-                usuario.SetNombreUsuario(updateDto.NombreUsuario);
-
-            if (!string.IsNullOrWhiteSpace(updateDto.Rol))
-                usuario.SetRol(updateDto.Rol);
-
-          
-
-            return usuarioRepository.Update(usuario);
+            if (usuarioRepository != null)
+            {
+                Usuario usuario = new Usuario(dto.Id, dto.Nombre, dto.Apellido, dto.Email, dto.Clave, dto.Pais, dto.NombreUsuario, dto.Rol, dto.FechaAlta, dto.Activo);
+                return usuarioRepository.Update(usuario);
+            }
+            else { return false; }
         }
     }
 }
