@@ -48,8 +48,7 @@ namespace Escritorio
 
         private void linkNuevoUsuario_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            UsuarioDetalle usuarioDetalle = new UsuarioDetalle();
-            usuarioDetalle.PermitirAdmin = false;
+            UsuarioDetalle usuarioDetalle = new UsuarioDetalle(false);
             Shared.AjustarFormMDI(usuarioDetalle);
             usuarioDetalle.ShowDialog();
         }
