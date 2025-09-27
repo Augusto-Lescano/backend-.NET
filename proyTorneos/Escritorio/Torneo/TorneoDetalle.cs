@@ -44,6 +44,14 @@ namespace Escritorio
 
         public async Task AgregaryActualizarTorneo()
         {
+            if (!int.TryParse(txtCantJugadores.Text, out int numero) || numero <= 0)
+            {
+                MessageBox.Show("Por favor, en cantidad de jugadores, ingrese un numero entero positivo.", "Error de Validación",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCantJugadores.Focus();
+                return;
+            }
+
             TorneoDTO dto = new TorneoDTO
             {
                 Id = 0,
@@ -58,6 +66,7 @@ namespace Escritorio
                 Region = txtRegion.Text,
                 Estado = txtEstado.Text
             };
+
             if (btnAceptar.Text == "Actualizar")
             {
                 dto.Id=torneoDTO.Id;

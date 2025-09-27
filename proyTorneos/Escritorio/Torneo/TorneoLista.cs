@@ -61,7 +61,8 @@ namespace Escritorio
             }
         }
 
-        public async Task BorrarTorneo() {
+        public async Task BorrarTorneo()
+        {
             var torneo = SeleccionarTorneo();
             if (torneo == null)
             {
@@ -69,15 +70,26 @@ namespace Escritorio
             }
             else
             {
-                await TorneoApiClient.DeleteAsync(torneo.Id);
-                MessageBox.Show("Torneo borrado exitosamente", "Exito al borrar");
+                DialogResult result = MessageBox.Show(
+                    "¿Desea eliminar el torneo seleccionado?",
+                    "Confirmación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    await TorneoApiClient.DeleteAsync(torneo.Id);
+                    MessageBox.Show("Torneo borrado exitosamente", "Exito al borrar");
+                }
+                else
+                {
+                    MessageBox.Show("Operación cancelada", "Confirmacion");
+                }
             }
             await CargarTorneos();
         }
         
-        
-        
-
         private async void TorneoLista_Load(object sender, EventArgs e)
         {
             Shared.AjustarDataGridView(dgvListaTorneos);
