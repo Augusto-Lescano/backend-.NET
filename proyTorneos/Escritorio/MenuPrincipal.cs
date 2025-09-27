@@ -57,7 +57,8 @@ namespace Escritorio
 
         private void mnuActualizarPerfil_Click(object sender, EventArgs e)
         {
-            UsuarioDetalle detalle = new UsuarioDetalle(usuarioActual, true);
+            UsuarioDetalle detalle = new UsuarioDetalle(usuarioActual);
+            detalle.PermitirAdmin = false;
             Shared.AjustarFormMDI(detalle);
             detalle.ShowDialog();
         }

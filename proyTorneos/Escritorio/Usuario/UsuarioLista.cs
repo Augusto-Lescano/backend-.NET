@@ -71,7 +71,8 @@ namespace Escritorio
             }
             else
             {
-                var detalle = new UsuarioDetalle(usuario, false);
+                var detalle = new UsuarioDetalle(usuario);
+                detalle.PermitirAdmin = true;
                 Shared.AjustarFormMDI(detalle);
                 if (detalle.ShowDialog() == DialogResult.OK)
                 {
