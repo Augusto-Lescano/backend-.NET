@@ -1,4 +1,5 @@
-﻿using DTOs;
+﻿using API.Clients;
+using DTOs;
 using Escritorio.Juego;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace Escritorio
 
         private void mnuTipoDeTorneo_Click(object sender, EventArgs e)
         {
-            TipoTorneoLista formTipoTorneoLista = new TipoTorneoLista();
+            TipoTorneoLista formTipoTorneoLista = new TipoTorneoLista(usuarioActual.Admin);
             mostrarFormularios(formTipoTorneoLista);
         }
 
@@ -55,10 +56,13 @@ namespace Escritorio
             mostrarFormularios(juegoLista);
         }
 
-        private void mnuActualizarPerfil_Click(object sender, EventArgs e)
+        private async void mnuActualizarPerfil_Click(object sender, EventArgs e)
         {
-            UsuarioDetalle detalle = new UsuarioDetalle(usuarioActual, false);
-            
+            //Cuando actualizo un usuario y luego vuelvo a querer actualizarlo, el mismo
+            //no aparece con los cambios realizados
+            //por eso se implementa la siguiente linea de codigo
+            UsuarioDTO usuarioActualizado = await UsuarioApiClient.GetAsync(usuarioActual.Id);
+            UsuarioDetalle detalle = new UsuarioDetalle(usuarioActualizado, false);
             Shared.AjustarFormMDI(detalle);
             detalle.ShowDialog();
         }

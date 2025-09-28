@@ -31,7 +31,6 @@ namespace Escritorio
             txtNombre = new TextBox();
             txtApellido = new TextBox();
             txtEmail = new TextBox();
-            txtPais = new TextBox();
             txtNombreUsuario = new TextBox();
             NombreLabel = new Label();
             ApellidoLabel = new Label();
@@ -43,6 +42,7 @@ namespace Escritorio
             label1 = new Label();
             txtClave = new TextBox();
             checkBoxAdmin = new CheckBox();
+            comboBoxPais = new ComboBox();
             SuspendLayout();
             // 
             // txtNombre
@@ -68,14 +68,6 @@ namespace Escritorio
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(157, 23);
             txtEmail.TabIndex = 3;
-            // 
-            // txtPais
-            // 
-            txtPais.Location = new Point(274, 191);
-            txtPais.Margin = new Padding(3, 2, 3, 2);
-            txtPais.Name = "txtPais";
-            txtPais.Size = new Size(157, 23);
-            txtPais.TabIndex = 4;
             // 
             // txtNombreUsuario
             // 
@@ -179,11 +171,21 @@ namespace Escritorio
             checkBoxAdmin.Text = "Otorgar permisos\r\nde administrador\r\n";
             checkBoxAdmin.UseVisualStyleBackColor = true;
             // 
+            // comboBoxPais
+            // 
+            comboBoxPais.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxPais.FormattingEnabled = true;
+            comboBoxPais.Location = new Point(274, 191);
+            comboBoxPais.Name = "comboBoxPais";
+            comboBoxPais.Size = new Size(156, 23);
+            comboBoxPais.TabIndex = 19;
+            // 
             // UsuarioDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 338);
+            Controls.Add(comboBoxPais);
             Controls.Add(checkBoxAdmin);
             Controls.Add(txtClave);
             Controls.Add(label1);
@@ -195,7 +197,6 @@ namespace Escritorio
             Controls.Add(ApellidoLabel);
             Controls.Add(NombreLabel);
             Controls.Add(txtNombreUsuario);
-            Controls.Add(txtPais);
             Controls.Add(txtEmail);
             Controls.Add(txtApellido);
             Controls.Add(txtNombre);
@@ -209,7 +210,6 @@ namespace Escritorio
         private TextBox txtNombre;
         private TextBox txtApellido;
         private TextBox txtEmail;
-        private TextBox txtPais;
         private TextBox txtNombreUsuario;
         private Label NombreLabel;
         private Label ApellidoLabel;
@@ -221,5 +221,6 @@ namespace Escritorio
         private Label label1;
         private TextBox txtClave;
         private CheckBox checkBoxAdmin;
+        private ComboBox comboBoxPais;
     }
 }
