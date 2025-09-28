@@ -24,7 +24,6 @@ namespace Domain.Services
                 Clave = usuario.Clave,
                 Pais = usuario.Pais,
                 NombreUsuario = usuario.NombreUsuario,
-                
                 FechaAlta = usuario.FechaAlta,
                 Admin = usuario.Admin,
             };

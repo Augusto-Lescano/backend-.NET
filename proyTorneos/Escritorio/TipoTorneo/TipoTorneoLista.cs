@@ -15,9 +15,15 @@ namespace Escritorio
 {
     public partial class TipoTorneoLista : Form
     {
-        public TipoTorneoLista()
+        
+        public TipoTorneoLista(bool admin)
         {
             InitializeComponent();
+            if (!admin) {
+                btnActualizar.Visible = false;
+                btnAgregar.Visible = false;
+                btnEliminar.Visible = false;
+            }
         }
 
         public async Task CargarTipoTorneos()

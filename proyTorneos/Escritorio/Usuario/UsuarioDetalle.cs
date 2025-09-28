@@ -9,7 +9,33 @@ namespace Escritorio
     public partial class UsuarioDetalle : Form
     {
         public UsuarioDTO UsuarioCreado { get; set; }
-        
+
+        public void CargarPaises() {
+            string[] paises = new string[] {
+                "",
+                "Argentina", 
+                "Bolivia", 
+                "Brasil", 
+                "Chile", 
+                "Colombia", 
+                "Costa Rica", 
+                "Cuba", 
+                "Ecuador", 
+                "El Salvador", 
+                "Guatemala", 
+                "Honduras", 
+                "México", 
+                "Nicaragua", 
+                "Panamá", 
+                "Paraguay", 
+                "Perú", 
+                "Puerto Rico", 
+                "República Dominicana", 
+                "Uruguay", 
+                "Venezuela"
+            };
+            comboBoxPais.DataSource=paises;
+        }
 
         // Constructor para AGREGAR
         public UsuarioDetalle(bool permitirAdmin)
@@ -20,7 +46,7 @@ namespace Escritorio
             {
                 checkBoxAdmin.Visible = false;
             }
-
+            CargarPaises();
         }
 
         // Constructor para MODIFICAR
@@ -28,22 +54,22 @@ namespace Escritorio
         {
 
             InitializeComponent();
+            CargarPaises();
             Text = "Modificar Usuario";
             btnAceptar.Text = "Modificar";
             txtNombre.Text = dto.Nombre;
             txtApellido.Text = dto.Apellido;
             txtEmail.Text = dto.Email;
             txtClave.Text = dto.Clave;
-            txtPais.Text = dto.Pais;
+            comboBoxPais.SelectedItem = dto.Pais;
             txtNombreUsuario.Text = dto.NombreUsuario;
-
+            checkBoxAdmin.Checked = dto.Admin;
             if (permitirAdmin == false)
             {
                 checkBoxAdmin.Visible = false;
             }
-     
-
             UsuarioCreado = dto;
+            
         }
 
         public async Task AgregaryActualizarUsuario()
@@ -55,7 +81,7 @@ namespace Escritorio
                 Apellido = txtApellido.Text,
                 Email = txtEmail.Text,
                 Clave = txtClave.Text?.Trim(),
-                Pais = txtPais.Text,
+                Pais = comboBoxPais.Text,
                 NombreUsuario = txtNombreUsuario.Text,
                 
             };
