@@ -82,8 +82,7 @@ namespace Escritorio
                 Email = txtEmail.Text,
                 Clave = txtClave.Text?.Trim(),
                 Pais = comboBoxPais.Text,
-                NombreUsuario = txtNombreUsuario.Text,
-                
+                NombreUsuario = txtNombreUsuario.Text
             };
 
             if (string.IsNullOrWhiteSpace(dto.Clave))
