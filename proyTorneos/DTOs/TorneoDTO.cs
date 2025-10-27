@@ -13,5 +13,7 @@
         public string Resultado { get; set; }
         public string Region { get; set; }
         public string Estado { get; set; }
+
+
     }
 }

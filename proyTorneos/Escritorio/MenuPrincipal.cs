@@ -75,9 +75,22 @@ namespace Escritorio
             {
                 this.usuarioActual = login.usuarioActual;
             }
-            else {
+            else
+            {
                 this.Dispose();
             }
+        }
+
+        private void mnuInscripciones_Click(object sender, EventArgs e)
+        {
+            InscripcionLista inscripcionLista = new InscripcionLista(usuarioActual.Admin);
+            mostrarFormularios(inscripcionLista);
+        }
+
+        private void mnuEquipos_Click(object sender, EventArgs e)
+        {
+            EquipoLista equipoLista = new EquipoLista(usuarioActual.Admin);
+            mostrarFormularios(equipoLista);
         }
     }
 }

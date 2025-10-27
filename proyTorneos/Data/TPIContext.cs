@@ -10,8 +10,9 @@ namespace Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Torneo> Torneos { get; set; }
         public DbSet<TipoTorneo> TipoTorneos { get; set; }
-
         public DbSet<Juego> Juegos { get; set; }
+        public DbSet<Inscripcion> Inscripciones { get; set; }
+        public DbSet<Equipo> Equipos { get; set; }
 
         internal TPIContext()
         {
@@ -72,9 +73,6 @@ namespace Data
                     .IsRequired()
                     .HasMaxLength(25);
 
-                
-                    
-
                 entity.Property(e => e.FechaAlta)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -88,8 +86,6 @@ namespace Data
 
                 entity.HasIndex(e => e.NombreUsuario)
                     .IsUnique();
-
-
             });
 
             modelBuilder.Entity<TipoTorneo>(entity =>
@@ -112,11 +108,14 @@ namespace Data
             modelBuilder.Entity<Juego>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.Id)
                     .ValueGeneratedOnAdd();
+
                 entity.Property(e => e.Nombre)
                     .IsRequired()
                     .HasMaxLength(100);
+
                 entity.Property(e => e.Descripcion)
                     .IsRequired()
                     .HasMaxLength(255);
@@ -125,33 +124,66 @@ namespace Data
             modelBuilder.Entity<Torneo>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.Id)
                     .ValueGeneratedOnAdd();
+
                 entity.Property(e => e.Nombre)
                     .IsRequired()
                     .HasMaxLength(100);
+
                 entity.Property(e => e.DescripcionDeReglas)
                     .IsRequired()
                     .HasMaxLength(255);
+
                 entity.Property(e => e.CantidadDeJugadores)
                     .IsRequired();
+
                 entity.Property(e => e.FechaInicio)
                     .IsRequired();
+
                 entity.Property(e => e.FechaFin)
                     .IsRequired();
+
                 entity.Property(e => e.FechaInicioDeInscripciones)
                     .IsRequired();
+
                 entity.Property(e => e.FechaFinDeInscripciones)
                     .IsRequired();
+
                 entity.Property(e => e.Resultado)
                     .IsRequired();
+
                 entity.Property(e => e.Region)
                     .IsRequired();
+
                 entity.Property(e=>e.Estado)
                     .IsRequired();                
             });
 
+            modelBuilder.Entity<Inscripcion>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd();
 
+                entity.Property(e => e.Estado)
+                    .IsRequired();
+
+                entity.Property(e => e.Fecha)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Equipo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Nombre)
+                    .IsRequired();
+            });
         }
     }
 }
