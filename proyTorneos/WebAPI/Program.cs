@@ -31,4 +31,6 @@ app.MapUsuarioEndpoints();
 app.MapJuegoEndpoints();
 app.MapTorneoEndpoints();
 app.MapTipoTorneoEndpoints();
+app.MapInscripcionEndpoints();
+app.MapEquipoEndpoints();
 app.Run();

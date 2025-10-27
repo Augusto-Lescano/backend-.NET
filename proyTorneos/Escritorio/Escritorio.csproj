@@ -35,4 +35,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Inscripcion\" />
+    <Folder Include="Equipo\" />
+  </ItemGroup>
+
 </Project>

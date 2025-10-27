@@ -36,6 +36,8 @@
             mnuTorneos = new ToolStripMenuItem();
             mnuTipoDeTorneo = new ToolStripMenuItem();
             mnuJuegos = new ToolStripMenuItem();
+            mnuInscripciones = new ToolStripMenuItem();
+            mnuEquipos = new ToolStripMenuItem();
             mnuActualizarPerfil = new ToolStripMenuItem();
             mnsPrincipal.SuspendLayout();
             SuspendLayout();
@@ -66,7 +68,7 @@
             // 
             // opcionesToolStripMenuItem
             // 
-            opcionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuUsuarios, mnuTorneos, mnuTipoDeTorneo, mnuJuegos, mnuActualizarPerfil });
+            opcionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuUsuarios, mnuTorneos, mnuTipoDeTorneo, mnuJuegos, mnuInscripciones, mnuEquipos, mnuActualizarPerfil });
             opcionesToolStripMenuItem.Name = "opcionesToolStripMenuItem";
             opcionesToolStripMenuItem.Size = new Size(69, 20);
             opcionesToolStripMenuItem.Text = "Opciones";
@@ -74,35 +76,49 @@
             // mnuUsuarios
             // 
             mnuUsuarios.Name = "mnuUsuarios";
-            mnuUsuarios.Size = new Size(157, 22);
+            mnuUsuarios.Size = new Size(180, 22);
             mnuUsuarios.Text = "Usuarios";
             mnuUsuarios.Click += mnuUsuarios_Click;
             // 
             // mnuTorneos
             // 
             mnuTorneos.Name = "mnuTorneos";
-            mnuTorneos.Size = new Size(157, 22);
+            mnuTorneos.Size = new Size(180, 22);
             mnuTorneos.Text = "Torneos";
             mnuTorneos.Click += mnuTorneos_Click;
             // 
             // mnuTipoDeTorneo
             // 
             mnuTipoDeTorneo.Name = "mnuTipoDeTorneo";
-            mnuTipoDeTorneo.Size = new Size(157, 22);
+            mnuTipoDeTorneo.Size = new Size(180, 22);
             mnuTipoDeTorneo.Text = "Tipos de Torneo";
             mnuTipoDeTorneo.Click += mnuTipoDeTorneo_Click;
             // 
             // mnuJuegos
             // 
             mnuJuegos.Name = "mnuJuegos";
-            mnuJuegos.Size = new Size(157, 22);
+            mnuJuegos.Size = new Size(180, 22);
             mnuJuegos.Text = "Juegos";
             mnuJuegos.Click += mnuJuegos_Click;
+            // 
+            // mnuInscripciones
+            // 
+            mnuInscripciones.Name = "mnuInscripciones";
+            mnuInscripciones.Size = new Size(180, 22);
+            mnuInscripciones.Text = "Inscripciones";
+            mnuInscripciones.Click += mnuInscripciones_Click;
+            // 
+            // mnuEquipos
+            // 
+            mnuEquipos.Name = "mnuEquipos";
+            mnuEquipos.Size = new Size(180, 22);
+            mnuEquipos.Text = "Equipos";
+            mnuEquipos.Click += mnuEquipos_Click;
             // 
             // mnuActualizarPerfil
             // 
             mnuActualizarPerfil.Name = "mnuActualizarPerfil";
-            mnuActualizarPerfil.Size = new Size(157, 22);
+            mnuActualizarPerfil.Size = new Size(180, 22);
             mnuActualizarPerfil.Text = "Actualizar perfil";
             mnuActualizarPerfil.Click += mnuActualizarPerfil_Click;
             // 
@@ -135,5 +151,7 @@
         private ToolStripMenuItem mnuTipoDeTorneo;
         private ToolStripMenuItem mnuJuegos;
         private ToolStripMenuItem mnuActualizarPerfil;
+        private ToolStripMenuItem mnuInscripciones;
+        private ToolStripMenuItem mnuEquipos;
     }
 }
