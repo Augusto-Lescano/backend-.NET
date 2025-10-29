@@ -21,5 +21,6 @@ namespace Domain.Model
             Descripcion = descripcion; 
         }
 
+        public ICollection<Torneo> Torneos { get; set; } = new List<Torneo>();
     }
 }

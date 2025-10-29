@@ -27,7 +27,14 @@
             Region = region;
             Estado = estado;
         }
+        public int JuegoId { get; set; }
+        public Juego Juego { get; set; }
 
+        public int TipoDeTorneoId { get; set; }
+        public TipoTorneo TipoDeTorneo { get; set; }
+        public int OrganizadorId { get; set; }
+        public Usuario Organizador { get; set; }
+        public Inscripcion Inscripcion { get; set; }
 
     }
 }

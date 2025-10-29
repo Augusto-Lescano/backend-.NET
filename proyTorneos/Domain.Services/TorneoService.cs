@@ -10,13 +10,25 @@ namespace Domain.Services
         public TorneoDTO Add(TorneoDTO dto) {
             
             var torneoRepository = new TorneoRepository();
+            var inscripcionRepository = new InscripcionRepository();
 
             var torneo = new Torneo(0, dto.Nombre, dto.DescripcionDeReglas,dto.CantidadDeJugadores, dto.FechaInicio, dto.FechaFin, dto.FechaInicioDeInscripciones, dto.FechaFinDeInscripciones, dto.Resultado, dto.Region, dto.Estado);
 
+
+            torneo.TipoDeTorneoId = dto.TipoDeTorneoId;
             torneoRepository.Add(torneo);
 
-            dto.Id = torneo.Id;
+            var inscripcion = new Inscripcion
+            {
+                Estado = "Abierta",
+                Fecha = DateTime.Now,
+                TorneoId = torneo.Id
+            };
 
+            inscripcionRepository.Add(inscripcion);
+
+            dto.Id = torneo.Id; 
+            dto.InscripcionId = inscripcion.Id;
             return dto;
         }
 

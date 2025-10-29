@@ -18,6 +18,9 @@ namespace Domain.Model
         
         public bool Admin { get; private set; }
 
+        public int? InscripcionId { get; set; }   
+        public Inscripcion Inscripcion { get; set; }
+
         public Usuario(int id, string nombre, string apellido, string email, string clave, string pais, string nombreUsuario, DateTime fechaAlta, bool admin = false)
         {
             SetId(id);
