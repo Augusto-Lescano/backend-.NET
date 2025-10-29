@@ -1,4 +1,5 @@
 ﻿using API.Clients;
+using API.TipoTorneo;
 using Domain.Model;
 using DTOs;
 using System;
@@ -22,6 +23,7 @@ namespace Escritorio
         {
             InitializeComponent();
             this.Text = "Agregar un Torneo";
+            this.Load += TorneoDetalle_Load;
         }
 
         public TorneoDetalle(TorneoDTO dto)
@@ -40,6 +42,8 @@ namespace Escritorio
             txtRegion.Text = dto.Region;
             txtEstado.Text = dto.Estado;
             torneoDTO = dto;
+
+            
         }
 
         public async Task AgregaryActualizarTorneo()
@@ -64,14 +68,16 @@ namespace Escritorio
                 FechaFinDeInscripciones = dtpFechaFinInscripciones.Value,
                 Resultado = txtResultado.Text,
                 Region = txtRegion.Text,
-                Estado = txtEstado.Text
+                Estado = txtEstado.Text,
+                JuegoId = (int)cmbJuego.SelectedValue,
+                TipoDeTorneoId = (int)cmbTipoTorneo.SelectedValue
             };
 
             if (btnAceptar.Text == "Actualizar")
             {
-                dto.Id=torneoDTO.Id;
+                dto.Id = torneoDTO.Id;
                 await TorneoApiClient.UpdateAsync(dto);
-                MessageBox.Show("Torneo actualizado exitosamente","Exito al actualizar");
+                MessageBox.Show("Torneo actualizado exitosamente", "Exito al actualizar");
             }
             else
             {
@@ -90,5 +96,57 @@ namespace Escritorio
         {
             this.Dispose();
         }
+
+
+        private async Task CargarComboboxes()
+        {
+            try
+            {
+                // Cargar juegos
+                var juegos = await JuegoApiClient.GetAllAsync();
+                if (juegos == null || !juegos.Any())
+                {
+                    MessageBox.Show("No se encontraron juegos en la base de datos.");
+                }
+                else
+                {
+                    cmbJuego.DataSource = juegos;
+                    cmbJuego.DisplayMember = "Nombre";
+                    cmbJuego.ValueMember = "Id";
+                }
+
+                // Cargar tipos de torneo
+                var tipos = await TipoTorneoApiClient.GetAllAsync();
+                if (tipos == null || !tipos.Any())
+                {
+                    MessageBox.Show("No se encontraron tipos de torneo en la base de datos.");
+                }
+                else
+                {
+                    cmbTipoTorneo.DataSource = tipos;
+                    cmbTipoTorneo.DisplayMember = "Nombre";
+                    cmbTipoTorneo.ValueMember = "Id";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar los datos: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private async void TorneoDetalle_Load(object sender, EventArgs e)
+        {
+            await CargarComboboxes();
+
+            if (torneoDTO != null)
+            {
+                if (torneoDTO.JuegoId > 0)
+                    cmbJuego.SelectedValue = torneoDTO.JuegoId;
+
+                if (torneoDTO.TipoDeTorneoId > 0)
+                    cmbTipoTorneo.SelectedValue = torneoDTO.TipoDeTorneoId;
+            }
+        }
+
     }
 }

@@ -24,5 +24,8 @@
                 throw new ArgumentException("El nombre no puede ser nulo o vacío.", nameof(nombre));
             Nombre = nombre;
         }
+
+        public int? InscripcionId { get; set; }
+        public Inscripcion Inscripcion { get; set; }
     }
 }

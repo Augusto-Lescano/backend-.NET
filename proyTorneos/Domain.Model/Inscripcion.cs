@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Estado { get; set; }
         public DateTime Fecha { get; set; }
-
+        public Inscripcion() { }
         public Inscripcion(int id, string estado, DateTime fecha)
         {
             SetId(id);
@@ -26,5 +26,13 @@
                 throw new ArgumentException("El estado no puede ser nulo o vacío.", nameof(estado));
             Estado = estado;
         }
+
+
+        public int TorneoId { get; set; }
+        public Torneo Torneo { get; set; }
+        public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+
+        public ICollection<Equipo> Equipos { get; set; } = new List<Equipo>(); 
+
     }
 }

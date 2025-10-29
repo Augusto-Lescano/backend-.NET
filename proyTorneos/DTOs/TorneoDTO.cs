@@ -14,6 +14,9 @@
         public string Region { get; set; }
         public string Estado { get; set; }
 
+        public int TipoDeTorneoId { get; set; }
 
+        public int JuegoId { get; set; }
+        public int InscripcionId { get; set; }
     }
 }

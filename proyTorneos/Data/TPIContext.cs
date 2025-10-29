@@ -61,7 +61,7 @@ namespace Data
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.Property(e=>e.Clave)
+                entity.Property(e => e.Clave)
                     .IsRequired()
                     .HasMaxLength(15);
 
@@ -86,6 +86,11 @@ namespace Data
 
                 entity.HasIndex(e => e.NombreUsuario)
                     .IsUnique();
+
+                entity.HasOne(u => u.Inscripcion)
+                      .WithMany(i => i.Usuarios)
+                      .HasForeignKey(u => u.InscripcionId)
+                      .IsRequired(false);
             });
 
             modelBuilder.Entity<TipoTorneo>(entity =>
@@ -158,7 +163,22 @@ namespace Data
                     .IsRequired();
 
                 entity.Property(e=>e.Estado)
-                    .IsRequired();                
+                    .IsRequired();
+                
+                entity.HasOne(t => t.Inscripcion)
+                .WithOne(i => i.Torneo)
+                .HasForeignKey<Inscripcion>(i => i.TorneoId)
+                .IsRequired();
+
+                entity.HasOne(u => u.TipoDeTorneo)
+                      .WithMany(i => i.Torneos)
+                      .HasForeignKey(u => u.TipoDeTorneoId)
+                      .IsRequired(false);
+
+                entity.HasOne(u => u.Juego)
+                      .WithMany(i => i.Torneos)
+                      .HasForeignKey(u => u.JuegoId)
+                      .IsRequired(false);
             });
 
             modelBuilder.Entity<Inscripcion>(entity =>
@@ -183,6 +203,11 @@ namespace Data
 
                 entity.Property(e => e.Nombre)
                     .IsRequired();
+
+                entity.HasOne(u => u.Inscripcion)
+                      .WithMany(i => i.Equipos)
+                      .HasForeignKey(u => u.InscripcionId)
+                      .IsRequired(false);
             });
         }
     }
