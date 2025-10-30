@@ -23,7 +23,7 @@ namespace Escritorio
             this.Text = "Actualizar una inscripción";
             btnAceptar.Text = "Actualizar";
             txtEstado.Text = dto.Estado;
-            dtpFecha.Value = dto.Fecha;
+            //dtpFecha.Value = dto.Fecha;
             InscripcionDTO = dto;
         }
 
@@ -33,7 +33,7 @@ namespace Escritorio
             {
                 Id = 0,
                 Estado = txtEstado.Text,
-                Fecha = dtpFecha.Value
+                //Fecha = dtpFecha.Value
             };
 
             if (btnAceptar.Text == "Actualizar")

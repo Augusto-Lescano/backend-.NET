@@ -30,7 +30,8 @@ namespace Domain.Services
             {
                 Id = inscripcion.Id,
                 Estado = inscripcion.Estado,
-                Fecha = inscripcion.Fecha
+                FechaApertura = inscripcion.FechaApertura,
+                FechaCierre = inscripcion.FechaCierre
             };
         }
 
@@ -41,7 +42,8 @@ namespace Domain.Services
             {
                 Id = inscripcion.Id,
                 Estado = inscripcion.Estado,
-                Fecha = inscripcion.Fecha
+                FechaApertura = inscripcion.FechaApertura,
+                FechaCierre = inscripcion.FechaCierre
             }).ToList();
         }
 
@@ -51,7 +53,7 @@ namespace Domain.Services
 
             if (inscripcionRepository != null)
             {
-                Inscripcion inscripcion = new Inscripcion(dto.Id, dto.Estado, dto.Fecha);
+                Inscripcion inscripcion = new Inscripcion(dto.Id, dto.Estado, dto.FechaApertura, dto.FechaCierre);
                 return inscripcionRepository.Update(inscripcion);
             }
             else

@@ -103,6 +103,7 @@ namespace Escritorio
             }
             else
             {
+                dto.OrganizadorId = usuarioConectadoId;
                 await TorneoApiClient.AddAsync(dto);
                 MessageBox.Show("Torneo agregado exitosamente", "Exito al agregar");
             }

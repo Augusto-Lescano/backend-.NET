@@ -41,7 +41,13 @@ namespace Data
         public IEnumerable<Inscripcion> GetAll()
         {
             using var context = CreateContext();
-            return context.Inscripciones.ToList();
+
+            //Actualiza estados antes de devolver los datos
+            ActualizarEstados(context);
+
+            return context.Inscripciones
+                .Include(i => i.Torneo) //Muestra torneo relacionado
+                .ToList();
         }
 
         public bool Update(Inscripcion inscripcion)
@@ -51,11 +57,37 @@ namespace Data
             if (existeInscripcion != null)
             {
                 existeInscripcion.SetEstado(inscripcion.Estado);
-                existeInscripcion.Fecha = inscripcion.Fecha;
+                existeInscripcion.FechaApertura = inscripcion.FechaApertura;
+                existeInscripcion.FechaCierre = inscripcion.FechaCierre;
                 context.SaveChanges();
                 return true;
             }
             return false;
+        }
+
+        public void ActualizarEstados(TPIContext context)
+        {
+            var hoy = DateTime.Now;
+            var inscripciones = context.Inscripciones.ToList();
+
+            foreach (var insc in inscripciones)
+            {
+                string nuevoEstado;
+
+                if (hoy < insc.FechaApertura)
+                    nuevoEstado = "Pronto...";
+                else if (hoy >= insc.FechaApertura && hoy <     insc.FechaCierre)
+                    nuevoEstado = "Abierto";
+                else
+                    nuevoEstado = "Finalizado";
+
+                if (insc.Estado != nuevoEstado)
+                {
+                    insc.Estado = nuevoEstado;
+                    context.Inscripciones.Update(insc);
+                }
+            }
+            context.SaveChanges();
         }
     }
 }

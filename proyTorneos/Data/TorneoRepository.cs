@@ -19,12 +19,30 @@ namespace Data
                 .Include(t => t.Juego)
                 .Include(t => t.TipoDeTorneo)
                 .Include(t => t.Inscripcion)
+                .Include(t => t.Organizador)
                 .ToList();
         }
 
-        public void Add(Torneo torneo) {
+        public void Add(Torneo torneo)
+        {
             using var context = CreateContext();
+
+            //Guarda el torneo
             context.Torneos.Add(torneo);
+            context.SaveChanges();
+
+            //Crea inscripción automáticamente
+            var estado = CalcularEstadoInscripcion(torneo.FechaInicioDeInscripciones, torneo.FechaFinDeInscripciones);
+
+            var inscripcion = new Inscripcion
+            {
+                FechaApertura = torneo.FechaInicioDeInscripciones,
+                FechaCierre = torneo.FechaFinDeInscripciones,
+                Estado = estado,
+                TorneoId = torneo.Id
+            };
+
+            context.Inscripciones.Add(inscripcion);
             context.SaveChanges();
         }
 
@@ -42,10 +60,12 @@ namespace Data
             }
         }
 
-        public bool Update(Torneo torneo) {
+        public bool Update(Torneo torneo)
+        {
             using var context = CreateContext();
             var torneoToUpdate = context.Torneos.Find(torneo.Id);
-            if (torneoToUpdate != null) {
+            if (torneoToUpdate != null)
+            {
                 torneoToUpdate.Nombre= torneo.Nombre;
                 torneoToUpdate.DescripcionDeReglas = torneo.DescripcionDeReglas;
                 torneoToUpdate.CantidadDeJugadores = torneo.CantidadDeJugadores;
@@ -57,10 +77,19 @@ namespace Data
                 torneoToUpdate.Estado = torneo.Estado;
                 context.SaveChanges();
                 return true;
-            }else { 
+            }
+            else
+            { 
                 return false; 
             }
+        }
 
+        private string CalcularEstadoInscripcion(DateTime apertura, DateTime cierre)
+        {
+            var hoy = DateTime.Now;
+            if (hoy < apertura) return "Pronto...";
+            if (hoy >= apertura && hoy < cierre) return "Abierto";
+            return "Finalizado";
         }
     }
 }

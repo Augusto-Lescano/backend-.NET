@@ -7,49 +7,36 @@ namespace Domain.Services
 {
     public class TorneoService
     {
-        public TorneoDTO Add(TorneoDTO dto, int usuarioConectadoId) {
-            
+        public TorneoDTO Add(TorneoDTO dto, int usuarioConectadoId)
+        {
             var torneoRepository = new TorneoRepository();
-            var inscripcionRepository = new InscripcionRepository();
             var juegoRepository = new JuegoRepository();
             var usuarioRepository = new UsuarioRepository();
 
             var juegoExiste = juegoRepository.GetOne(dto.JuegoId);
-
             if (juegoExiste == null)
-            {
                 throw new ArgumentException($"El juego con ID {dto.JuegoId} no existe");
-            }
 
             var organizadorExiste = usuarioRepository.Get(usuarioConectadoId);
-
             if (organizadorExiste == null)
-            {
                 throw new ArgumentException($"El organizador con ID {usuarioConectadoId} no existe");
-            }
 
-            var torneo = new Torneo(0, dto.Nombre, dto.DescripcionDeReglas,dto.CantidadDeJugadores, dto.FechaInicio, dto.FechaFin, dto.FechaInicioDeInscripciones, dto.FechaFinDeInscripciones, dto.Resultado, dto.Region, dto.Estado);
-
+            var torneo = new Torneo(0, dto.Nombre, dto.DescripcionDeReglas, dto.CantidadDeJugadores,
+                dto.FechaInicio, dto.FechaFin, dto.FechaInicioDeInscripciones, dto.FechaFinDeInscripciones,
+                dto.Resultado, dto.Region, dto.Estado);
 
             torneo.TipoDeTorneoId = dto.TipoDeTorneoId;
             torneo.JuegoId = dto.JuegoId;
             torneo.OrganizadorId = usuarioConectadoId;
+
             torneoRepository.Add(torneo);
 
-            var inscripcion = new Inscripcion
-            {
-                Estado = "Abierta",
-                Fecha = DateTime.Now,
-                TorneoId = torneo.Id
-            };
-
-            inscripcionRepository.Add(inscripcion);
-
-            dto.Id = torneo.Id; 
-            dto.InscripcionId = inscripcion.Id;
+            dto.Id = torneo.Id;
             dto.OrganizadorId = usuarioConectadoId;
+
             return dto;
         }
+
 
         public bool Delete(int id) {
             var torneoRepository = new TorneoRepository();
@@ -103,11 +90,13 @@ namespace Domain.Services
                        Estado = dto.Estado,
                        //Claves foráneas
                        JuegoId = dto.JuegoId,
+                       OrganizadorId = dto.OrganizadorId,
                        TipoDeTorneoId = dto.TipoDeTorneoId,
                        InscripcionId = dto.InscripcionId,
                        //Datos relacionados opcionales (para mostrar en el front)
                         JuegoNombre = dto.Juego != null ? dto.Juego.Nombre : "(sin juego)",
-                       TipoTorneoNombre = dto.TipoDeTorneo != null ? dto.TipoDeTorneo.Nombre : "(sin tipo)"
+                       TipoTorneoNombre = dto.TipoDeTorneo != null ? dto.TipoDeTorneo.Nombre : "(sin tipo)",
+                       OrganizadorNombre = dto.Organizador != null ? dto.Organizador.NombreUsuario : "(Sin nombre)"
                    }).ToList();
 
         }

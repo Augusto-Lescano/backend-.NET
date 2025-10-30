@@ -24,7 +24,16 @@ namespace Escritorio
         }
         public async Task CargarInscripciones()
         {
-            dgvInscripciones.DataSource = await API.Clients.InscripcionApiClient.GetAllAsync();
+            var inscripciones = await InscripcionApiClient.GetAllAsync();
+
+            dgvInscripciones.DataSource = inscripciones.Select(i => new
+            {
+                i.Id,
+                i.Estado,
+                Torneo = i.TorneoNombre,
+                i.FechaApertura,
+                i.FechaCierre
+            }).ToList();
         }
 
         public InscripcionDTO SeleccionarInscripcion()
