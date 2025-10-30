@@ -42,11 +42,9 @@ namespace Escritorio
             dtpFechaInicioInscripciones.Value = dto.FechaInicioDeInscripciones;
             dtpFechaFinInscripciones.Value = dto.FechaFinDeInscripciones;
             txtResultado.Text = dto.Resultado;
-            txtRegion.Text = dto.Region;
-            txtEstado.Text = dto.Estado;
+            cmbRegion.SelectedItem = dto.Region;
+            cmbEstado.SelectedItem = dto.Estado;
             torneoDTO = dto;
-
-            
         }
 
         public async Task AgregaryActualizarTorneo()
@@ -73,6 +71,12 @@ namespace Escritorio
                 return;
             }
 
+            if (cmbRegion.SelectedItem == null || cmbEstado.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar una región y un estado válidos.");
+                return;
+            }
+
 
             TorneoDTO dto = new TorneoDTO
             {
@@ -85,8 +89,8 @@ namespace Escritorio
                 FechaInicioDeInscripciones = dtpFechaInicioInscripciones.Value,
                 FechaFinDeInscripciones = dtpFechaFinInscripciones.Value,
                 Resultado = txtResultado.Text,
-                Region = txtRegion.Text,
-                Estado = txtEstado.Text,
+                Region = cmbRegion.SelectedItem.ToString(),
+                Estado = cmbEstado.SelectedItem.ToString(),
                 JuegoId = (int)cmbJuego.SelectedValue,
                 TipoDeTorneoId = (int)cmbTipoTorneo.SelectedValue
             };
@@ -156,6 +160,7 @@ namespace Escritorio
         {
             btnAceptar.Enabled = false;
             await CargarComboboxes();
+            CargarCombosEstaticos();
 
             if (torneoDTO != null)
             {
@@ -164,9 +169,26 @@ namespace Escritorio
 
                 if (torneoDTO.TipoDeTorneoId > 0)
                     cmbTipoTorneo.SelectedValue = torneoDTO.TipoDeTorneoId;
+
+                cmbRegion.SelectedItem = torneoDTO.Region;
+                cmbEstado.SelectedItem = torneoDTO.Estado;
             }
             btnAceptar.Enabled = true;
         }
+
+        private void CargarCombosEstaticos()
+        {
+            // Región
+            cmbRegion.Items.Clear();
+            cmbRegion.Items.AddRange(new string[] { "LAS", "LAN", "NA", "EUW", "GLOBAL" });
+            cmbRegion.SelectedIndex = 0; // por defecto
+
+            // Estado
+            cmbEstado.Items.Clear();
+            cmbEstado.Items.AddRange(new string[] { "Pendiente", "En curso", "Finalizado" });
+            cmbEstado.SelectedIndex = 0; // por defecto
+        }
+
 
     }
 }
