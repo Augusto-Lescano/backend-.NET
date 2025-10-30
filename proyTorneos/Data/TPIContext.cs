@@ -166,9 +166,9 @@ namespace Data
                     .IsRequired();
                 
                 entity.HasOne(t => t.Inscripcion)
-                .WithOne(i => i.Torneo)
-                .HasForeignKey<Inscripcion>(i => i.TorneoId)
-                .IsRequired();
+                    .WithOne(i => i.Torneo)
+                    .HasForeignKey<Inscripcion>(i => i.TorneoId)
+                    .IsRequired();
 
                 entity.HasOne(u => u.TipoDeTorneo)
                       .WithMany(i => i.Torneos)

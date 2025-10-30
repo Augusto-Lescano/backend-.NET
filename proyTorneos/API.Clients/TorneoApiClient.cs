@@ -11,6 +11,12 @@ namespace API.Clients
     public class TorneoApiClient
     {
         private static HttpClient client = new HttpClient();
+        private static int usuarioId; //Guarda el ID del usuario conectado
+
+        public static void SetUsuarioConectado(int usuario)
+        {
+            usuarioId = usuario;
+        }
 
         static TorneoApiClient()
         {
@@ -62,9 +68,13 @@ namespace API.Clients
 
         public static async Task AddAsync(TorneoDTO torneo) {
             try {
+                client.DefaultRequestHeaders.Add("X-Usuario-Id", usuarioId.ToString());
+
                 HttpResponseMessage response = await client.PostAsJsonAsync("torneos",torneo);
+
                 if (!response.IsSuccessStatusCode) {
                     string errorContent = await response.Content.ReadAsStringAsync();
+
                     throw new Exception($"Error crear el torneo. Status: {response.StatusCode}. Detalle: {errorContent}");
                 }
             }

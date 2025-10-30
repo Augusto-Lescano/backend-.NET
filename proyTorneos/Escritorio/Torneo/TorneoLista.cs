@@ -16,6 +16,7 @@ namespace Escritorio
     public partial class TorneoLista : Form
     {
         private bool Admin { get; set; }
+        private int usuarioConectado;
         public TorneoLista(bool admin)
         {
             InitializeComponent();
@@ -41,7 +42,7 @@ namespace Escritorio
 
         public async Task AgregarTorneo()
         {
-            TorneoDetalle detalle = new TorneoDetalle();
+            TorneoDetalle detalle = new TorneoDetalle(usuarioConectado);
             Shared.AjustarFormMDI(detalle);
 
             if (detalle.ShowDialog() == DialogResult.OK)

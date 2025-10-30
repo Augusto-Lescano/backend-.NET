@@ -14,6 +14,8 @@ namespace Domain.Model
             SetDescripcion(descripcion);
         }
 
+        public ICollection<Torneo> Torneos { get; set; } = new List<Torneo>();
+
         public void SetId(int id)
         {
             if (id < 0)
@@ -28,7 +30,6 @@ namespace Domain.Model
             Nombre = nombre;
         }
 
-        public ICollection<Torneo> Torneos { get; set; } = new List<Torneo>();
         public void SetDescripcion(string descripcion)
         {
             if (string.IsNullOrWhiteSpace(descripcion))
