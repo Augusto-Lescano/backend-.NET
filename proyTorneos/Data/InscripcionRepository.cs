@@ -35,7 +35,10 @@ namespace Data
         public Inscripcion? Get(int id)
         {
             using var context = CreateContext();
-            return context.Inscripciones.Find(id);
+
+            return context.Inscripciones
+                .Include(i => i.Torneo)
+                .FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Inscripcion> GetAll()

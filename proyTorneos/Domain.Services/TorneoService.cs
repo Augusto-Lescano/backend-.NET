@@ -10,6 +10,7 @@ namespace Domain.Services
         public TorneoDTO Add(TorneoDTO dto, int usuarioConectadoId)
         {
             var torneoRepository = new TorneoRepository();
+            var inscripcionRepository = new InscripcionRepository();
             var juegoRepository = new JuegoRepository();
             var usuarioRepository = new UsuarioRepository();
 
@@ -31,8 +32,30 @@ namespace Domain.Services
 
             torneoRepository.Add(torneo);
 
+             string estadoInscripcion;
+             if (DateTime.Now >= dto.FechaInicioDeInscripciones && DateTime.Now <= dto.FechaFinDeInscripciones)
+             {
+                 estadoInscripcion = "Abierta";
+             }
+             else
+             {
+                 estadoInscripcion = "Cerrada";
+             }
+
+             var inscripcion = new Inscripcion
+             {
+                 FechaApertura = dto.FechaInicioDeInscripciones,
+                 FechaCierre = dto.FechaFinDeInscripciones,
+                 Estado = estadoInscripcion,
+                 TorneoId = torneo.Id
+             };
+
+             inscripcionRepository.Add(inscripcion);
+
+
             dto.Id = torneo.Id;
             dto.OrganizadorId = usuarioConectadoId;
+            dto.InscripcionId = inscripcion.Id;
 
             return dto;
         }

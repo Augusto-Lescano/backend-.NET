@@ -43,7 +43,9 @@ namespace Domain.Services
                 Id = inscripcion.Id,
                 Estado = inscripcion.Estado,
                 FechaApertura = inscripcion.FechaApertura,
-                FechaCierre = inscripcion.FechaCierre
+                FechaCierre = inscripcion.FechaCierre,
+                TorneoId = inscripcion.TorneoId,
+                TorneoNombre = inscripcion.Torneo.Nombre //!= null ? inscripcion.Torneo.Nombre : "(sin torneo)"
             }).ToList();
         }
 

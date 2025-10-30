@@ -48,15 +48,22 @@ namespace API.Clients
 
         public static async Task<IEnumerable<InscripcionDTO>> GetAllAsync()
         {
+            
             try
             {
                 HttpResponseMessage response = await client.GetAsync("inscripciones");
 
-                var inscripciones = await response.Content.ReadFromJsonAsync<IEnumerable<InscripcionDTO>>();
-                if (inscripciones == null)
-                    throw new Exception("El servidor devolvió una respuesta vacía.");
+                //var inscripciones = await response.Content.ReadFromJsonAsync<IEnumerable<InscripcionDTO>>();
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<InscripcionDTO>>();
+                }
+                else
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al obtener las inscripciones. Status: {response.StatusCode}. Detalle: {errorContent}");
+                }
 
-                return inscripciones;
             }
             catch (HttpRequestException ex)
             {
