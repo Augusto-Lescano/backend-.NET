@@ -30,7 +30,19 @@ namespace Escritorio
 
         public async Task CargarTorneos()
         {
-            dgvListaTorneos.DataSource = await TorneoApiClient.GetAllAsync();
+            var torneos = await TorneoApiClient.GetAllAsync();
+
+            dgvListaTorneos.DataSource = torneos.Select(t => new
+            {
+                t.Id,
+                t.Nombre,
+                t.Region,
+                t.Estado,
+                Juego = t.JuegoNombre,
+                TipoTorneo = t.TipoTorneoNombre,
+                t.FechaInicio,
+                t.FechaInicioDeInscripciones
+            }).ToList();
         }
 
         public TorneoDTO SeleccionarTorneo()

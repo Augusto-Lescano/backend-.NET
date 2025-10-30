@@ -82,9 +82,11 @@ namespace Domain.Services
             };
         }
 
-        public IEnumerable<TorneoDTO> GetAll() {
+        public IEnumerable<TorneoDTO> GetAll()
+        {
             var torneoRepository = new TorneoRepository();
             var torneos = torneoRepository.GetAll();
+
             return (from dto in torneos
                    select new TorneoDTO
                    {
@@ -99,6 +101,13 @@ namespace Domain.Services
                        Resultado = dto.Resultado,
                        Region = dto.Region,
                        Estado = dto.Estado,
+                       //Claves foráneas
+                       JuegoId = dto.JuegoId,
+                       TipoDeTorneoId = dto.TipoDeTorneoId,
+                       InscripcionId = dto.InscripcionId,
+                       //Datos relacionados opcionales (para mostrar en el front)
+                        JuegoNombre = dto.Juego != null ? dto.Juego.Nombre : "(sin juego)",
+                       TipoTorneoNombre = dto.TipoDeTorneo != null ? dto.TipoDeTorneo.Nombre : "(sin tipo)"
                    }).ToList();
 
         }
