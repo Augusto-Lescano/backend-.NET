@@ -33,18 +33,33 @@ namespace WebAPI
             .Produces<List<TorneoDTO>>(StatusCodes.Status200OK)
             .WithOpenApi();
 
-            app.MapPost("/torneos", (TorneoDTO dto) => {
+            app.MapPost("/torneos", (TorneoDTO dto, HttpContext httpContext) => {
                 try
                 {
                     TorneoService torneoService = new TorneoService();
 
-                    TorneoDTO torneoDTO = torneoService.Add(dto);
+                    // Obtener usuarioId del header
+                    if (!httpContext.Request.Headers.TryGetValue("X-Usuario-Id", out var usuarioIdHeader))
+                    {
+                        return Results.BadRequest(new { error = "Header X-Usuario-Id es requerido" });
+                    }
 
-                    return Results.Created($"/usuarios/{torneoDTO.Id}", torneoDTO);
+                    if (!int.TryParse(usuarioIdHeader, out int usuarioId))
+                    {
+                        return Results.BadRequest(new { error = "X-Usuario-Id debe ser un número válido" });
+                    }
+
+                    TorneoDTO torneoDTO = torneoService.Add(dto, usuarioId);
+
+                    return Results.Created($"/torneos/{torneoDTO.Id}", torneoDTO);
                 }
                 catch (ArgumentException ex)
                 {
                     return Results.BadRequest(new { error = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return Results.Problem(ex.Message);
                 }
             })
             .WithName("AddTorneo")

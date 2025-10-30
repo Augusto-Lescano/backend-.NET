@@ -74,6 +74,7 @@ namespace Escritorio
             if (login.ShowDialog() == DialogResult.OK)
             {
                 this.usuarioActual = login.usuarioActual;
+                TorneoApiClient.SetUsuarioConectado(usuarioActual.Id);
             }
             else
             {

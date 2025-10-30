@@ -19,10 +19,13 @@ namespace Escritorio
     public partial class TorneoDetalle : Form
     {
         private TorneoDTO torneoDTO { set; get; }
-        public TorneoDetalle()
+        private int usuarioConectadoId;
+
+        public TorneoDetalle(int usuarioConectado)
         {
             InitializeComponent();
             this.Text = "Agregar un Torneo";
+            usuarioConectadoId = usuarioConectado;
             this.Load += TorneoDetalle_Load;
         }
 
@@ -55,6 +58,21 @@ namespace Escritorio
                 txtCantJugadores.Focus();
                 return;
             }
+
+            if (cmbJuego.SelectedValue == null)
+            {
+                MessageBox.Show("Debe seleccionar un juego.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbJuego.Focus();
+                return;
+            }
+
+            if (cmbTipoTorneo.SelectedValue == null)
+            {
+                MessageBox.Show("Debe seleccionar un tipo de torneo.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbTipoTorneo.Focus();
+                return;
+            }
+
 
             TorneoDTO dto = new TorneoDTO
             {
@@ -136,6 +154,7 @@ namespace Escritorio
         }
         private async void TorneoDetalle_Load(object sender, EventArgs e)
         {
+            btnAceptar.Enabled = false;
             await CargarComboboxes();
 
             if (torneoDTO != null)
@@ -146,6 +165,7 @@ namespace Escritorio
                 if (torneoDTO.TipoDeTorneoId > 0)
                     cmbTipoTorneo.SelectedValue = torneoDTO.TipoDeTorneoId;
             }
+            btnAceptar.Enabled = true;
         }
 
     }
