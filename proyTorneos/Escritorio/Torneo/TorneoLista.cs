@@ -15,13 +15,15 @@ namespace Escritorio
 {
     public partial class TorneoLista : Form
     {
-        private bool Admin { get; set; }
-        private int usuarioConectado;
-        public TorneoLista(bool admin)
+        //private bool Admin { get; set; }
+        private UsuarioDTO usuarioActual;
+
+        public TorneoLista(UsuarioDTO usuario)
         {
             InitializeComponent();
-            Admin = admin;
-            if (!admin) {
+            usuarioActual = usuario;
+        
+            if (!usuario.Admin) {
                 btnActualizar.Visible = false;
                 btnAgregar.Visible = false;
                 btnEliminar.Visible = false;
@@ -41,7 +43,8 @@ namespace Escritorio
                 Juego = t.JuegoNombre,
                 TipoTorneo = t.TipoTorneoNombre,
                 t.FechaInicio,
-                t.FechaInicioDeInscripciones
+                t.FechaInicioDeInscripciones,
+                Organizador = t.OrganizadorNombre
             }).ToList();
         }
 
@@ -54,7 +57,8 @@ namespace Escritorio
 
         public async Task AgregarTorneo()
         {
-            TorneoDetalle detalle = new TorneoDetalle(usuarioConectado);
+            TorneoDetalle detalle = new TorneoDetalle(usuarioActual.Id);
+
             Shared.AjustarFormMDI(detalle);
 
             if (detalle.ShowDialog() == DialogResult.OK)

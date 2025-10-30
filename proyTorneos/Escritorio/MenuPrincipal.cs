@@ -40,7 +40,7 @@ namespace Escritorio
 
         private void mnuTorneos_Click(object sender, EventArgs e)
         {
-            TorneoLista torneoLista = new TorneoLista(usuarioActual.Admin);
+            TorneoLista torneoLista = new TorneoLista(usuarioActual);
             mostrarFormularios(torneoLista);
         }
 

@@ -20,7 +20,8 @@ namespace WebAPI
                 {
                     Id = inscripcion.Id,
                     Estado = inscripcion.Estado,
-                    Fecha = inscripcion.Fecha
+                    FechaApertura = inscripcion.FechaApertura,
+                    FechaCierre = inscripcion.FechaCierre
                 };
                 return Results.Ok(dtoResult);
             })
@@ -38,7 +39,8 @@ namespace WebAPI
                 {
                     Id = i.Id,
                     Estado = i.Estado,
-                    Fecha = i.Fecha
+                    FechaApertura = i.FechaApertura,
+                    FechaCierre = i.FechaCierre
                 }).ToList();
 
                 return Results.Ok(dtosResult);
@@ -52,14 +54,15 @@ namespace WebAPI
                 try
                 {
                     InscripcionService inscripcionService = new InscripcionService();
-                    Inscripcion inscripcion = new Inscripcion(dto.Id, dto.Estado, dto.Fecha);
+                    Inscripcion inscripcion = new Inscripcion(dto.Id, dto.Estado, dto.FechaApertura, dto.FechaCierre);
                     inscripcionService.Add(inscripcion);
 
                     var dtoResult = new InscripcionDTO
                     {
                         Id = inscripcion.Id,
                         Estado = inscripcion.Estado,
-                        Fecha = inscripcion.Fecha
+                        FechaApertura = inscripcion.FechaApertura,
+                        FechaCierre = inscripcion.FechaCierre
                     };
                     return Results.Created($"/inscripciones/{dtoResult.Id}", dtoResult);
                 }

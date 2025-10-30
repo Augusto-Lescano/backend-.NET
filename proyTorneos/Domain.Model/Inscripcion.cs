@@ -3,14 +3,22 @@
     public class Inscripcion
     {
         public int Id { get; set; }
-        public string Estado { get; set; }
-        public DateTime Fecha { get; set; }
+        public string Estado { get; set; } = "Abierto";
+        public DateTime FechaApertura { get; set; }
+        public DateTime FechaCierre { get; set; }
+        public int TorneoId { get; set; }
+        public Torneo Torneo { get; set; }
+        public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+        public ICollection<Equipo> Equipos { get; set; } = new List<Equipo>();
+
         public Inscripcion() { }
-        public Inscripcion(int id, string estado, DateTime fecha)
+
+        public Inscripcion(int id, string estado, DateTime fechaApertura, DateTime fechaCierre)
         {
             SetId(id);
             SetEstado(estado);
-            Fecha = fecha;
+            FechaApertura = fechaApertura;
+            FechaCierre = fechaCierre;
         }
 
         public void SetId(int id)
@@ -26,13 +34,5 @@
                 throw new ArgumentException("El estado no puede ser nulo o vacío.", nameof(estado));
             Estado = estado;
         }
-
-
-        public int TorneoId { get; set; }
-        public Torneo Torneo { get; set; }
-        public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
-
-        public ICollection<Equipo> Equipos { get; set; } = new List<Equipo>(); 
-
     }
 }

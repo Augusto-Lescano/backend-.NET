@@ -168,29 +168,36 @@ namespace Data
                 entity.HasOne(t => t.Inscripcion)
                     .WithOne(i => i.Torneo)
                     .HasForeignKey<Inscripcion>(i => i.TorneoId)
-                    .IsRequired();
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(u => u.TipoDeTorneo)
                       .WithMany(i => i.Torneos)
                       .HasForeignKey(u => u.TipoDeTorneoId)
-                      .IsRequired(false);
+                      .IsRequired(false)
+                      .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(u => u.Juego)
                       .WithMany(i => i.Torneos)
                       .HasForeignKey(u => u.JuegoId)
-                      .IsRequired(false);
+                      .IsRequired(false)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Inscripcion>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Estado)
                     .IsRequired();
 
-                entity.Property(e => e.Fecha)
+                entity.Property(e => e.FechaApertura)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaCierre)
                     .IsRequired();
             });
 
