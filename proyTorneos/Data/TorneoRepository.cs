@@ -1,4 +1,5 @@
 ﻿using Domain.Model;
+using Microsoft.EntityFrameworkCore;
 namespace Data
 {
     public class TorneoRepository
@@ -14,7 +15,11 @@ namespace Data
 
         public IEnumerable<Torneo> GetAll() {
             using var context = CreateContext();
-            return context.Torneos.ToList();
+            return context.Torneos
+                .Include(t => t.Juego)
+                .Include(t => t.TipoDeTorneo)
+                .Include(t => t.Inscripcion)
+                .ToList();
         }
 
         public void Add(Torneo torneo) {
