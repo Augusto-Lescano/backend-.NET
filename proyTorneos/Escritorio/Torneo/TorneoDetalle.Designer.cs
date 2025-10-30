@@ -32,8 +32,6 @@
             dtpFechaInicioInscripciones = new DateTimePicker();
             dtpFechaFin = new DateTimePicker();
             dtpFechaInicio = new DateTimePicker();
-            txtEstado = new TextBox();
-            txtRegion = new TextBox();
             txtResultado = new TextBox();
             txtCantJugadores = new TextBox();
             txtReglas = new TextBox();
@@ -54,105 +52,81 @@
             cmbTipoTorneo = new ComboBox();
             cmbJuego = new ComboBox();
             labelJuego = new Label();
+            cmbRegion = new ComboBox();
+            cmbEstado = new ComboBox();
             SuspendLayout();
             // 
             // dtpFechaFinInscripciones
             // 
             dtpFechaFinInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            dtpFechaFinInscripciones.Location = new Point(208, 350);
-            dtpFechaFinInscripciones.Margin = new Padding(3, 4, 3, 4);
+            dtpFechaFinInscripciones.Location = new Point(182, 262);
             dtpFechaFinInscripciones.Name = "dtpFechaFinInscripciones";
-            dtpFechaFinInscripciones.Size = new Size(266, 27);
+            dtpFechaFinInscripciones.Size = new Size(230, 23);
             dtpFechaFinInscripciones.TabIndex = 50;
             // 
             // dtpFechaInicioInscripciones
             // 
             dtpFechaInicioInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            dtpFechaInicioInscripciones.Location = new Point(208, 304);
-            dtpFechaInicioInscripciones.Margin = new Padding(3, 4, 3, 4);
+            dtpFechaInicioInscripciones.Location = new Point(182, 228);
             dtpFechaInicioInscripciones.Name = "dtpFechaInicioInscripciones";
-            dtpFechaInicioInscripciones.Size = new Size(266, 27);
+            dtpFechaInicioInscripciones.Size = new Size(230, 23);
             dtpFechaInicioInscripciones.TabIndex = 49;
             // 
             // dtpFechaFin
             // 
             dtpFechaFin.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            dtpFechaFin.Location = new Point(125, 251);
-            dtpFechaFin.Margin = new Padding(3, 4, 3, 4);
+            dtpFechaFin.Location = new Point(80, 188);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.Size = new Size(347, 27);
+            dtpFechaFin.Size = new Size(332, 23);
             dtpFechaFin.TabIndex = 48;
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            dtpFechaInicio.Location = new Point(125, 200);
-            dtpFechaInicio.Margin = new Padding(3, 4, 3, 4);
+            dtpFechaInicio.Location = new Point(80, 150);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(347, 27);
+            dtpFechaInicio.Size = new Size(332, 23);
             dtpFechaInicio.TabIndex = 47;
-            // 
-            // txtEstado
-            // 
-            txtEstado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            txtEstado.Location = new Point(92, 616);
-            txtEstado.Margin = new Padding(3, 4, 3, 4);
-            txtEstado.Name = "txtEstado";
-            txtEstado.Size = new Size(379, 27);
-            txtEstado.TabIndex = 46;
-            // 
-            // txtRegion
-            // 
-            txtRegion.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            txtRegion.Location = new Point(92, 565);
-            txtRegion.Margin = new Padding(3, 4, 3, 4);
-            txtRegion.Name = "txtRegion";
-            txtRegion.Size = new Size(379, 27);
-            txtRegion.TabIndex = 45;
             // 
             // txtResultado
             // 
             txtResultado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            txtResultado.Location = new Point(92, 513);
-            txtResultado.Margin = new Padding(3, 4, 3, 4);
+            txtResultado.Location = new Point(80, 385);
             txtResultado.Name = "txtResultado";
-            txtResultado.Size = new Size(379, 27);
+            txtResultado.Size = new Size(332, 23);
             txtResultado.TabIndex = 44;
             // 
             // txtCantJugadores
             // 
             txtCantJugadores.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            txtCantJugadores.Location = new Point(171, 148);
-            txtCantJugadores.Margin = new Padding(3, 4, 3, 4);
+            txtCantJugadores.Location = new Point(182, 111);
             txtCantJugadores.Name = "txtCantJugadores";
-            txtCantJugadores.Size = new Size(300, 27);
+            txtCantJugadores.Size = new Size(230, 23);
             txtCantJugadores.TabIndex = 43;
             // 
             // txtReglas
             // 
             txtReglas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            txtReglas.Location = new Point(118, 88);
-            txtReglas.Margin = new Padding(3, 4, 3, 4);
+            txtReglas.Location = new Point(80, 66);
             txtReglas.Name = "txtReglas";
-            txtReglas.Size = new Size(354, 27);
+            txtReglas.Size = new Size(332, 23);
             txtReglas.TabIndex = 42;
             // 
             // txtNombre
             // 
             txtNombre.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            txtNombre.Location = new Point(118, 33);
-            txtNombre.Margin = new Padding(3, 4, 3, 4);
+            txtNombre.Location = new Point(80, 25);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(354, 27);
+            txtNombre.Size = new Size(332, 23);
             txtNombre.TabIndex = 41;
             // 
             // labelEstado
             // 
             labelEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelEstado.AutoSize = true;
-            labelEstado.Location = new Point(16, 626);
+            labelEstado.Location = new Point(8, 470);
             labelEstado.Name = "labelEstado";
-            labelEstado.Size = new Size(54, 20);
+            labelEstado.Size = new Size(42, 15);
             labelEstado.TabIndex = 40;
             labelEstado.Text = "Estado";
             // 
@@ -160,9 +134,9 @@
             // 
             labelRegion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelRegion.AutoSize = true;
-            labelRegion.Location = new Point(18, 569);
+            labelRegion.Location = new Point(8, 427);
             labelRegion.Name = "labelRegion";
-            labelRegion.Size = new Size(56, 20);
+            labelRegion.Size = new Size(44, 15);
             labelRegion.TabIndex = 39;
             labelRegion.Text = "Region";
             // 
@@ -170,9 +144,9 @@
             // 
             labelResultado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelResultado.AutoSize = true;
-            labelResultado.Location = new Point(18, 517);
+            labelResultado.Location = new Point(8, 388);
             labelResultado.Name = "labelResultado";
-            labelResultado.Size = new Size(75, 20);
+            labelResultado.Size = new Size(59, 15);
             labelResultado.TabIndex = 38;
             labelResultado.Text = "Resultado";
             // 
@@ -180,9 +154,9 @@
             // 
             labelFechaFinInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelFechaFinInscripciones.AutoSize = true;
-            labelFechaFinInscripciones.Location = new Point(5, 350);
+            labelFechaFinInscripciones.Location = new Point(8, 268);
             labelFechaFinInscripciones.Name = "labelFechaFinInscripciones";
-            labelFechaFinInscripciones.Size = new Size(178, 20);
+            labelFechaFinInscripciones.Size = new Size(143, 15);
             labelFechaFinInscripciones.TabIndex = 37;
             labelFechaFinInscripciones.Text = "Fecha de fin inscripciones";
             // 
@@ -190,9 +164,9 @@
             // 
             labelFechaInicioInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelFechaInicioInscripciones.AutoSize = true;
-            labelFechaInicioInscripciones.Location = new Point(5, 309);
+            labelFechaInicioInscripciones.Location = new Point(8, 234);
             labelFechaInicioInscripciones.Name = "labelFechaInicioInscripciones";
-            labelFechaInicioInscripciones.Size = new Size(197, 20);
+            labelFechaInicioInscripciones.Size = new Size(158, 15);
             labelFechaInicioInscripciones.TabIndex = 36;
             labelFechaInicioInscripciones.Text = "Fecha de inicio inscripciones";
             // 
@@ -200,29 +174,29 @@
             // 
             labelFechaFin.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelFechaFin.AutoSize = true;
-            labelFechaFin.Location = new Point(19, 259);
+            labelFechaFin.Location = new Point(8, 194);
             labelFechaFin.Name = "labelFechaFin";
-            labelFechaFin.Size = new Size(91, 20);
+            labelFechaFin.Size = new Size(57, 15);
             labelFechaFin.TabIndex = 35;
-            labelFechaFin.Text = "Fecha de Fin";
+            labelFechaFin.Text = "Fecha Fin";
             // 
             // labelFechaInicio
             // 
             labelFechaInicio.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelFechaInicio.AutoSize = true;
-            labelFechaInicio.Location = new Point(19, 200);
+            labelFechaInicio.Location = new Point(8, 156);
             labelFechaInicio.Name = "labelFechaInicio";
-            labelFechaInicio.Size = new Size(108, 20);
+            labelFechaInicio.Size = new Size(70, 15);
             labelFechaInicio.TabIndex = 34;
-            labelFechaInicio.Text = "Fecha de Inicio";
+            labelFechaInicio.Text = "Fecha Inicio";
             // 
             // labelCantJugadores
             // 
             labelCantJugadores.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelCantJugadores.AutoSize = true;
-            labelCantJugadores.Location = new Point(19, 148);
+            labelCantJugadores.Location = new Point(8, 114);
             labelCantJugadores.Name = "labelCantJugadores";
-            labelCantJugadores.Size = new Size(160, 20);
+            labelCantJugadores.Size = new Size(126, 15);
             labelCantJugadores.TabIndex = 33;
             labelCantJugadores.Text = "Cantidad de jugadores";
             // 
@@ -230,9 +204,9 @@
             // 
             labelReglas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelReglas.AutoSize = true;
-            labelReglas.Location = new Point(21, 92);
+            labelReglas.Location = new Point(8, 69);
             labelReglas.Name = "labelReglas";
-            labelReglas.Size = new Size(53, 20);
+            labelReglas.Size = new Size(41, 15);
             labelReglas.TabIndex = 32;
             labelReglas.Text = "Reglas";
             // 
@@ -240,18 +214,17 @@
             // 
             labelNombre.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelNombre.AutoSize = true;
-            labelNombre.Location = new Point(21, 37);
+            labelNombre.Location = new Point(8, 28);
             labelNombre.Name = "labelNombre";
-            labelNombre.Size = new Size(64, 20);
+            labelNombre.Size = new Size(51, 15);
             labelNombre.TabIndex = 31;
             labelNombre.Text = "Nombre";
             // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(92, 664);
-            btnAceptar.Margin = new Padding(3, 4, 3, 4);
+            btnAceptar.Location = new Point(80, 509);
             btnAceptar.Name = "btnAceptar";
-            btnAceptar.Size = new Size(86, 31);
+            btnAceptar.Size = new Size(75, 23);
             btnAceptar.TabIndex = 51;
             btnAceptar.Text = "Aceptar";
             btnAceptar.UseVisualStyleBackColor = true;
@@ -259,10 +232,9 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(253, 664);
-            btnCancelar.Margin = new Padding(3, 4, 3, 4);
+            btnCancelar.Location = new Point(218, 509);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(86, 31);
+            btnCancelar.Size = new Size(75, 23);
             btnCancelar.TabIndex = 52;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
@@ -271,42 +243,62 @@
             // labelTipoTorneo
             // 
             labelTipoTorneo.AutoSize = true;
-            labelTipoTorneo.Location = new Point(7, 411);
+            labelTipoTorneo.Location = new Point(8, 305);
             labelTipoTorneo.Name = "labelTipoTorneo";
-            labelTipoTorneo.Size = new Size(112, 20);
+            labelTipoTorneo.Size = new Size(68, 15);
             labelTipoTorneo.TabIndex = 53;
-            labelTipoTorneo.Text = "Tipo De Torneo";
+            labelTipoTorneo.Text = "Tipo torneo";
             // 
             // cmbTipoTorneo
             // 
             cmbTipoTorneo.FormattingEnabled = true;
-            cmbTipoTorneo.Location = new Point(125, 403);
+            cmbTipoTorneo.Location = new Point(80, 302);
+            cmbTipoTorneo.Margin = new Padding(3, 2, 3, 2);
             cmbTipoTorneo.Name = "cmbTipoTorneo";
-            cmbTipoTorneo.Size = new Size(346, 28);
+            cmbTipoTorneo.Size = new Size(332, 23);
             cmbTipoTorneo.TabIndex = 54;
             // 
             // cmbJuego
             // 
             cmbJuego.FormattingEnabled = true;
-            cmbJuego.Location = new Point(125, 462);
+            cmbJuego.Location = new Point(80, 346);
+            cmbJuego.Margin = new Padding(3, 2, 3, 2);
             cmbJuego.Name = "cmbJuego";
-            cmbJuego.Size = new Size(346, 28);
+            cmbJuego.Size = new Size(332, 23);
             cmbJuego.TabIndex = 55;
             // 
             // labelJuego
             // 
             labelJuego.AutoSize = true;
-            labelJuego.Location = new Point(12, 465);
+            labelJuego.Location = new Point(8, 349);
             labelJuego.Name = "labelJuego";
-            labelJuego.Size = new Size(48, 20);
+            labelJuego.Size = new Size(38, 15);
             labelJuego.TabIndex = 56;
             labelJuego.Text = "Juego";
             // 
+            // cmbRegion
+            // 
+            cmbRegion.FormattingEnabled = true;
+            cmbRegion.Location = new Point(80, 424);
+            cmbRegion.Name = "cmbRegion";
+            cmbRegion.Size = new Size(332, 23);
+            cmbRegion.TabIndex = 57;
+            // 
+            // cmbEstado
+            // 
+            cmbEstado.FormattingEnabled = true;
+            cmbEstado.Location = new Point(80, 467);
+            cmbEstado.Name = "cmbEstado";
+            cmbEstado.Size = new Size(332, 23);
+            cmbEstado.TabIndex = 58;
+            // 
             // TorneoDetalle
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(495, 765);
+            ClientSize = new Size(433, 574);
+            Controls.Add(cmbEstado);
+            Controls.Add(cmbRegion);
             Controls.Add(labelJuego);
             Controls.Add(cmbJuego);
             Controls.Add(cmbTipoTorneo);
@@ -317,8 +309,6 @@
             Controls.Add(dtpFechaInicioInscripciones);
             Controls.Add(dtpFechaFin);
             Controls.Add(dtpFechaInicio);
-            Controls.Add(txtEstado);
-            Controls.Add(txtRegion);
             Controls.Add(txtResultado);
             Controls.Add(txtCantJugadores);
             Controls.Add(txtReglas);
@@ -333,7 +323,6 @@
             Controls.Add(labelCantJugadores);
             Controls.Add(labelReglas);
             Controls.Add(labelNombre);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "TorneoDetalle";
             Text = "Torneo";
             ResumeLayout(false);
@@ -346,8 +335,6 @@
         private DateTimePicker dtpFechaInicioInscripciones;
         private DateTimePicker dtpFechaFin;
         private DateTimePicker dtpFechaInicio;
-        private TextBox txtEstado;
-        private TextBox txtRegion;
         private TextBox txtResultado;
         private TextBox txtCantJugadores;
         private TextBox txtReglas;
@@ -368,5 +355,7 @@
         private ComboBox cmbTipoTorneo;
         private ComboBox cmbJuego;
         private Label labelJuego;
+        private ComboBox cmbRegion;
+        private ComboBox cmbEstado;
     }
 }
