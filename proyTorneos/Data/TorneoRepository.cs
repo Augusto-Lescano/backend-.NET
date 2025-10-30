@@ -31,7 +31,9 @@ namespace Data
             context.Torneos.Add(torneo);
             context.SaveChanges();
 
-            //Crea inscripción automáticamente
+
+            // comentado momentaneamente
+            /*Crea inscripción automáticamente
             var estado = CalcularEstadoInscripcion(torneo.FechaInicioDeInscripciones, torneo.FechaFinDeInscripciones);
 
             var inscripcion = new Inscripcion
@@ -43,7 +45,7 @@ namespace Data
             };
 
             context.Inscripciones.Add(inscripcion);
-            context.SaveChanges();
+            context.SaveChanges();*/ 
         }
 
         public bool Delete(int id) {

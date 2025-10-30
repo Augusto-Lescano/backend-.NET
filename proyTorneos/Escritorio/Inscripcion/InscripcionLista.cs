@@ -12,20 +12,22 @@ namespace Escritorio
 {
     public partial class InscripcionLista : Form
     {
+        private bool Admin { get; set; }
         public InscripcionLista(bool admin)
         {
             InitializeComponent();
+            Admin = admin;
             if (!admin)
             {
                 btnActualizar.Visible = false;
-                btnAgregar.Visible = false;
+                btnAgregar.Visible = true;
                 btnEliminar.Visible = false;
             }
         }
         public async Task CargarInscripciones()
         {
             var inscripciones = await InscripcionApiClient.GetAllAsync();
-
+            dgvInscripciones.AutoGenerateColumns = true;
             dgvInscripciones.DataSource = inscripciones.Select(i => new
             {
                 i.Id,
@@ -34,6 +36,7 @@ namespace Escritorio
                 i.FechaApertura,
                 i.FechaCierre
             }).ToList();
+
         }
 
         public InscripcionDTO SeleccionarInscripcion()
@@ -117,5 +120,6 @@ namespace Escritorio
         {
             await BorrarInscripcion();
         }
+
     }
 }
