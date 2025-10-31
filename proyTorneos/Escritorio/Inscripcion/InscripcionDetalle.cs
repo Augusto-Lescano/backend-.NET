@@ -33,7 +33,8 @@ namespace Escritorio
             {
                 Id = 0,
                 Estado = txtEstado.Text,
-                //Fecha = dtpFecha.Value
+                FechaApertura = dtpFechaApertura.Value,
+                FechaCierre = dtpFechaCierre.Value
             };
 
             if (btnAceptar.Text == "Actualizar")

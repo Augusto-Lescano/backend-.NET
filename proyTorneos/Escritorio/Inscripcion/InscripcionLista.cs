@@ -28,14 +28,9 @@ namespace Escritorio
         {
             var inscripciones = await InscripcionApiClient.GetAllAsync();
             dgvInscripciones.AutoGenerateColumns = true;
-            dgvInscripciones.DataSource = inscripciones.Select(i => new
-            {
-                i.Id,
-                i.Estado,
-                Torneo = i.TorneoNombre,
-                i.FechaApertura,
-                i.FechaCierre
-            }).ToList();
+            dgvInscripciones.DataSource = inscripciones.ToList();
+
+            //dgvInscripciones.Columns["TorneoId"].Visible = false;
 
         }
 

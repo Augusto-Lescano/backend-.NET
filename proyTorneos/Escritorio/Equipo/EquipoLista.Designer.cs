@@ -38,16 +38,19 @@
             // dgvEquipo
             // 
             dgvEquipo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEquipo.Location = new Point(12, 12);
+            dgvEquipo.Location = new Point(14, 16);
+            dgvEquipo.Margin = new Padding(3, 4, 3, 4);
             dgvEquipo.Name = "dgvEquipo";
-            dgvEquipo.Size = new Size(776, 342);
+            dgvEquipo.RowHeadersWidth = 51;
+            dgvEquipo.Size = new Size(887, 456);
             dgvEquipo.TabIndex = 0;
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(475, 374);
+            btnAgregar.Location = new Point(543, 499);
+            btnAgregar.Margin = new Padding(3, 4, 3, 4);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(75, 25);
+            btnAgregar.Size = new Size(86, 33);
             btnAgregar.TabIndex = 1;
             btnAgregar.Text = "Agregar";
             btnAgregar.UseVisualStyleBackColor = true;
@@ -55,9 +58,10 @@
             // 
             // btnActualizar
             // 
-            btnActualizar.Location = new Point(597, 374);
+            btnActualizar.Location = new Point(682, 499);
+            btnActualizar.Margin = new Padding(3, 4, 3, 4);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(75, 25);
+            btnActualizar.Size = new Size(86, 33);
             btnActualizar.TabIndex = 2;
             btnActualizar.Text = "Actualizar";
             btnActualizar.UseVisualStyleBackColor = true;
@@ -65,9 +69,10 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(713, 374);
+            btnEliminar.Location = new Point(815, 499);
+            btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(75, 25);
+            btnEliminar.Size = new Size(86, 33);
             btnEliminar.TabIndex = 3;
             btnEliminar.Text = "eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
@@ -75,15 +80,17 @@
             // 
             // EquipoLista
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(btnEliminar);
             Controls.Add(btnActualizar);
             Controls.Add(btnAgregar);
             Controls.Add(dgvEquipo);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "EquipoLista";
             Text = "Form1";
+            Load += EquipoLista_Load;
             ((System.ComponentModel.ISupportInitialize)dgvEquipo).EndInit();
             ResumeLayout(false);
         }
