@@ -33,19 +33,16 @@ namespace Escritorio
         public async Task CargarTorneos()
         {
             var torneos = await TorneoApiClient.GetAllAsync();
+            dgvListaTorneos.DataSource = torneos.ToList();
 
-            dgvListaTorneos.DataSource = torneos.Select(t => new
-            {
-                t.Id,
-                t.Nombre,
-                t.Region,
-                t.Estado,
-                Juego = t.JuegoNombre,
-                TipoTorneo = t.TipoTorneoNombre,
-                t.FechaInicio,
-                t.FechaInicioDeInscripciones,
-                Organizador = t.OrganizadorNombre
-            }).ToList();
+            //se hace de esta forma porque si los mostramos de la otra forma crea un objeto anonimo 
+            //y no se puede hacer el cast para eliminar. Entonces se elije que columnas no mostrar
+            dgvListaTorneos.Columns["TipoDeTorneoId"].Visible = false;
+            dgvListaTorneos.Columns["JuegoId"].Visible = false;
+            dgvListaTorneos.Columns["InscripcionId"].Visible = false;
+            dgvListaTorneos.Columns["OrganizadorId"].Visible = false;
+            dgvListaTorneos.Columns["DescripcionDeReglas"].Visible = false;
+            
         }
 
         public TorneoDTO SeleccionarTorneo()

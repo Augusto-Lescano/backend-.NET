@@ -59,9 +59,9 @@ namespace Data
             var existeInscripcion = context.Inscripciones.Find(inscripcion.Id);
             if (existeInscripcion != null)
             {
-                existeInscripcion.SetEstado(inscripcion.Estado);
                 existeInscripcion.FechaApertura = inscripcion.FechaApertura;
                 existeInscripcion.FechaCierre = inscripcion.FechaCierre;
+                existeInscripcion.SetEstado(); 
                 context.SaveChanges();
                 return true;
             }

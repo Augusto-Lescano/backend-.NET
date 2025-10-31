@@ -3,7 +3,7 @@
     public class Inscripcion
     {
         public int Id { get; set; }
-        public string Estado { get; set; } = "Abierto";
+        public string Estado { get; set; } 
         public DateTime FechaApertura { get; set; }
         public DateTime FechaCierre { get; set; }
         public int TorneoId { get; set; }
@@ -16,7 +16,7 @@
         public Inscripcion(int id, string estado, DateTime fechaApertura, DateTime fechaCierre)
         {
             SetId(id);
-            SetEstado(estado);
+            SetEstado();
             FechaApertura = fechaApertura;
             FechaCierre = fechaCierre;
         }
@@ -28,11 +28,19 @@
             Id = id;
         }
 
-        public void SetEstado(string estado)
+        public void SetEstado()
         {
-            if (string.IsNullOrWhiteSpace(estado))
-                throw new ArgumentException("El estado no puede ser nulo o vacío.", nameof(estado));
-            Estado = estado;
+            if(FechaApertura > DateTime.Now && FechaCierre > DateTime.Now)
+            {
+                Estado = "Pronto";
+            }else if (FechaCierre <= DateTime.Now)
+            {
+                Estado = "Finalizado"; 
+            }else if(FechaApertura <= DateTime.Now && FechaCierre > DateTime.Now) 
+            {
+                Estado = "Abierta"; 
+            }
+            
         }
     }
 }
