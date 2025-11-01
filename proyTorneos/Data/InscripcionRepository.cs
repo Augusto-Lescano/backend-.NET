@@ -14,6 +14,7 @@ namespace Data
 
         public void Add(Inscripcion inscripcion)
         {
+
             using var context = CreateContext();
             context.Inscripciones.Add(inscripcion);
             context.SaveChanges();
