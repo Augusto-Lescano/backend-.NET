@@ -7,7 +7,7 @@
         public DateTime FechaApertura { get; set; }
         public DateTime FechaCierre { get; set; }
         public int TorneoId { get; set; }
-        public Torneo Torneo { get; set; }
+        public Torneo? Torneo { get; set; }
         public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
         public ICollection<Equipo> Equipos { get; set; } = new List<Equipo>();
 

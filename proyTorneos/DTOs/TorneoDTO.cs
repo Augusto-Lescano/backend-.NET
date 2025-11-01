@@ -17,8 +17,8 @@
         public int JuegoId { get; set; }
         public int InscripcionId { get; set; }
         public int OrganizadorId { get; set; }
-        public string OrganizadorNombre { get; set; }
-        public string JuegoNombre { get; set; }
-        public string TipoTorneoNombre { get; set; }
+        public string ?OrganizadorNombre { get; set; }
+        public string? JuegoNombre { get; set; }
+        public string ?TipoTorneoNombre { get; set; }
     }
 }

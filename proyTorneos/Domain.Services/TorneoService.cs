@@ -10,15 +10,19 @@ namespace Domain.Services
         public TorneoDTO Add(TorneoDTO dto, int usuarioConectadoId)
         {
 
-
             var torneoRepository = new TorneoRepository();
             var inscripcionRepository = new InscripcionRepository();
             var juegoRepository = new JuegoRepository();
+            var tipoTorneoRepository = new TipoTorneoRepository();
             var usuarioRepository = new UsuarioRepository();
 
             var juegoExiste = juegoRepository.GetOne(dto.JuegoId);
             if (juegoExiste == null)
                 throw new ArgumentException($"El juego con ID {dto.JuegoId} no existe");
+
+            var tipoExiste = tipoTorneoRepository.Get(dto.TipoDeTorneoId);
+            if (tipoExiste == null)
+                throw new ArgumentException($"El tipo de torneo con ID {dto.TipoDeTorneoId} no existe");
 
             var organizadorExiste = usuarioRepository.Get(usuarioConectadoId);
             if (organizadorExiste == null)
@@ -38,7 +42,8 @@ namespace Domain.Services
              {
                  FechaApertura = dto.FechaInicioDeInscripciones,
                  FechaCierre = dto.FechaFinDeInscripciones,
-                 TorneoId = torneo.Id
+                 Estado = dto.Estado,
+                 TorneoId = torneo.Id,
              };
 
              inscripcionRepository.Add(inscripcion);
