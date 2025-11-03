@@ -32,6 +32,11 @@ namespace WebAPI
 
             app.MapGet("/inscripciones", () =>
             {
+
+                InscripcionService inscripcionService = new InscripcionService();
+                var inscripciones = inscripcionService.GetAll();
+                return Results.Ok(inscripciones);
+                /*
                 InscripcionService inscripcionService = new InscripcionService();
                 var inscripciones = inscripcionService.GetAll();
 
@@ -43,7 +48,7 @@ namespace WebAPI
                     FechaCierre = i.FechaCierre
                 }).ToList();
 
-                return Results.Ok(dtosResult);
+                return Results.Ok(dtosResult);*/
             })
             .WithName("GetAllInscripciones")
             .Produces<IEnumerable<InscripcionDTO>>(StatusCodes.Status200OK)

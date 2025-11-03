@@ -36,7 +36,7 @@ namespace Domain.Services
             torneo.JuegoId = dto.JuegoId;
             torneo.OrganizadorId = usuarioConectadoId;
 
-            torneoRepository.Add(torneo);
+            torneo = torneoRepository.Add(torneo);
 
             var inscripcion = new Inscripcion
              {
@@ -110,7 +110,7 @@ namespace Domain.Services
                        JuegoId = dto.JuegoId,
                        OrganizadorId = dto.OrganizadorId,
                        TipoDeTorneoId = dto.TipoDeTorneoId,
-                       InscripcionId = dto.InscripcionId,
+                       //InscripcionId = dto.InscripcionId,
                        //Datos relacionados opcionales (para mostrar en el front)
                         JuegoNombre = dto.Juego != null ? dto.Juego.Nombre : "(sin juego)",
                        TipoTorneoNombre = dto.TipoDeTorneo != null ? dto.TipoDeTorneo.Nombre : "(sin tipo)",

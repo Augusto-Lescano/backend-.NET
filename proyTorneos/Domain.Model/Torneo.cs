@@ -35,7 +35,7 @@
         public int OrganizadorId { get; set; }
         public Usuario? Organizador { get; set; }
         public Inscripcion? Inscripcion { get; set; }
-        public int InscripcionId { get; set; }
+        //public int InscripcionId { get; set; }
 
     }
 }
