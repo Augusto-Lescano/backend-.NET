@@ -50,10 +50,10 @@
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(39, 489);
+            btnAgregar.Location = new Point(30, 503);
             btnAgregar.Margin = new Padding(3, 4, 3, 4);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(86, 35);
+            btnAgregar.Size = new Size(162, 35);
             btnAgregar.TabIndex = 1;
             btnAgregar.Text = "Agregar";
             btnAgregar.UseVisualStyleBackColor = true;
@@ -72,10 +72,10 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(146, 489);
+            btnEliminar.Location = new Point(198, 503);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(86, 35);
+            btnEliminar.Size = new Size(141, 35);
             btnEliminar.TabIndex = 3;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;

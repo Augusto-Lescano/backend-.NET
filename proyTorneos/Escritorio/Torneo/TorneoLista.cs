@@ -22,14 +22,20 @@ namespace Escritorio
         {
             InitializeComponent();
             usuarioActual = usuario;
-        
-            if (!usuario.Admin) {
+
+            if (!usuario.Admin)
+            {
                 btnActualizar.Visible = false;
                 btnAgregar.Visible = false;
                 btnEliminar.Visible = false;
             }
+
+            cmbFiltro.Items.AddRange(new String[] { "Nombre Torneo", "Juego", "Organizador", "Region" });
+            cmbFiltro.SelectedIndex = 0;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
         }
 
+        private List<TorneoDTO> torneosCargados = new List<TorneoDTO>();
         public async Task CargarTorneos()
         {
             var torneos = await TorneoApiClient.GetAllAsync();
@@ -42,7 +48,9 @@ namespace Escritorio
             dgvListaTorneos.Columns["InscripcionId"].Visible = false;
             dgvListaTorneos.Columns["OrganizadorId"].Visible = false;
             dgvListaTorneos.Columns["DescripcionDeReglas"].Visible = false;
-            
+
+            torneosCargados = torneos.ToList();
+
         }
 
         public TorneoDTO SeleccionarTorneo()
@@ -110,7 +118,7 @@ namespace Escritorio
             }
             await CargarTorneos();
         }
-        
+
         private async void TorneoLista_Load(object sender, EventArgs e)
         {
             Shared.AjustarDataGridView(dgvListaTorneos);
@@ -130,6 +138,50 @@ namespace Escritorio
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
             await BorrarTorneo();
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            FiltrarTorneos(txtBuscar.Text);
+        }
+
+        private void FiltrarTorneos(string texto)
+        {
+            texto = texto.ToLower();
+
+            if (string.IsNullOrWhiteSpace(texto))
+            {
+                dgvListaTorneos.DataSource = torneosCargados;
+                return;
+            }
+
+            string campo = cmbFiltro.SelectedItem?.ToString() ?? "Nombre";
+            IEnumerable<TorneoDTO> filtrados = torneosCargados;
+
+            switch (campo)
+            {
+                case "Nombre Torneo":
+                    filtrados = torneosCargados.Where(t =>
+                        t.Nombre != null && t.Nombre.ToLower().Contains(texto));
+                    break;
+
+                case "Juego":
+                    filtrados = torneosCargados.Where(t =>
+                        t.JuegoNombre != null && t.JuegoNombre.ToLower().Contains(texto));
+                    break;
+
+                case "Organizador":
+                    filtrados = torneosCargados.Where(t =>
+                        t.OrganizadorNombre != null && t.OrganizadorNombre.ToLower().Contains(texto));
+                    break;
+
+                case "Region":
+                    filtrados = torneosCargados.Where(t =>
+                        t.Region != null && t.Region.ToLower().Contains(texto));
+                    break;
+            }
+
+            dgvListaTorneos.DataSource = filtrados.ToList();
         }
     }
 }
