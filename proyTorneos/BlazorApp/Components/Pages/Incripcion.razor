@@ -1,0 +1,49 @@
+﻿@page "/inscripciones"
+@using DTOs
+@using API.Clients
+
+<h3>Inscripcion</h3>
+
+@if (incripcion == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estado</th>
+                <th>FechaApertura</th>
+                <th>FechaCierre</th>
+                <th>Torneo Id</th>
+                <th>Torneo Nombre</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in incripcion)
+            {
+                <tr>
+                    <td>@t.Id</td>
+                    <td>@t.Estado</td>
+                    <td>@t.FechaApertura</td>
+                    <td>@t.FechaCierre</td>
+                    <td>@t.TorneoId</td>
+                    <td>@t.TorneoNombre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<InscripcionDTO>? incripcion;
+
+    protected override async Task OnInitializedAsync()
+    {
+        incripcion = await InscripcionApiClient.GetAllAsync();
+    }
+}

@@ -46,7 +46,7 @@ namespace API.Clients
             }
         }
 
-        public static async Task<IEnumerable<TorneoDTO>> GetAllAsync() {
+        public async static  Task<IEnumerable<TorneoDTO>> GetAllAsync() {
             try {
                 HttpResponseMessage response = await client.GetAsync("torneos");
                 if (response.IsSuccessStatusCode)
