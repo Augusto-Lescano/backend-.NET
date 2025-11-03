@@ -1,0 +1,42 @@
+﻿@page "/tipoTorneo"
+
+@using DTOs
+@using API.TipoTorneo
+
+<h3>Tipo de Torneos</h3>
+
+@if (tipoTorneos == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in tipoTorneos)
+            {
+                <tr>
+                    <td>@t.Id</td>
+                    <td>@t.Nombre</td>
+                    <td>@t.Descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<TipoTorneoDTO>? tipoTorneos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tipoTorneos = await TipoTorneoApiClient.GetAllAsync();
+    }
+}

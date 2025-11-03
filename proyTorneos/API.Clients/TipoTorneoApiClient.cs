@@ -1,27 +1,32 @@
 ﻿using DTOs;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
+
 
 namespace API.TipoTorneo
 {
 
     public class TipoTorneoApiClient
     {
-        private static HttpClient client = new HttpClient();
+        private static readonly HttpClient client;
+
 
         static TipoTorneoApiClient()
+        {
+            client = new HttpClient
+            {
+                BaseAddress = new Uri("http://localhost:3000")
+            };
+        }
+        /*
+        public TipoTorneoApiClient(HttpClient httpClient)
         {
             client.BaseAddress = new Uri("http://localhost:3000/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
+        */
         public static async Task<TipoTorneoDTO> GetAsync(int id)
         {
             try
@@ -50,7 +55,7 @@ namespace API.TipoTorneo
             }
         }
 
-        public async static Task<IEnumerable<TipoTorneoDTO>> GetAllAsync()
+        public static async Task<IEnumerable<TipoTorneoDTO>> GetAllAsync()
         {
             try
             {
@@ -74,7 +79,7 @@ namespace API.TipoTorneo
         }
 
 
-        public async static Task AddAsync(TipoTorneoDTO tipoTorneo)
+        public static async Task AddAsync(TipoTorneoDTO tipoTorneo)
         {
             try
             {

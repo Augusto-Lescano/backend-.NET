@@ -1,0 +1,64 @@
+﻿@page "/torneo"
+@using DTOs
+@using API.Clients
+
+<h3>Torneos</h3>
+
+@if (torneos == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion Reglas</th>
+                <th>Tipo de torneo</th>
+                <th>Cantidad de Jugadores</th>
+                <th>Fecha de inicio</th>
+                <th>Fecha de fin</th>
+                <th>Organizador</th>
+                <th>Juego</th>
+                <th>Inicio inscripcion</th>
+                <th>Fin inscripcion</th>
+                <th>Resultado</th>
+                <th>Region</th>
+                <th>Estado</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in torneos)
+            {
+                <tr>
+                    <td>@t.Id</td>
+                    <td>@t.Nombre</td>
+                    <td>@t.DescripcionDeReglas</td>
+                    <td>@t.TipoTorneoNombre</td>
+                    <td>@t.CantidadDeJugadores</td>
+                    <td>@t.FechaInicio</td>
+                    <td>@t.FechaFin</td>
+                    <td>@t.OrganizadorNombre</td>
+                    <td>@t.JuegoNombre</td>
+                    <td>@t.FechaInicioDeInscripciones</td>
+                    <td>@t.FechaFinDeInscripciones</td>
+                    <td>@t.Resultado</td>
+                    <td>@t.Region</td>
+                    <td>@t.Estado</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<TorneoDTO>? torneos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        torneos = await TorneoApiClient.GetAllAsync();
+    }
+}

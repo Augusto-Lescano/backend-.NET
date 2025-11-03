@@ -1,0 +1,42 @@
+﻿@page "/juegos"
+
+@using DTOs
+@using API.Clients
+
+<h3>Juegos</h3>
+
+@if (juegos == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in juegos)
+            {
+                <tr>
+                    <td>@t.Id</td>
+                    <td>@t.Nombre</td>
+                    <td>@t.Descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<JuegoDTO>? juegos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        juegos = await JuegoApiClient.GetAllAsync();
+    }
+}
