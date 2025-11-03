@@ -30,7 +30,7 @@ namespace Escritorio
                 btnEliminar.Visible = false;
             }
 
-            cmbFiltro.Items.AddRange(new String[] { "Nombre Torneo", "Juego", "Organizador", "Region" });
+            cmbFiltro.Items.AddRange(new String[] { "Nombre Torneo", "Juego", "Organizador", "Region", "Estado" });
             cmbFiltro.SelectedIndex = 0;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
         }
@@ -178,6 +178,11 @@ namespace Escritorio
                 case "Region":
                     filtrados = torneosCargados.Where(t =>
                         t.Region != null && t.Region.ToLower().Contains(texto));
+                    break;
+
+                case "Estado":
+                    filtrados = torneosCargados.Where(t =>
+                        t.Estado != null && t.Estado.ToLower().Contains(texto));
                     break;
             }
 

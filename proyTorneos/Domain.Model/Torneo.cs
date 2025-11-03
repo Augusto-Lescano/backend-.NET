@@ -25,7 +25,24 @@
             FechaFinDeInscripciones = fechaFinDeInscripciones;
             Resultado = resultado;
             Region = region;
-            Estado = estado;
+            SetEstado();
+        }
+
+        public void SetEstado()
+        {
+            if (FechaInicio > DateTime.Now && FechaFin > DateTime.Now)
+            {
+                Estado = "Pronto";
+            }
+            else if (FechaFin <= DateTime.Now)
+            {
+                Estado = "Finalizado";
+            }
+            else if (FechaInicio <= DateTime.Now && FechaFin > DateTime.Now)
+            {
+                Estado = "En Curso";
+            }
+
         }
         public int JuegoId { get; set; }
         public Juego? Juego { get; set; }
