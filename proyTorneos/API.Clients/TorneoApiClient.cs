@@ -68,6 +68,7 @@ namespace API.Clients
 
         public static async Task AddAsync(TorneoDTO torneo) {
             try {
+                client.DefaultRequestHeaders.Remove("X-Usuario-Id");
                 client.DefaultRequestHeaders.Add("X-Usuario-Id", usuarioId.ToString());
 
                 HttpResponseMessage response = await client.PostAsJsonAsync("torneos",torneo);

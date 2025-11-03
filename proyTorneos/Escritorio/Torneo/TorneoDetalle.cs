@@ -27,6 +27,7 @@ namespace Escritorio
             this.Text = "Agregar un Torneo";
             usuarioConectadoId = usuarioConectado;
             this.Load += TorneoDetalle_Load;
+            cmbEstado.Visible = false;
         }
 
         public TorneoDetalle(TorneoDTO dto)
