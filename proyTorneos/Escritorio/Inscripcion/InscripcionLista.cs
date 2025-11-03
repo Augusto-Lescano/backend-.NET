@@ -16,13 +16,11 @@ namespace Escritorio
         public InscripcionLista(bool admin)
         {
             InitializeComponent();
-            Admin = admin;
-            if (!admin)
-            {
-                btnActualizar.Visible = false;
-                btnAgregar.Visible = true;
+
+                btnActualizar.Visible = true;
+                btnAgregar.Visible = false;
                 btnEliminar.Visible = false;
-            }
+
         }
         public async Task CargarInscripciones()
         {
