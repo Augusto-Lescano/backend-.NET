@@ -23,13 +23,14 @@ namespace Data
                 .ToList();
         }
 
-        public void Add(Torneo torneo)
+        public Torneo Add(Torneo torneo)
         {
             using var context = CreateContext();
 
             //Guarda el torneo
             context.Torneos.Add(torneo);
             context.SaveChanges();
+            return torneo;
 
 
             // comentado momentaneamente
