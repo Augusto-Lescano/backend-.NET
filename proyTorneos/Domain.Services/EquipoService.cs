@@ -29,7 +29,9 @@ namespace Domain.Services
             return new EquipoDTO
             {
                 Id = equipo.Id,
-                Nombre = equipo.Nombre
+                Nombre = equipo.Nombre,
+                LiderId = equipo.LiderId,
+                LiderNombre = equipo.Lider?.NombreUsuario ?? "(sin nombre)"
             };
         }
 
@@ -39,7 +41,9 @@ namespace Domain.Services
             return equipoRepository.GetAll().Select(equipo => new EquipoDTO
             {
                 Id = equipo.Id,
-                Nombre = equipo.Nombre
+                Nombre = equipo.Nombre,
+                LiderId = equipo.LiderId,
+                LiderNombre = equipo.Lider?.NombreUsuario ?? "(sin nombre)"
             }).ToList();
         }
 

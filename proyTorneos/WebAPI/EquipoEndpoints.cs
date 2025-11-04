@@ -19,7 +19,9 @@ namespace WebAPI
                 var dtoResult = new EquipoDTO
                 {
                     Id = equipo.Id,
-                    Nombre = equipo.Nombre
+                    Nombre = equipo.Nombre,
+                    LiderId = equipo.LiderId,
+                    LiderNombre = equipo.LiderNombre
                 };
                 return Results.Ok(dtoResult);
             })
@@ -63,7 +65,9 @@ namespace WebAPI
                 var dtosResult = equipos.Select(e => new EquipoDTO
                 {
                     Id = e.Id,
-                    Nombre = e.Nombre
+                    Nombre = e.Nombre,
+                    LiderId = e.LiderId,
+                    LiderNombre = e.LiderNombre
                 }).ToList();
 
                 return Results.Ok(dtosResult);
@@ -77,14 +81,22 @@ namespace WebAPI
                 try
                 {
                     EquipoService equipoService = new EquipoService();
-                    Equipo equipo = new Equipo(dto.Id, dto.Nombre);
+
+                    //Crear el equipo con el líder asignado
+                    Equipo equipo = new Equipo(dto.Id, dto.Nombre)
+                    {
+                        LiderId = dto.LiderId
+                    };
+
                     equipoService.Add(equipo);
 
                     var dtoResult = new EquipoDTO
                     {
                         Id = equipo.Id,
-                        Nombre = equipo.Nombre
+                        Nombre = equipo.Nombre,
+                        LiderId = equipo.LiderId
                     };
+
                     return Results.Created($"/equipos/{dtoResult.Id}", dtoResult);
                 }
                 catch (ArgumentException ex)

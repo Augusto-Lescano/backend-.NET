@@ -90,7 +90,7 @@ namespace Escritorio
 
         private void mnuEquipos_Click(object sender, EventArgs e)
         {
-            EquipoLista equipoLista = new EquipoLista(usuarioActual.Admin);
+            EquipoLista equipoLista = new EquipoLista(usuarioActual);
             mostrarFormularios(equipoLista);
         }
     }

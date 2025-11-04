@@ -12,9 +12,24 @@ namespace Data
             return new TPIContext();
         }
 
+        /*public void Add(Equipo equipo)
+        {
+            using var context = CreateContext();
+            context.Equipos.Add(equipo);
+            context.SaveChanges();
+        }*/
+
         public void Add(Equipo equipo)
         {
             using var context = CreateContext();
+
+            var usuario = context.Usuarios.Find(equipo.LiderId);
+
+            if (usuario == null)
+                throw new InvalidOperationException($"No existe el usuario líder con ID {equipo.LiderId}");
+
+            equipo.Lider = usuario; // ⚠️ asignamos la entidad completa
+
             context.Equipos.Add(equipo);
             context.SaveChanges();
         }

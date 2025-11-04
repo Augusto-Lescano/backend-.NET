@@ -12,10 +12,13 @@ namespace Escritorio
 {
     public partial class EquipoLista : Form
     {
-        public EquipoLista(bool admin)
+        private readonly UsuarioDTO usuarioActual;
+        public EquipoLista(UsuarioDTO usuario)
         {
             InitializeComponent();
-            if (!admin)
+            usuarioActual = usuario;
+
+            if (!usuario.Admin)
             {
                 btnActualizar.Visible = false;
                 btnAgregar.Visible = false;
@@ -35,7 +38,7 @@ namespace Escritorio
 
         public async Task AgregarEquipo()
         {
-            EquipoDetalle detalle = new EquipoDetalle();
+            EquipoDetalle detalle = new EquipoDetalle(usuarioActual.Id);
             Shared.AjustarFormMDI(detalle);
 
             if (detalle.ShowDialog() == DialogResult.OK)
