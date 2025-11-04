@@ -28,6 +28,33 @@ namespace WebAPI
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
 
+            app.MapGet("/equipos/usuario/{usuarioId}", (int usuarioId) =>
+            {
+                EquipoService equipoService = new EquipoService();
+                var equipo = equipoService.GetEquipoPorLider(usuarioId); // Método que vamos a definir en el service
+
+                if (equipo is null)
+                    return Results.NotFound();
+
+                var dtoResult = new EquipoDTO
+                {
+                    Id = equipo.Id,
+                    Nombre = equipo.Nombre,
+                    LiderId = equipo.LiderId,
+                    Usuarios = equipo.Usuarios.Select(u => new UsuarioDTO
+                    {
+                        Id = u.Id,
+                        Nombre = u.Nombre
+                    }).ToList()
+                };
+
+                return Results.Ok(dtoResult);
+            })
+            .WithName("GetEquipoDelUsuario")
+            .Produces<EquipoDTO>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithOpenApi();
+
             app.MapGet("/equipos", () =>
             {
                 EquipoService equipoService = new EquipoService();

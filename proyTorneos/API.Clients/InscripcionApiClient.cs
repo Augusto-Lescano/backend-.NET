@@ -20,11 +20,12 @@ namespace API.Clients
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        //Obtener una inscripción por Id
         public static async Task<InscripcionDTO> GetAsync(int id)
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync("inscripciones/" + id);
+                HttpResponseMessage response = await client.GetAsync($"inscripciones/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -37,33 +38,39 @@ namespace API.Clients
                 else
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error al obtener la inscripción con Id {id}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                    throw new Exception($"Error al obtener la inscripción con Id {id}. Status: {response.StatusCode}. Detalle: {errorContent}");
                 }
             }
             catch (HttpRequestException ex)
             {
                 throw new Exception($"Error de conexión al obtener la inscripción con Id {id}: {ex.Message}", ex);
             }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al obtener la inscripción con Id {id}: {ex.Message}", ex);
+            }
         }
 
+        //Obtener todas las inscripciones
         public static async Task<IEnumerable<InscripcionDTO>> GetAllAsync()
         {
-            
             try
             {
                 HttpResponseMessage response = await client.GetAsync("inscripciones");
 
-                //var inscripciones = await response.Content.ReadFromJsonAsync<IEnumerable<InscripcionDTO>>();
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<InscripcionDTO>>();
+                    var inscripciones = await response.Content.ReadFromJsonAsync<IEnumerable<InscripcionDTO>>();
+                    if (inscripciones == null)
+                        throw new Exception("El servidor devolvió una respuesta vacía.");
+
+                    return inscripciones;
                 }
                 else
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
                     throw new Exception($"Error al obtener las inscripciones. Status: {response.StatusCode}. Detalle: {errorContent}");
                 }
-
             }
             catch (HttpRequestException ex)
             {
@@ -75,6 +82,7 @@ namespace API.Clients
             }
         }
 
+        //Crear nueva inscripción
         public static async Task AddAsync(InscripcionDTO inscripcion)
         {
             try
@@ -84,7 +92,7 @@ namespace API.Clients
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error al crear la inscripción. Status: {response.StatusCode}, Detalle: {errorContent}");
+                    throw new Exception($"Error al crear la inscripción. Status: {response.StatusCode}. Detalle: {errorContent}");
                 }
             }
             catch (HttpRequestException ex)
@@ -97,16 +105,17 @@ namespace API.Clients
             }
         }
 
+        //Eliminar inscripción
         public static async Task DeleteAsync(int id)
         {
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync("inscripciones/" + id);
+                HttpResponseMessage response = await client.DeleteAsync($"inscripciones/{id}");
 
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error al eliminar la inscripción con Id {id}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                    throw new Exception($"Error al eliminar la inscripción con Id {id}. Status: {response.StatusCode}. Detalle: {errorContent}");
                 }
             }
             catch (HttpRequestException ex)
@@ -119,6 +128,7 @@ namespace API.Clients
             }
         }
 
+        //Actualizar inscripción
         public static async Task UpdateAsync(InscripcionDTO inscripcion)
         {
             try
@@ -133,11 +143,59 @@ namespace API.Clients
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception($"Error de conexión al actualizar la inscripción con Id:{inscripcion.Id}. Mensaje: {ex.Message}", ex);
+                throw new Exception($"Error de conexión al actualizar la inscripción con Id {inscripcion.Id}: {ex.Message}", ex);
             }
             catch (TaskCanceledException ex)
             {
-                throw new Exception($"Timeout al actualizar la inscripción con Id:{inscripcion.Id}. Mensaje: {ex.Message}", ex);
+                throw new Exception($"Timeout al actualizar la inscripción con Id {inscripcion.Id}: {ex.Message}", ex);
+            }
+        }
+
+        //Inscribir usuario individual
+        public static async Task InscribirUsuarioAsync(int inscripcionId, int usuarioId)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync(
+                    $"inscripciones/{inscripcionId}/usuarios/{usuarioId}", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al inscribir usuario. Status: {response.StatusCode}. Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al inscribir usuario: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al inscribir usuario: {ex.Message}", ex);
+            }
+        }
+
+        //Inscribir equipo (solo por líder)
+        public static async Task InscribirEquipoAsync(int inscripcionId, int usuarioId)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync(
+                    $"inscripciones/{inscripcionId}/equipos/{usuarioId}", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al inscribir equipo. Status: {response.StatusCode}. Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al inscribir equipo: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al inscribir equipo: {ex.Message}", ex);
             }
         }
     }

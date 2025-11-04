@@ -57,5 +57,12 @@ namespace Domain.Services
                 return false;
             }
         }
+
+        public Equipo? GetEquipoPorLider(int usuarioId)
+        {
+            var equipoRepository = new EquipoRepository();
+            return equipoRepository.GetEquipoPorLider(usuarioId);
+        }
+
     }
 }

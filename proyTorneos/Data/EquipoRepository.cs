@@ -35,13 +35,23 @@ namespace Data
         public Equipo? Get(int id)
         {
             using var context = CreateContext();
-            return context.Equipos.Find(id);
+            return context.Equipos
+                .Include(e => e.Lider)
+                .Include(e => e.Usuarios)
+                .Include(e => e.Inscripciones)
+                    .ThenInclude(i => i.Torneo)
+                .FirstOrDefault(e => e.Id == id);
         }
 
         public IEnumerable<Equipo> GetAll()
         {
             using var context = CreateContext();
-            return context.Equipos.ToList();
+            return context.Equipos
+                .Include(e => e.Lider)
+                .Include(e => e.Usuarios)
+                .Include(e => e.Inscripciones)
+                    .ThenInclude(i => i.Torneo)
+                .ToList();
         }
 
         public bool Update(Equipo equipo)
@@ -56,5 +66,14 @@ namespace Data
             }
             return false;
         }
+
+        public Equipo? GetEquipoPorLider(int usuarioId)
+        {
+            using var context = CreateContext();
+            return context.Equipos
+                          .Include(e => e.Usuarios)
+                          .FirstOrDefault(e => e.LiderId == usuarioId);
+        }
+
     }
 }

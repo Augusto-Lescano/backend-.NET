@@ -13,13 +13,10 @@ namespace Domain.Model
         public string Clave { get; private set; }
         public string Pais {  get; private set; }
         public string NombreUsuario { get; private set; }
-       
         public DateTime FechaAlta { get; private set; }
-        
         public bool Admin { get; private set; }
-
-        public int? InscripcionId { get; set; }   
-        public Inscripcion Inscripcion { get; set; }
+        public ICollection<Inscripcion> Inscripciones { get; set; } = new List<Inscripcion>();
+        public ICollection<Equipo> Equipos { get; set; } = new List<Equipo>();
 
         public Usuario(int id, string nombre, string apellido, string email, string clave, string pais, string nombreUsuario, DateTime fechaAlta, bool admin = false)
         {
@@ -29,8 +26,7 @@ namespace Domain.Model
             SetEmail(email);
             SetClave(clave);
             SetPais(pais);
-            SetNombreUsuario(nombreUsuario);
-            
+            SetNombreUsuario(nombreUsuario);       
             SetFechaAlta(fechaAlta);
             SetAdmin(admin);
         }

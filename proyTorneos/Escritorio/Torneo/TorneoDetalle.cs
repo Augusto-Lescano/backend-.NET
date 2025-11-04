@@ -28,6 +28,7 @@ namespace Escritorio
             usuarioConectadoId = usuarioConectado;
             this.Load += TorneoDetalle_Load;
             cmbEstado.Visible = false;
+            labelEstado.Visible = false;
         }
 
         public TorneoDetalle(TorneoDTO dto)

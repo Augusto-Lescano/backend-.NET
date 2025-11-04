@@ -2,52 +2,65 @@
 using Domain.Model;
 using DTOs;
 
-
 namespace Domain.Services
 {
     public class TorneoService
     {
         public TorneoDTO Add(TorneoDTO dto, int usuarioConectadoId)
         {
-
             var torneoRepository = new TorneoRepository();
             var inscripcionRepository = new InscripcionRepository();
             var juegoRepository = new JuegoRepository();
             var tipoTorneoRepository = new TipoTorneoRepository();
             var usuarioRepository = new UsuarioRepository();
 
-            var juegoExiste = juegoRepository.GetOne(dto.JuegoId);
-            if (juegoExiste == null)
+            //Validaciones previas
+            if (juegoRepository.GetOne(dto.JuegoId) == null)
                 throw new ArgumentException($"El juego con ID {dto.JuegoId} no existe");
 
-            var tipoExiste = tipoTorneoRepository.Get(dto.TipoDeTorneoId);
-            if (tipoExiste == null)
+            if (tipoTorneoRepository.Get(dto.TipoDeTorneoId) == null)
                 throw new ArgumentException($"El tipo de torneo con ID {dto.TipoDeTorneoId} no existe");
 
-            var organizadorExiste = usuarioRepository.Get(usuarioConectadoId);
-            if (organizadorExiste == null)
+            if (usuarioRepository.Get(usuarioConectadoId) == null)
                 throw new ArgumentException($"El organizador con ID {usuarioConectadoId} no existe");
 
-            var torneo = new Torneo(0, dto.Nombre, dto.DescripcionDeReglas, dto.CantidadDeJugadores,
-                dto.FechaInicio, dto.FechaFin, dto.FechaInicioDeInscripciones, dto.FechaFinDeInscripciones,
-                dto.Resultado, dto.Region, dto.Estado);
+            //Crear torneo
+            var torneo = new Torneo(
+                0,
+                dto.Nombre,
+                dto.DescripcionDeReglas,
+                dto.CantidadDeJugadores,
+                dto.FechaInicio,
+                dto.FechaFin,
+                dto.FechaInicioDeInscripciones,
+                dto.FechaFinDeInscripciones,
+                dto.Resultado,
+                dto.Region,
+                dto.Estado
+            );
 
             torneo.TipoDeTorneoId = dto.TipoDeTorneoId;
             torneo.JuegoId = dto.JuegoId;
             torneo.OrganizadorId = usuarioConectadoId;
 
-            torneo = torneoRepository.Add(torneo);
+            torneo = torneoRepository.Add(torneo); //Se guarda torneo
 
+            //Crear inscripción asociada
             var inscripcion = new Inscripcion
-             {
-                 FechaApertura = dto.FechaInicioDeInscripciones,
-                 FechaCierre = dto.FechaFinDeInscripciones,
-                 Estado = dto.Estado,
-                 TorneoId = torneo.Id,
-             };
+            {
+                FechaApertura = dto.FechaInicioDeInscripciones,
+                FechaCierre = dto.FechaFinDeInscripciones,
+                Estado = dto.Estado,
+                TorneoId = torneo.Id,
+            };
 
-             inscripcionRepository.Add(inscripcion);
+            inscripcionRepository.Add(inscripcion); //Se guarda inscripción
 
+            //Actualizar torneo con el Id de inscripción
+            torneo.InscripcionId = inscripcion.Id;
+            torneoRepository.Update(torneo); //IMPORTANTE: guarda relación en DB
+
+            //Preparar DTO de respuesta
             dto.Id = torneo.Id;
             dto.OrganizadorId = usuarioConectadoId;
             dto.InscripcionId = inscripcion.Id;
@@ -55,35 +68,49 @@ namespace Domain.Services
             return dto;
         }
 
-
-        public bool Delete(int id) {
+        public bool Delete(int id)
+        {
             var torneoRepository = new TorneoRepository();
             return torneoRepository.Delete(id);
         }
 
-        public bool Update(TorneoDTO dto) {
+        public bool Update(TorneoDTO dto)
+        {
             var torneoRepository = new TorneoRepository();
-
-            var torneo = new Torneo(dto.Id, dto.Nombre, dto.DescripcionDeReglas, dto.CantidadDeJugadores, dto.FechaInicio, dto.FechaFin, dto.FechaInicioDeInscripciones, dto.FechaFinDeInscripciones, dto.Resultado, dto.Region, dto.Estado);
-
+            var torneo = new Torneo(
+                dto.Id,
+                dto.Nombre,
+                dto.DescripcionDeReglas,
+                dto.CantidadDeJugadores,
+                dto.FechaInicio,
+                dto.FechaFin,
+                dto.FechaInicioDeInscripciones,
+                dto.FechaFinDeInscripciones,
+                dto.Resultado,
+                dto.Region,
+                dto.Estado
+            );
             return torneoRepository.Update(torneo);
         }
 
-        public TorneoDTO GetOne(int id) {
+        public TorneoDTO GetOne(int id)
+        {
             var torneoRepository = new TorneoRepository();
             var dto = torneoRepository.GetOne(id);
-            return new TorneoDTO {
-                Id=dto.Id,
-                Nombre=dto.Nombre,
-                DescripcionDeReglas=dto.DescripcionDeReglas,
-                CantidadDeJugadores=dto.CantidadDeJugadores,
-                FechaInicio=dto.FechaInicio,
-                FechaFin=dto.FechaFin,
-                FechaInicioDeInscripciones=dto.FechaInicioDeInscripciones,
-                FechaFinDeInscripciones=dto.FechaFinDeInscripciones,
-                Resultado=dto.Resultado,
-                Region=dto.Region,
-                Estado=dto.Estado,
+
+            return new TorneoDTO
+            {
+                Id = dto.Id,
+                Nombre = dto.Nombre,
+                DescripcionDeReglas = dto.DescripcionDeReglas,
+                CantidadDeJugadores = dto.CantidadDeJugadores,
+                FechaInicio = dto.FechaInicio,
+                FechaFin = dto.FechaFin,
+                FechaInicioDeInscripciones = dto.FechaInicioDeInscripciones,
+                FechaFinDeInscripciones = dto.FechaFinDeInscripciones,
+                Resultado = dto.Resultado,
+                Region = dto.Region,
+                Estado = dto.Estado
             };
         }
 
@@ -92,31 +119,27 @@ namespace Domain.Services
             var torneoRepository = new TorneoRepository();
             var torneos = torneoRepository.GetAll();
 
-            return (from dto in torneos
-                   select new TorneoDTO
-                   {
-                       Id = dto.Id,
-                       Nombre = dto.Nombre,
-                       DescripcionDeReglas = dto.DescripcionDeReglas,
-                       CantidadDeJugadores = dto.CantidadDeJugadores,
-                       FechaInicio = dto.FechaInicio,
-                       FechaFin = dto.FechaFin,
-                       FechaInicioDeInscripciones = dto.FechaInicioDeInscripciones,
-                       FechaFinDeInscripciones = dto.FechaFinDeInscripciones,
-                       Resultado = dto.Resultado,
-                       Region = dto.Region,
-                       Estado = dto.Estado,
-                       //Claves foráneas
-                       JuegoId = dto.JuegoId,
-                       OrganizadorId = dto.OrganizadorId,
-                       TipoDeTorneoId = dto.TipoDeTorneoId,
-                       //InscripcionId = dto.InscripcionId,
-                       //Datos relacionados opcionales (para mostrar en el front)
-                        JuegoNombre = dto.Juego != null ? dto.Juego.Nombre : "(sin juego)",
-                       TipoTorneoNombre = dto.TipoDeTorneo != null ? dto.TipoDeTorneo.Nombre : "(sin tipo)",
-                       OrganizadorNombre = dto.Organizador != null ? dto.Organizador.NombreUsuario : "(Sin nombre)"
-                   }).ToList();
-
+            return torneos.Select(dto => new TorneoDTO
+            {
+                Id = dto.Id,
+                Nombre = dto.Nombre,
+                DescripcionDeReglas = dto.DescripcionDeReglas,
+                CantidadDeJugadores = dto.CantidadDeJugadores,
+                FechaInicio = dto.FechaInicio,
+                FechaFin = dto.FechaFin,
+                FechaInicioDeInscripciones = dto.FechaInicioDeInscripciones,
+                FechaFinDeInscripciones = dto.FechaFinDeInscripciones,
+                Resultado = dto.Resultado,
+                Region = dto.Region,
+                Estado = dto.Estado,
+                JuegoId = dto.JuegoId,
+                OrganizadorId = dto.OrganizadorId,
+                TipoDeTorneoId = dto.TipoDeTorneoId,
+                InscripcionId = dto.InscripcionId,
+                JuegoNombre = dto.Juego?.Nombre ?? "(sin juego)",
+                TipoTorneoNombre = dto.TipoDeTorneo?.Nombre ?? "(sin tipo)",
+                OrganizadorNombre = dto.Organizador?.NombreUsuario ?? "(sin nombre)"
+            }).ToList();
         }
     }
 }

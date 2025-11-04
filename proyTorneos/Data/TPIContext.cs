@@ -86,11 +86,6 @@ namespace Data
 
                 entity.HasIndex(e => e.NombreUsuario)
                     .IsUnique();
-
-                entity.HasOne(u => u.Inscripcion)
-                      .WithMany(i => i.Usuarios)
-                      .HasForeignKey(u => u.InscripcionId)
-                      .IsRequired(false);
             });
 
             modelBuilder.Entity<TipoTorneo>(entity =>
@@ -184,6 +179,35 @@ namespace Data
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
+            /*modelBuilder.Entity<Inscripcion>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Estado)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaApertura)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaCierre)
+                    .IsRequired();
+
+                //Relación Inscripción - Usuario (N:M)
+                 entity.HasMany(i => i.Usuarios)
+                     .WithMany(u => u.Inscripciones)
+                     .UsingEntity(j => j.ToTable("UsuariosInscripciones"));
+
+                //Relación Inscripción - Equipo (N:M)
+                entity.HasMany(i => i.Equipos)
+                    .WithMany(e => e.Inscripciones)
+                    .UsingEntity(j => j.ToTable("EquiposInscripciones"));
+            });*/
+
+
+
             modelBuilder.Entity<Inscripcion>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -199,7 +223,51 @@ namespace Data
 
                 entity.Property(e => e.FechaCierre)
                     .IsRequired();
+
+                //Relación Inscripción - Usuario (N:M) CON CLAVE PRIMARIA DEFINIDA
+                entity.HasMany(i => i.Usuarios)
+                    .WithMany(u => u.Inscripciones)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "UsuariosInscripciones",
+                        j => j
+                            .HasOne<Usuario>()
+                            .WithMany()
+                            .HasForeignKey("UsuarioId")
+                            .OnDelete(DeleteBehavior.NoAction),
+                        j => j
+                            .HasOne<Inscripcion>()
+                            .WithMany()
+                            .HasForeignKey("InscripcionId")
+                            .OnDelete(DeleteBehavior.NoAction),
+                        j =>
+                        {
+                            j.HasKey("UsuarioId", "InscripcionId");
+                            j.ToTable("UsuariosInscripciones");
+                        });
+
+                //Relación Inscripción - Equipo (N:M) CON CLAVE PRIMARIA DEFINIDA
+                entity.HasMany(i => i.Equipos)
+                    .WithMany(e => e.Inscripciones)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "EquiposInscripciones",
+                        j => j
+                            .HasOne<Equipo>()
+                            .WithMany()
+                            .HasForeignKey("EquipoId")
+                            .OnDelete(DeleteBehavior.NoAction),
+                        j => j
+                            .HasOne<Inscripcion>()
+                            .WithMany()
+                            .HasForeignKey("InscripcionId")
+                            .OnDelete(DeleteBehavior.NoAction),
+                        j =>
+                        {
+                            j.HasKey("EquipoId", "InscripcionId");
+                            j.ToTable("EquiposInscripciones");
+                        });
             });
+
+
 
             modelBuilder.Entity<Equipo>(entity =>
             {
@@ -211,10 +279,10 @@ namespace Data
                 entity.Property(e => e.Nombre)
                     .IsRequired();
 
-                entity.HasOne(u => u.Inscripcion)
-                      .WithMany(i => i.Equipos)
-                      .HasForeignKey(u => u.InscripcionId)
-                      .IsRequired(false);
+                entity.HasOne(e => e.Lider)
+                    .WithMany()
+                    .HasForeignKey(e => e.LiderId)
+                    .OnDelete(DeleteBehavior.Restrict); //Esto evita que si se elimina un usuario, se borre accidentalmente su equipo.
             });
         }
     }

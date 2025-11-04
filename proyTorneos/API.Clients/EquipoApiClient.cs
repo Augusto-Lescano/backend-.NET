@@ -133,5 +133,36 @@ namespace API.Clients
                 throw new Exception($"Timeout al actualizar el equipo con Id:{equipo.Id}. Mensaje: {ex.Message}", ex);
             }
         }
+
+        public static async Task<EquipoDTO?> GetEquipoDelUsuarioAsync(int usuarioId)
+        {
+            try
+            {
+                //API endpoint: "equipos/usuario/{usuarioId}"
+                HttpResponseMessage response = await client.GetAsync($"equipos/usuario/{usuarioId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var equipo = await response.Content.ReadFromJsonAsync<EquipoDTO>();
+                    if (equipo == null)
+                        throw new Exception($"El servidor devolvió una respuesta vacía para el equipo del usuario con Id {usuarioId}.");
+
+                    return equipo;
+                }
+                else
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al obtener el equipo del usuario con Id {usuarioId}. Status: {response.StatusCode}, Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al obtener el equipo del usuario con Id {usuarioId}: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al obtener el equipo del usuario con Id {usuarioId}: {ex.Message}", ex);
+            }
+        }
     }
 }

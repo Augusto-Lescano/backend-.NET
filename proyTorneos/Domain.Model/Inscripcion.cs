@@ -10,7 +10,7 @@
         public Torneo? Torneo { get; set; }
         public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
         public ICollection<Equipo> Equipos { get; set; } = new List<Equipo>();
-
+        
         public Inscripcion() { }
 
         public Inscripcion(int id, string estado, DateTime fechaApertura, DateTime fechaCierre)

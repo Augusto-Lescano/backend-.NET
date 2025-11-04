@@ -4,16 +4,19 @@ namespace Data
 {
     public class TorneoRepository
     {
-        private TPIContext CreateContext() {
+        private TPIContext CreateContext()
+        {
             return new TPIContext();
         }
 
-        public Torneo GetOne(int id) {
+        public Torneo GetOne(int id)
+        {
             using var context = CreateContext();
             return context.Torneos.Find(id);
         }
 
-        public IEnumerable<Torneo> GetAll() {
+        public IEnumerable<Torneo> GetAll()
+        {
             using var context = CreateContext();
             return context.Torneos
                 .Include(t => t.Juego)
@@ -46,10 +49,11 @@ namespace Data
             };
 
             context.Inscripciones.Add(inscripcion);
-            context.SaveChanges();*/ 
+            context.SaveChanges();*/
         }
 
-        public bool Delete(int id) {
+        public bool Delete(int id)
+        {
             using var context = CreateContext();
             var torneo = context.Torneos.Find(id);
             if (torneo != null)
@@ -58,7 +62,8 @@ namespace Data
                 context.SaveChanges();
                 return true;
             }
-            else {
+            else
+            {
                 return false;
             }
         }
@@ -69,7 +74,7 @@ namespace Data
             var torneoToUpdate = context.Torneos.Find(torneo.Id);
             if (torneoToUpdate != null)
             {
-                torneoToUpdate.Nombre= torneo.Nombre;
+                torneoToUpdate.Nombre = torneo.Nombre;
                 torneoToUpdate.DescripcionDeReglas = torneo.DescripcionDeReglas;
                 torneoToUpdate.CantidadDeJugadores = torneo.CantidadDeJugadores;
                 torneoToUpdate.FechaInicio = torneo.FechaInicio;
@@ -78,21 +83,14 @@ namespace Data
                 torneoToUpdate.Resultado = torneo.Resultado;
                 torneoToUpdate.Region = torneo.Region;
                 torneoToUpdate.Estado = torneo.Estado;
+                torneoToUpdate.InscripcionId = torneo.InscripcionId;
                 context.SaveChanges();
                 return true;
             }
             else
-            { 
-                return false; 
+            {
+                return false;
             }
-        }
-
-        private string CalcularEstadoInscripcion(DateTime apertura, DateTime cierre)
-        {
-            var hoy = DateTime.Now;
-            if (hoy < apertura) return "Pronto...";
-            if (hoy >= apertura && hoy < cierre) return "Abierto";
-            return "Finalizado";
         }
     }
 }
