@@ -82,13 +82,36 @@ namespace Data
             return false;
         }
 
+        //Devuelve todos
+        public IEnumerable<Equipo> GetEquiposPorLider(int usuarioId)
+        {
+            using var context = CreateContext();
+
+            return context.Equipos
+                .Include(e => e.Lider)
+                .Include(e => e.Usuarios)
+                .Include(e => e.Inscripciones)
+                    .ThenInclude(i => i.Torneo)
+                .Where(e => e.LiderId == usuarioId)
+                .ToList();
+        }
+
+        //Solo devuelve uno
         public Equipo? GetEquipoPorLider(int usuarioId)
         {
             using var context = CreateContext();
+
             return context.Equipos
-                          .Include(e => e.Usuarios)
-                          .FirstOrDefault(e => e.LiderId == usuarioId);
+                .Include(e => e.Lider)
+                .Include(e => e.Usuarios)
+                    .ThenInclude(u => u.Inscripciones)
+                        .ThenInclude(i => i.Torneo)
+                .Include(e => e.Inscripciones)
+                    .ThenInclude(i => i.Torneo)
+                        .ThenInclude(t => t.TipoDeTorneo)
+                .FirstOrDefault(e => e.LiderId == usuarioId);
         }
+
 
     }
 }

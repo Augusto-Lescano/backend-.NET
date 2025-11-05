@@ -101,6 +101,29 @@ namespace WebAPI
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
+
+
+            //Usuarios disponibles para agregarse a un equipo
+            app.MapGet("/usuarios/disponibles", () =>
+            {
+                var service = new UsuarioService();
+                var usuarios = service.GetUsuariosDisponibles();
+
+                var dtoList = usuarios.Select(u => new UsuarioDTO
+                {
+                    Id = u.Id,
+                    Nombre = u.Nombre,
+                    NombreUsuario = u.NombreUsuario,
+                    Email = u.Email
+                });
+
+                return Results.Ok(dtoList);
+            })
+            .WithName("GetUsuariosDisponibles")
+            .Produces<IEnumerable<UsuarioDTO>>(StatusCodes.Status200OK)
+            .WithOpenApi();
+
+
         }
     }
 }

@@ -40,17 +40,15 @@
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
-            txtBusqueda = new TextBox();
-            buscarButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             SuspendLayout();
             // 
             // btnAgregar
             // 
             btnAgregar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAgregar.Location = new Point(48, 390);
+            btnAgregar.Location = new Point(513, 390);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(208, 34);
+            btnAgregar.Size = new Size(85, 34);
             btnAgregar.TabIndex = 0;
             btnAgregar.Text = "Agregar";
             btnAgregar.UseVisualStyleBackColor = true;
@@ -114,9 +112,9 @@
             // btnModificar
             // 
             btnModificar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnModificar.Location = new Point(303, 390);
+            btnModificar.Location = new Point(604, 390);
             btnModificar.Name = "btnModificar";
-            btnModificar.Size = new Size(208, 34);
+            btnModificar.Size = new Size(89, 34);
             btnModificar.TabIndex = 16;
             btnModificar.Text = "Modificar";
             btnModificar.UseVisualStyleBackColor = true;
@@ -125,9 +123,9 @@
             // btnEliminar
             // 
             btnEliminar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEliminar.Location = new Point(570, 390);
+            btnEliminar.Location = new Point(699, 390);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(219, 34);
+            btnEliminar.Size = new Size(90, 34);
             btnEliminar.TabIndex = 17;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
@@ -160,30 +158,11 @@
             label9.Size = new Size(0, 15);
             label9.TabIndex = 22;
             // 
-            // txtBusqueda
-            // 
-            txtBusqueda.Location = new Point(48, 23);
-            txtBusqueda.Name = "txtBusqueda";
-            txtBusqueda.PlaceholderText = "Buscar por nombre, apellido o email...";
-            txtBusqueda.Size = new Size(208, 23);
-            txtBusqueda.TabIndex = 23;
-            // 
-            // buscarButton
-            // 
-            buscarButton.Location = new Point(262, 23);
-            buscarButton.Name = "buscarButton";
-            buscarButton.Size = new Size(75, 23);
-            buscarButton.TabIndex = 24;
-            buscarButton.Text = "Buscar";
-            buscarButton.UseVisualStyleBackColor = true;
-            // 
             // UsuarioLista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(buscarButton);
-            Controls.Add(txtBusqueda);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -218,7 +197,5 @@
         private Label label7;
         private Label label8;
         private Label label9;
-        private TextBox txtBusqueda;
-        private Button buscarButton;
     }
 }

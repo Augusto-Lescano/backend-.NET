@@ -101,7 +101,7 @@ namespace WebAPI
             .WithOpenApi();
 
 
-            //Inscribir equipo (por el líder)
+            // Inscribir equipo (por el líder)
             app.MapPost("/inscripciones/{inscripcionId}/equipos/{usuarioId}", (int inscripcionId, int usuarioId) =>
             {
                 try
@@ -115,7 +115,10 @@ namespace WebAPI
                     var equipo = service.InscribirEquipo(inscripcionId, usuarioId);
 
                     string nombreTorneo = inscripcion.Torneo?.Nombre ?? "(torneo desconocido)";
-                    return Results.Ok(new { mensaje = $"Tu equipo {equipo.Nombre} ha sido inscrito al torneo {nombreTorneo}" });
+                    return Results.Ok(new
+                    {
+                        mensaje = $"Tu equipo '{equipo.Nombre}' ha sido inscrito al torneo '{nombreTorneo}'."
+                    });
                 }
                 catch (ArgumentException ex)
                 {

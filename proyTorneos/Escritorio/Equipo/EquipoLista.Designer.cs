@@ -32,36 +32,37 @@
             btnAgregar = new Button();
             btnActualizar = new Button();
             btnEliminar = new Button();
+            btnAgregarJugadores = new Button();
+            dgvJugadoresEquipo = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dgvEquipo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvJugadoresEquipo).BeginInit();
             SuspendLayout();
             // 
             // dgvEquipo
             // 
             dgvEquipo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEquipo.Location = new Point(14, 16);
-            dgvEquipo.Margin = new Padding(3, 4, 3, 4);
+            dgvEquipo.Location = new Point(12, 12);
             dgvEquipo.Name = "dgvEquipo";
             dgvEquipo.RowHeadersWidth = 51;
-            dgvEquipo.Size = new Size(887, 456);
+            dgvEquipo.Size = new Size(776, 342);
             dgvEquipo.TabIndex = 0;
+            dgvEquipo.SelectionChanged += dgvEquipo_SelectionChanged;
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(543, 499);
-            btnAgregar.Margin = new Padding(3, 4, 3, 4);
+            btnAgregar.Location = new Point(12, 374);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(86, 33);
+            btnAgregar.Size = new Size(97, 25);
             btnAgregar.TabIndex = 1;
-            btnAgregar.Text = "Agregar";
+            btnAgregar.Text = "Agregar equipo";
             btnAgregar.UseVisualStyleBackColor = true;
             btnAgregar.Click += btnAgregar_Click;
             // 
             // btnActualizar
             // 
-            btnActualizar.Location = new Point(682, 499);
-            btnActualizar.Margin = new Padding(3, 4, 3, 4);
+            btnActualizar.Location = new Point(632, 374);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(86, 33);
+            btnActualizar.Size = new Size(75, 25);
             btnActualizar.TabIndex = 2;
             btnActualizar.Text = "Actualizar";
             btnActualizar.UseVisualStyleBackColor = true;
@@ -69,29 +70,48 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(815, 499);
-            btnEliminar.Margin = new Padding(3, 4, 3, 4);
+            btnEliminar.Location = new Point(713, 374);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(86, 33);
+            btnEliminar.Size = new Size(75, 25);
             btnEliminar.TabIndex = 3;
             btnEliminar.Text = "eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
             btnEliminar.Click += btnEliminar_Click;
             // 
+            // btnAgregarJugadores
+            // 
+            btnAgregarJugadores.Location = new Point(115, 374);
+            btnAgregarJugadores.Name = "btnAgregarJugadores";
+            btnAgregarJugadores.Size = new Size(114, 25);
+            btnAgregarJugadores.TabIndex = 4;
+            btnAgregarJugadores.Text = "Agregar jugadores";
+            btnAgregarJugadores.UseVisualStyleBackColor = true;
+            btnAgregarJugadores.Click += btnAgregarJugadores_Click;
+            // 
+            // dgvJugadoresEquipo
+            // 
+            dgvJugadoresEquipo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvJugadoresEquipo.Location = new Point(921, 12);
+            dgvJugadoresEquipo.Name = "dgvJugadoresEquipo";
+            dgvJugadoresEquipo.Size = new Size(240, 342);
+            dgvJugadoresEquipo.TabIndex = 5;
+            // 
             // EquipoLista
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(1506, 438);
+            Controls.Add(dgvJugadoresEquipo);
+            Controls.Add(btnAgregarJugadores);
             Controls.Add(btnEliminar);
             Controls.Add(btnActualizar);
             Controls.Add(btnAgregar);
             Controls.Add(dgvEquipo);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "EquipoLista";
-            Text = "Form1";
+            Text = "Listado de equipos";
             Load += EquipoLista_Load;
             ((System.ComponentModel.ISupportInitialize)dgvEquipo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvJugadoresEquipo).EndInit();
             ResumeLayout(false);
         }
 
@@ -101,5 +121,7 @@
         private Button btnAgregar;
         private Button btnActualizar;
         private Button btnEliminar;
+        private Button btnAgregarJugadores;
+        private DataGridView dgvJugadoresEquipo;
     }
 }

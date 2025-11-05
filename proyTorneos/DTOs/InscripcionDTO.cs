@@ -8,6 +8,7 @@
         public DateTime FechaCierre { get; set; }
         public int? TorneoId { get; set; }
         public string ?TorneoNombre { get; set; }
+        public string? TipoTorneoNombre { get; set; }
         public List<UsuarioDTO> Usuarios { get; set; } = new List<UsuarioDTO>();
         public List<EquipoDTO> Equipos { get; set; } = new List<EquipoDTO>();
 

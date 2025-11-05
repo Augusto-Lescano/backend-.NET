@@ -179,34 +179,6 @@ namespace Data
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            /*modelBuilder.Entity<Inscripcion>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Estado)
-                    .IsRequired();
-
-                entity.Property(e => e.FechaApertura)
-                    .IsRequired();
-
-                entity.Property(e => e.FechaCierre)
-                    .IsRequired();
-
-                //Relación Inscripción - Usuario (N:M)
-                 entity.HasMany(i => i.Usuarios)
-                     .WithMany(u => u.Inscripciones)
-                     .UsingEntity(j => j.ToTable("UsuariosInscripciones"));
-
-                //Relación Inscripción - Equipo (N:M)
-                entity.HasMany(i => i.Equipos)
-                    .WithMany(e => e.Inscripciones)
-                    .UsingEntity(j => j.ToTable("EquiposInscripciones"));
-            });*/
-
-
 
             modelBuilder.Entity<Inscripcion>(entity =>
             {
@@ -274,15 +246,37 @@ namespace Data
                 entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
+                      .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Nombre)
-                    .IsRequired();
+                      .IsRequired();
 
+                // Relación Equipo - Líder (Usuario)
                 entity.HasOne(e => e.Lider)
-                    .WithMany()
-                    .HasForeignKey(e => e.LiderId)
-                    .OnDelete(DeleteBehavior.Restrict); //Esto evita que si se elimina un usuario, se borre accidentalmente su equipo.
+                      .WithMany()
+                      .HasForeignKey(e => e.LiderId)
+                      .OnDelete(DeleteBehavior.Restrict); // No borra equipo si se borra usuario
+
+                // Relación Equipo - Usuarios (N:M) para los miembros del equipo
+                entity.HasMany(e => e.Usuarios)
+                      .WithMany(u => u.Equipos)
+                      .UsingEntity<Dictionary<string, object>>(
+                        "EquipoUsuarios",
+                        j => j
+                            .HasOne<Usuario>()
+                            .WithMany()
+                            .HasForeignKey("UsuarioId")
+                            .OnDelete(DeleteBehavior.NoAction),
+                        j => j
+                            .HasOne<Equipo>()
+                            .WithMany()
+                            .HasForeignKey("EquipoId")
+                            .OnDelete(DeleteBehavior.NoAction),
+                        j =>
+                        {
+                            j.HasKey("EquipoId", "UsuarioId");
+                            j.ToTable("EquipoUsuarios");
+                        });
             });
         }
     }

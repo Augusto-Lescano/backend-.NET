@@ -34,7 +34,8 @@ namespace Domain.Services
                 FechaApertura = inscripcion.FechaApertura,
                 FechaCierre = inscripcion.FechaCierre,
                 TorneoId = inscripcion.TorneoId,
-                TorneoNombre = inscripcion.Torneo?.Nombre ?? "(sin torneo)"
+                TorneoNombre = inscripcion.Torneo?.Nombre ?? "(sin torneo)",
+                TipoTorneoNombre = inscripcion.Torneo?.TipoDeTorneo?.Nombre ?? "(sin tipo)"
             };
         }
 
@@ -125,33 +126,31 @@ namespace Domain.Services
             var inscripcionRepository = new InscripcionRepository();
             var equipoRepository = new EquipoRepository();
 
-            var inscripcion = inscripcionRepository.Get(inscripcionId);
+            //Obtener inscripción
+            var inscripcion = inscripcionRepository.Get(inscripcionId)
+                ?? throw new ArgumentException("Inscripción no encontrada.");
 
-            if (inscripcion == null)
-                throw new ArgumentException("Inscripción no encontrada.");
-
-            if (inscripcion.Estado != "Abierto")
+            //Validar estado
+            if (inscripcion.Estado?.ToLower() != "abierto" && inscripcion.Estado.ToLower() != "abierta")
                 throw new InvalidOperationException("La inscripción no está abierta.");
 
-            var equipo = equipoRepository.GetEquipoPorLider(usuarioId);
+            //Obtener equipo del líder
+            var equipo = equipoRepository.GetEquipoPorLider(usuarioId)
+                ?? throw new ArgumentException("El usuario no es líder de ningún equipo.");
 
-            if (equipo == null)
-                throw new ArgumentException("El usuario no es líder de ningún equipo.");
-
-            // Solo el dueño puede inscribir al equipo
+            //Validar liderazgo
             if (equipo.LiderId != usuarioId)
-                throw new InvalidOperationException("Solo el dueño del equipo puede inscribirlo al torneo.");
+                throw new InvalidOperationException("Solo el líder del equipo puede inscribirlo al torneo.");
 
-            // Verificar tipo de torneo: solo equipos en torneos por equipos
-            var tipo = inscripcion.Torneo.TipoDeTorneo?.Nombre?.ToLower() ?? "";
-            bool esIndividual = tipo.Contains("1v1") || tipo.Contains("individual") || tipo.Contains("battle royale individual");
+            //Validar tipo de torneo
+            var tipoTorneo = inscripcion.Torneo?.TipoDeTorneo?.Nombre?.ToLower() ?? "";
+            bool esIndividual = tipoTorneo.Contains("1v1") || tipoTorneo.Contains("individual") || tipoTorneo.Contains("battle royale individual");
+
             if (esIndividual)
                 throw new InvalidOperationException("Este torneo es individual. Solo se pueden inscribir jugadores, no equipos.");
 
-            // Verificar tamaño correcto del equipo según el tipo de torneo
+            //Validar cantidad de jugadores según tipo de torneo
             int cantidadJugadores = equipo.Usuarios.Count;
-            string tipoTorneo = inscripcion.Torneo.TipoDeTorneo.Nombre.ToLower();
-
             bool cantidadValida = tipoTorneo switch
             {
                 var t when t.Contains("2v2") => cantidadJugadores == 2,
@@ -163,41 +162,44 @@ namespace Domain.Services
             };
 
             if (!cantidadValida)
-                throw new InvalidOperationException($"El equipo no cumple con la cantidad requerida de jugadores para un torneo {inscripcion.Torneo.TipoDeTorneo.Nombre}.");
+                throw new InvalidOperationException($"El equipo no cumple con la cantidad requerida de jugadores para un torneo '{inscripcion.Torneo?.TipoDeTorneo?.Nombre}'.");
 
-            // Verificar que ningún jugador del equipo ya esté inscrito en un torneo solapado
+            //Validar solapamiento de torneos de los jugadores
             foreach (var usuario in equipo.Usuarios)
             {
-                if (usuario.Inscripciones.Any(i =>
+                bool tieneSolapamiento = usuario.Inscripciones.Any(i =>
                     (inscripcion.Torneo.FechaInicio < i.Torneo.FechaFin) &&
-                    (inscripcion.Torneo.FechaFin > i.Torneo.FechaInicio)))
-                {
-                    throw new InvalidOperationException($"El usuario {usuario.Nombre} tiene otra inscripción en un torneo que se solapa.");
-                }
+                    (inscripcion.Torneo.FechaFin > i.Torneo.FechaInicio));
+
+                if (tieneSolapamiento)
+                    throw new InvalidOperationException($"El usuario '{usuario.Nombre}' tiene otra inscripción en un torneo que se solapa.");
             }
 
-            // Verificar que el equipo no esté ya inscrito
+            //Verificar si el equipo ya está inscrito
             if (inscripcion.Equipos.Any(e => e.Id == equipo.Id))
                 throw new InvalidOperationException("El equipo ya está inscrito en esta inscripción.");
 
-            // Verificar que los usuarios del equipo no estén inscritos individualmente
+            //Verificar que los usuarios del equipo no estén inscritos individualmente
             foreach (var usuario in equipo.Usuarios)
             {
                 if (inscripcion.Usuarios.Any(u => u.Id == usuario.Id))
-                    throw new InvalidOperationException($"El usuario {usuario.Nombre} ya está inscrito individualmente en esta inscripción.");
+                    throw new InvalidOperationException($"El usuario '{usuario.Nombre}' ya está inscrito individualmente en esta inscripción.");
             }
 
-            // Verificar límite máximo
+            //Verificar límite máximo de jugadores en el torneo
             int totalActual = inscripcion.Usuarios.Count + inscripcion.Equipos.Sum(e => e.Usuarios.Count);
             int nuevoTotal = totalActual + equipo.Usuarios.Count;
+
             if (nuevoTotal > inscripcion.Torneo.CantidadDeJugadores)
                 throw new InvalidOperationException("No se puede inscribir el equipo, se alcanzó la cantidad máxima de jugadores.");
 
+            //Registrar la inscripción
             inscripcion.Equipos.Add(equipo);
             inscripcionRepository.Update(inscripcion);
 
             return equipo;
         }
+
 
         public Inscripcion? GetInscripcion(int inscripcionId)
         {

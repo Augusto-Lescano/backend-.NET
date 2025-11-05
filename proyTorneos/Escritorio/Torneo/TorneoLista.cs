@@ -1,4 +1,6 @@
 ﻿using API.Clients;
+using Domain.Model;
+using Domain.Services;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -170,24 +172,39 @@ namespace Escritorio
                 {
                     //Inscribir usuario individual
                     await InscripcionApiClient.InscribirUsuarioAsync(torneo.InscripcionId, usuarioActual.Id);
+
                     MessageBox.Show($"Te has inscrito al torneo {torneo.Nombre}",
                         "Inscripción exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     //Inscribir equipo del usuario (solo líder)
-                    var equipo = await EquipoApiClient.GetEquipoDelUsuarioAsync(usuarioActual.Id);
-                    if (equipo == null)
+                    var equipos = await EquipoApiClient.GetEquiposDelLiderAsync(usuarioActual.Id);
+
+                    if (equipos == null || !equipos.Any())
                     {
                         MessageBox.Show("No tienes un equipo disponible para inscribir.",
                             "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    //Llamada corregida (solo 2 parámetros)
-                    await InscripcionApiClient.InscribirEquipoAsync(torneo.InscripcionId, usuarioActual.Id);
-                    MessageBox.Show($"Tu equipo {equipo.Nombre} ha sido inscrito al torneo {torneo.Nombre}",
-                        "Inscripción exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Mostrar ventana para elegir equipo
+                    using (var seleccionarEquipoForm = new SeleccionarEquipo(equipos))
+                    {
+                        if (seleccionarEquipoForm.ShowDialog() != DialogResult.OK || seleccionarEquipoForm.EquipoSeleccionado == null)
+                        {
+                            MessageBox.Show("Operación cancelada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
+                        var equipoSeleccionado = seleccionarEquipoForm.EquipoSeleccionado;
+
+                        // Inscribir el equipo seleccionado
+                        await InscripcionApiClient.InscribirEquipoAsync(torneo.InscripcionId, usuarioActual.Id);
+
+                        MessageBox.Show($"Tu equipo '{equipoSeleccionado.Nombre}' ha sido inscrito al torneo '{torneo.Nombre}'.",
+                            "Inscripción exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
             catch (Exception ex)

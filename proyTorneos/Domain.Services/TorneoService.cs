@@ -18,8 +18,8 @@ namespace Domain.Services
             if (juegoRepository.GetOne(dto.JuegoId) == null)
                 throw new ArgumentException($"El juego con ID {dto.JuegoId} no existe");
 
-            if (tipoTorneoRepository.Get(dto.TipoDeTorneoId) == null)
-                throw new ArgumentException($"El tipo de torneo con ID {dto.TipoDeTorneoId} no existe");
+            var tipoTorneo = tipoTorneoRepository.Get(dto.TipoDeTorneoId)
+                ?? throw new ArgumentException($"El tipo de torneo con ID {dto.TipoDeTorneoId} no existe");
 
             if (usuarioRepository.Get(usuarioConectadoId) == null)
                 throw new ArgumentException($"El organizador con ID {usuarioConectadoId} no existe");
@@ -58,15 +58,17 @@ namespace Domain.Services
 
             //Actualizar torneo con el Id de inscripción
             torneo.InscripcionId = inscripcion.Id;
-            torneoRepository.Update(torneo); //IMPORTANTE: guarda relación en DB
+            torneoRepository.Update(torneo);
 
-            //Preparar DTO de respuesta
+            // Preparar DTO de respuesta
             dto.Id = torneo.Id;
             dto.OrganizadorId = usuarioConectadoId;
             dto.InscripcionId = inscripcion.Id;
+            dto.TipoTorneoNombre = tipoTorneo.Nombre; //Devolvemos el tipo de torneo
 
             return dto;
         }
+
 
         public bool Delete(int id)
         {

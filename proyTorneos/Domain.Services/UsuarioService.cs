@@ -89,5 +89,13 @@ namespace Domain.Services
             }
             else { return false; }
         }
+
+        //Llama al repositorio para buscar solo los usuarios sin equipo o que no esten en un torneo activo
+        public IEnumerable<Usuario> GetUsuariosDisponibles()
+        {
+            var repo = new UsuarioRepository();
+            return repo.GetUsuariosDisponibles();
+        }
+
     }
 }

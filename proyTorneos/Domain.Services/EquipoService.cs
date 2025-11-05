@@ -62,10 +62,38 @@ namespace Domain.Services
             }
         }
 
-        public Equipo? GetEquipoPorLider(int usuarioId)
+        public IEnumerable<Equipo> GetEquiposPorLider(int usuarioId)
         {
             var equipoRepository = new EquipoRepository();
-            return equipoRepository.GetEquipoPorLider(usuarioId);
+            return equipoRepository.GetEquiposPorLider(usuarioId);
+        }
+
+
+        //Agregar usuarios al equipo llamando al repositorio
+        public Equipo AgregarUsuariosAlEquipo(int equipoId, List<int> usuariosIds)
+        {
+            var equipoRepository = new EquipoRepository();
+            var usuarioRepository = new UsuarioRepository();
+
+            var equipo = equipoRepository.Get(equipoId)
+                ?? throw new ArgumentException("Equipo no encontrado.");
+
+            var usuarios = usuarioRepository.GetUsuariosPorIds(usuariosIds);
+
+            if (usuarios == null || !usuarios.Any())
+                throw new InvalidOperationException("No se encontraron usuarios válidos para agregar.");
+
+            foreach (var usuario in usuarios)
+            {
+                if (!equipo.Usuarios.Any(u => u.Id == usuario.Id))
+                {
+                    equipo.Usuarios.Add(usuario);
+                }
+            }
+
+            equipoRepository.Update(equipo);
+
+            return equipo;
         }
 
     }

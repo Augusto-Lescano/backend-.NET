@@ -16,11 +16,18 @@ namespace Escritorio
         public InscripcionLista(bool admin)
         {
             InitializeComponent();
-
+            if (!admin)
+            {
+                btnActualizar.Visible = false;
+                btnAgregar.Visible = false;
+                btnEliminar.Visible = false;
+            }
+            else
+            {
                 btnActualizar.Visible = true;
                 btnAgregar.Visible = false;
                 btnEliminar.Visible = false;
-
+            }
         }
         public async Task CargarInscripciones()
         {
@@ -28,13 +35,13 @@ namespace Escritorio
             dgvInscripciones.AutoGenerateColumns = true;
             dgvInscripciones.DataSource = inscripciones.ToList();
 
-            //dgvInscripciones.Columns["TorneoId"].Visible = false;
-
         }
 
         public InscripcionDTO SeleccionarInscripcion()
         {
-            return (InscripcionDTO)dgvInscripciones.SelectedRows[0].DataBoundItem;
+            return dgvInscripciones.SelectedRows.Count > 0
+                ? (InscripcionDTO)dgvInscripciones.SelectedRows[0].DataBoundItem
+                : null;
         }
 
         public async Task AgregarInscripcion()
@@ -95,7 +102,11 @@ namespace Escritorio
         private async void InscripcionLista_Load(object sender, EventArgs e)
         {
             Shared.AjustarDataGridView(dgvInscripciones);
+            Shared.AjustarDataGridView(dgvInscriptos);
+
             dgvInscripciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvInscriptos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
             await CargarInscripciones();
         }
 
@@ -113,6 +124,53 @@ namespace Escritorio
         {
             await BorrarInscripcion();
         }
+
+        private async void dgvInscripciones_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvInscripciones.SelectedRows.Count == 0)
+                return;
+
+            var inscripcionSeleccionada = (InscripcionDTO)dgvInscripciones.SelectedRows[0].DataBoundItem;
+
+            if (inscripcionSeleccionada == null)
+                return;
+
+            // Traer la inscripción completa con usuarios o equipos
+            var inscripcionDetalle = await InscripcionApiClient.GetAsync(inscripcionSeleccionada.Id);
+
+            if (inscripcionDetalle == null)
+            {
+                dgvInscriptos.DataSource = null;
+                return;
+            }
+
+            // Detectar tipo de torneo
+            string tipoTorneo = inscripcionDetalle.TipoTorneoNombre?.ToLower() ?? "";
+
+            bool esIndividual = tipoTorneo.Contains("1v1")
+                             || tipoTorneo.Contains("individual")
+                             || tipoTorneo.Contains("battle royale individual");
+
+            if (esIndividual)
+            {
+                // Mostrar usuarios inscriptos
+                dgvInscriptos.DataSource = inscripcionDetalle.Usuarios?.Select(u => new
+                {
+                    NombreUsuario = u.NombreUsuario,
+                    Email = u.Email
+                }).ToList();
+            }
+            else
+            {
+                // Mostrar equipos inscriptos
+                dgvInscriptos.DataSource = inscripcionDetalle.Equipos?.Select(e => new
+                {
+                    NombreEquipo = e.Nombre,
+                    Lider = e.LiderNombre
+                }).ToList();
+            }
+        }
+
 
     }
 }
