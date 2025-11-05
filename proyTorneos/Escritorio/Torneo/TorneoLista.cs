@@ -1,13 +1,12 @@
 ﻿using API.Clients;
 using Domain.Model;
+using Domain.Services;
 using DTOs;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,8 +14,8 @@ namespace Escritorio
 {
     public partial class TorneoLista : Form
     {
-        //private bool Admin { get; set; }
-        private UsuarioDTO usuarioActual;
+        private readonly UsuarioDTO usuarioActual;
+        private List<TorneoDTO> torneosCargados = new();
 
         public TorneoLista(UsuarioDTO usuario)
         {
@@ -30,116 +29,105 @@ namespace Escritorio
                 btnEliminar.Visible = false;
             }
 
-            cmbFiltro.Items.AddRange(new String[] { "Nombre Torneo", "Juego", "Organizador", "Region", "Estado" });
+            cmbFiltro.Items.AddRange(new[] { "Nombre Torneo", "Juego", "Organizador", "Region", "Estado" });
             cmbFiltro.SelectedIndex = 0;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
-        }
-
-        private List<TorneoDTO> torneosCargados = new List<TorneoDTO>();
-        public async Task CargarTorneos()
-        {
-            var torneos = await TorneoApiClient.GetAllAsync();
-            dgvListaTorneos.DataSource = torneos.ToList();
-
-            //se hace de esta forma porque si los mostramos de la otra forma crea un objeto anonimo 
-            //y no se puede hacer el cast para eliminar. Entonces se elije que columnas no mostrar
-            dgvListaTorneos.Columns["TipoDeTorneoId"].Visible = false;
-            dgvListaTorneos.Columns["JuegoId"].Visible = false;
-            dgvListaTorneos.Columns["InscripcionId"].Visible = false;
-            dgvListaTorneos.Columns["OrganizadorId"].Visible = false;
-            dgvListaTorneos.Columns["DescripcionDeReglas"].Visible = false;
-
-            torneosCargados = torneos.ToList();
-
-        }
-
-        public TorneoDTO SeleccionarTorneo()
-        {
-
-            TorneoDTO dto = (TorneoDTO)dgvListaTorneos.SelectedRows[0].DataBoundItem;
-            return dto;
-        }
-
-        public async Task AgregarTorneo()
-        {
-            TorneoDetalle detalle = new TorneoDetalle(usuarioActual.Id);
-
-            Shared.AjustarFormMDI(detalle);
-
-            if (detalle.ShowDialog() == DialogResult.OK)
-            {
-                await CargarTorneos();
-            }
-        }
-
-        public async Task ActualziarTorneo()
-        {
-            var torneo = SeleccionarTorneo();
-            if (torneo == null)
-            {
-                MessageBox.Show("No puede actualizar un torneo sin haber seleccionado uno anteriormente", "Error al actualizar torneo");
-            }
-            else
-            {
-                var detalle = new TorneoDetalle(torneo);
-                Shared.AjustarFormMDI(detalle);
-                if (detalle.ShowDialog() == DialogResult.OK)
-                {
-                    await CargarTorneos();
-                }
-            }
-        }
-
-        public async Task BorrarTorneo()
-        {
-            var torneo = SeleccionarTorneo();
-            if (torneo == null)
-            {
-                MessageBox.Show("No puede borrar un torneo sin haber seleccionado uno anteriormente", "Error al borrar torneo");
-            }
-            else
-            {
-                DialogResult result = MessageBox.Show(
-                    "¿Desea eliminar el torneo seleccionado?",
-                    "Confirmación",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (result == DialogResult.Yes)
-                {
-                    await TorneoApiClient.DeleteAsync(torneo.Id);
-                    MessageBox.Show("Torneo borrado exitosamente", "Exito al borrar");
-                }
-                else
-                {
-                    MessageBox.Show("Operación cancelada", "Confirmacion");
-                }
-            }
-            await CargarTorneos();
         }
 
         private async void TorneoLista_Load(object sender, EventArgs e)
         {
             Shared.AjustarDataGridView(dgvListaTorneos);
             await CargarTorneos();
+
+            if (dgvListaTorneos.Rows.Count > 0)
+                dgvListaTorneos_SelectionChanged(sender, e);
         }
 
-        private async void btnAgregar_Click(object sender, EventArgs e)
+        //Verifica si el torneo tiene la inscripción abierta
+        public bool EstaActivo(TorneoDTO torneo)
         {
-            await AgregarTorneo();
+            DateTime hoy = DateTime.Now;
+            return hoy >= torneo.FechaInicioDeInscripciones && hoy <= torneo.FechaFinDeInscripciones;
         }
 
-        private async void btnActualizar_Click(object sender, EventArgs e)
+        //Cargar torneos desde la API
+        public async Task CargarTorneos()
         {
-            await ActualziarTorneo();
+            var torneos = await TorneoApiClient.GetAllAsync();
+            torneosCargados = torneos.ToList();
+
+            dgvListaTorneos.DataSource = torneosCargados;
+
+            /*se hace de esta forma porque si los mostramos de la otra forma crea un objeto anonimo y no se puede hacer el cast para eliminar. Entonces se elije que columnas no mostrar*/
+
+            dgvListaTorneos.Columns["TipoDeTorneoId"].Visible = false;
+            dgvListaTorneos.Columns["JuegoId"].Visible = false;
+            dgvListaTorneos.Columns["InscripcionId"].Visible = false;
+            dgvListaTorneos.Columns["OrganizadorId"].Visible = false;
+            dgvListaTorneos.Columns["DescripcionDeReglas"].Visible = false;
         }
 
-        private async void btnEliminar_Click(object sender, EventArgs e)
+        //Retorna el torneo seleccionado en la grilla
+        public TorneoDTO SeleccionarTorneo()
         {
-            await BorrarTorneo();
+            if (dgvListaTorneos.SelectedRows.Count == 0)
+                return null;
+
+            return (TorneoDTO)dgvListaTorneos.SelectedRows[0].DataBoundItem;
         }
 
+        //Agregar torneo (solo admin)
+        public async Task AgregarTorneo()
+        {
+            var detalle = new TorneoDetalle(usuarioActual.Id);
+            Shared.AjustarFormMDI(detalle);
+
+            if (detalle.ShowDialog() == DialogResult.OK)
+                await CargarTorneos();
+        }
+
+        //Actualizar torneo (solo admin)
+        public async Task ActualizarTorneo()
+        {
+            var torneo = SeleccionarTorneo();
+            if (torneo == null)
+            {
+                MessageBox.Show("Debe seleccionar un torneo para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var detalle = new TorneoDetalle(torneo);
+            Shared.AjustarFormMDI(detalle);
+
+            if (detalle.ShowDialog() == DialogResult.OK)
+                await CargarTorneos();
+        }
+
+        //Borrar torneo (solo admin)
+        public async Task BorrarTorneo()
+        {
+            var torneo = SeleccionarTorneo();
+            if (torneo == null)
+            {
+                MessageBox.Show("Debe seleccionar un torneo para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                $"¿Desea eliminar el torneo \"{torneo.Nombre}\"?",
+                "Confirmación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                await TorneoApiClient.DeleteAsync(torneo.Id);
+                MessageBox.Show("Torneo eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await CargarTorneos();
+            }
+        }
+
+        //Filtro de búsqueda
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             FiltrarTorneos(txtBuscar.Text);
@@ -156,37 +144,122 @@ namespace Escritorio
             }
 
             string campo = cmbFiltro.SelectedItem?.ToString() ?? "Nombre";
-            IEnumerable<TorneoDTO> filtrados = torneosCargados;
-
-            switch (campo)
+            IEnumerable<TorneoDTO> filtrados = campo switch
             {
-                case "Nombre Torneo":
-                    filtrados = torneosCargados.Where(t =>
-                        t.Nombre != null && t.Nombre.ToLower().Contains(texto));
-                    break;
-
-                case "Juego":
-                    filtrados = torneosCargados.Where(t =>
-                        t.JuegoNombre != null && t.JuegoNombre.ToLower().Contains(texto));
-                    break;
-
-                case "Organizador":
-                    filtrados = torneosCargados.Where(t =>
-                        t.OrganizadorNombre != null && t.OrganizadorNombre.ToLower().Contains(texto));
-                    break;
-
-                case "Region":
-                    filtrados = torneosCargados.Where(t =>
-                        t.Region != null && t.Region.ToLower().Contains(texto));
-                    break;
-
-                case "Estado":
-                    filtrados = torneosCargados.Where(t =>
-                        t.Estado != null && t.Estado.ToLower().Contains(texto));
-                    break;
-            }
+                "Nombre Torneo" => torneosCargados.Where(t => t.Nombre?.ToLower().Contains(texto) == true),
+                "Juego" => torneosCargados.Where(t => t.JuegoNombre?.ToLower().Contains(texto) == true),
+                "Organizador" => torneosCargados.Where(t => t.OrganizadorNombre?.ToLower().Contains(texto) == true),
+                "Region" => torneosCargados.Where(t => t.Region?.ToLower().Contains(texto) == true),
+                "Estado" => torneosCargados.Where(t => t.Estado?.ToLower().Contains(texto) == true),
+                _ => torneosCargados
+            };
 
             dgvListaTorneos.DataSource = filtrados.ToList();
         }
+
+        //Evento principal de inscripción
+        private async void btnInscribirse_Click(object sender, EventArgs e)
+        {
+            var torneo = SeleccionarTorneo();
+            if (torneo == null) return;
+
+            string tipo = torneo.TipoTorneoNombre?.ToLower() ?? "";
+            bool esIndividual = tipo.Contains("1v1") || tipo.Contains("individual") || tipo.Contains("battle royale individual");
+
+            try
+            {
+                if (esIndividual)
+                {
+                    //Inscribir usuario individual
+                    await InscripcionApiClient.InscribirUsuarioAsync(torneo.InscripcionId, usuarioActual.Id);
+
+                    MessageBox.Show($"Te has inscrito al torneo {torneo.Nombre}",
+                        "Inscripción exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    //Inscribir equipo del usuario (solo líder)
+                    var equipos = await EquipoApiClient.GetEquiposDelLiderAsync(usuarioActual.Id);
+
+                    if (equipos == null || !equipos.Any())
+                    {
+                        MessageBox.Show("No tienes un equipo disponible para inscribir.",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Mostrar ventana para elegir equipo
+                    using (var seleccionarEquipoForm = new SeleccionarEquipo(equipos))
+                    {
+                        if (seleccionarEquipoForm.ShowDialog() != DialogResult.OK || seleccionarEquipoForm.EquipoSeleccionado == null)
+                        {
+                            MessageBox.Show("Operación cancelada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
+                        var equipoSeleccionado = seleccionarEquipoForm.EquipoSeleccionado;
+
+                        // Inscribir el equipo seleccionado
+                        await InscripcionApiClient.InscribirEquipoAsync(torneo.InscripcionId, equipoSeleccionado.Id);
+
+                        MessageBox.Show($"Tu equipo '{equipoSeleccionado.Nombre}' ha sido inscrito al torneo '{torneo.Nombre}'.",
+                            "Inscripción exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al inscribirse", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //Cambia texto y tamaño del botón al seleccionar torneo
+        private void dgvListaTorneos_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvListaTorneos.SelectedRows.Count == 0)
+            {
+                btnInscribirse.Visible = false;
+                return;
+            }
+
+            var torneoSeleccionado = (TorneoDTO)dgvListaTorneos.SelectedRows[0].DataBoundItem;
+            ActualizarTextoBotonInscribirse(torneoSeleccionado);
+            btnInscribirse.Visible = EstaActivo(torneoSeleccionado);
+        }
+
+        //Ajusta texto y tamaño del botón “Inscribirse”
+        private void ActualizarTextoBotonInscribirse(TorneoDTO? torneo = null)
+        {
+            if (torneo == null && dgvListaTorneos.SelectedRows.Count > 0)
+                torneo = (TorneoDTO)dgvListaTorneos.SelectedRows[0].DataBoundItem;
+
+            if (torneo == null)
+            {
+                btnInscribirse.Visible = false;
+                return;
+            }
+
+            string tipo = torneo.TipoTorneoNombre?.ToLower() ?? "";
+            bool esIndividual = tipo.Contains("1v1") || tipo.Contains("individual") || tipo.Contains("battle royale individual");
+
+            btnInscribirse.Text = esIndividual ? "Inscribirme" : "Inscribir mi equipo";
+
+            // Medir texto y ajustar tamaño dinámicamente
+            var flags = TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix;
+            Size textSize = TextRenderer.MeasureText(btnInscribirse.Text, btnInscribirse.Font,
+                                                     new Size(int.MaxValue, int.MaxValue), flags);
+
+            const int margenHorizontal = 20;
+            const int margenVertical = 8;
+
+            btnInscribirse.Width = textSize.Width + margenHorizontal;
+            btnInscribirse.Height = textSize.Height + margenVertical;
+            btnInscribirse.Visible = true;
+        }
+
+        //Botones de administración
+        private async void btnAgregar_Click(object sender, EventArgs e) => await AgregarTorneo();
+        private async void btnActualizar_Click(object sender, EventArgs e) => await ActualizarTorneo();
+        private async void btnEliminar_Click(object sender, EventArgs e) => await BorrarTorneo();
     }
 }

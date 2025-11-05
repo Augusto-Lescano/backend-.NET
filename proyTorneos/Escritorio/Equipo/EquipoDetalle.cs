@@ -11,11 +11,13 @@ namespace Escritorio
     public partial class EquipoDetalle : Form
     {
         private EquipoDTO EquipoDTO { set; get; }
+        private int usuarioConectadoId;
 
-        public EquipoDetalle()
+        public EquipoDetalle(int usuarioConectado)
             {
             InitializeComponent();
             this.Text = "Agregar un equipo";
+            usuarioConectadoId = usuarioConectado;
         }   
 
         public EquipoDetalle(EquipoDTO dto)
@@ -43,6 +45,7 @@ namespace Escritorio
             }
             else
             {
+                dto.LiderId = usuarioConectadoId;
                 await API.Clients.EquipoApiClient.AddAsync(dto);
                 MessageBox.Show("Equipo agregado exitosamente", "Éxito al agregar");
             }

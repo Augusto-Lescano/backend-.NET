@@ -36,6 +36,7 @@
             cmbFiltro = new ComboBox();
             labelBuscar = new Label();
             txtBuscar = new TextBox();
+            btnInscribirse = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvListaTorneos).BeginInit();
             SuspendLayout();
             // 
@@ -43,22 +44,21 @@
             // 
             dgvListaTorneos.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dgvListaTorneos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvListaTorneos.Location = new Point(14, 67);
-            dgvListaTorneos.Margin = new Padding(3, 4, 3, 4);
+            dgvListaTorneos.Location = new Point(12, 50);
             dgvListaTorneos.MultiSelect = false;
             dgvListaTorneos.Name = "dgvListaTorneos";
             dgvListaTorneos.RowHeadersWidth = 51;
             dgvListaTorneos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvListaTorneos.Size = new Size(887, 292);
+            dgvListaTorneos.Size = new Size(776, 219);
             dgvListaTorneos.TabIndex = 23;
+            dgvListaTorneos.SelectionChanged += dgvListaTorneos_SelectionChanged;
             // 
             // btnEliminar
             // 
             btnEliminar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnEliminar.Location = new Point(815, 367);
-            btnEliminar.Margin = new Padding(3, 4, 3, 4);
+            btnEliminar.Location = new Point(713, 275);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(86, 36);
+            btnEliminar.Size = new Size(75, 27);
             btnEliminar.TabIndex = 29;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
@@ -67,10 +67,9 @@
             // btnAgregar
             // 
             btnAgregar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnAgregar.Location = new Point(558, 367);
-            btnAgregar.Margin = new Padding(3, 4, 3, 4);
+            btnAgregar.Location = new Point(488, 275);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(86, 36);
+            btnAgregar.Size = new Size(75, 27);
             btnAgregar.TabIndex = 28;
             btnAgregar.Text = "Agregar";
             btnAgregar.UseVisualStyleBackColor = true;
@@ -79,10 +78,9 @@
             // btnActualizar
             // 
             btnActualizar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnActualizar.Location = new Point(690, 367);
-            btnActualizar.Margin = new Padding(3, 4, 3, 4);
+            btnActualizar.Location = new Point(604, 275);
             btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(86, 36);
+            btnActualizar.Size = new Size(75, 27);
             btnActualizar.TabIndex = 27;
             btnActualizar.Text = "Actualizar";
             btnActualizar.UseVisualStyleBackColor = true;
@@ -91,42 +89,55 @@
             // labelFiltro
             // 
             labelFiltro.AutoSize = true;
-            labelFiltro.Location = new Point(14, 29);
+            labelFiltro.Location = new Point(12, 22);
             labelFiltro.Name = "labelFiltro";
-            labelFiltro.Size = new Size(79, 20);
+            labelFiltro.Size = new Size(64, 15);
             labelFiltro.TabIndex = 30;
             labelFiltro.Text = "Filtrar Por: ";
             // 
             // cmbFiltro
             // 
             cmbFiltro.FormattingEnabled = true;
-            cmbFiltro.Location = new Point(99, 26);
+            cmbFiltro.Location = new Point(87, 20);
+            cmbFiltro.Margin = new Padding(3, 2, 3, 2);
             cmbFiltro.Name = "cmbFiltro";
-            cmbFiltro.Size = new Size(160, 28);
+            cmbFiltro.Size = new Size(140, 23);
             cmbFiltro.TabIndex = 31;
             // 
             // labelBuscar
             // 
             labelBuscar.AutoSize = true;
-            labelBuscar.Location = new Point(279, 29);
+            labelBuscar.Location = new Point(244, 22);
             labelBuscar.Name = "labelBuscar";
-            labelBuscar.Size = new Size(59, 20);
+            labelBuscar.Size = new Size(48, 15);
             labelBuscar.TabIndex = 32;
             labelBuscar.Text = "Buscar: ";
             // 
             // txtBuscar
             // 
-            txtBuscar.Location = new Point(344, 27);
+            txtBuscar.Location = new Point(301, 20);
+            txtBuscar.Margin = new Padding(3, 2, 3, 2);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(163, 27);
+            txtBuscar.Size = new Size(143, 23);
             txtBuscar.TabIndex = 33;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
+            // btnInscribirse
+            // 
+            btnInscribirse.Location = new Point(12, 275);
+            btnInscribirse.Name = "btnInscribirse";
+            btnInscribirse.Size = new Size(75, 27);
+            btnInscribirse.TabIndex = 34;
+            btnInscribirse.Text = "Inscribirse";
+            btnInscribirse.UseVisualStyleBackColor = true;
+            btnInscribirse.Click += btnInscribirse_Click;
+            // 
             // TorneoLista
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 421);
+            ClientSize = new Size(800, 316);
+            Controls.Add(btnInscribirse);
             Controls.Add(txtBuscar);
             Controls.Add(labelBuscar);
             Controls.Add(cmbFiltro);
@@ -135,7 +146,6 @@
             Controls.Add(btnAgregar);
             Controls.Add(btnActualizar);
             Controls.Add(dgvListaTorneos);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "TorneoLista";
             Text = "Lista de torneos";
             Load += TorneoLista_Load;
@@ -154,5 +164,6 @@
         private ComboBox cmbFiltro;
         private Label labelBuscar;
         private TextBox txtBuscar;
+        private Button btnInscribirse;
     }
 }

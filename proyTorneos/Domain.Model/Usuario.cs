@@ -6,20 +6,17 @@ namespace Domain.Model
 {
     public class Usuario
     {
-        public int Id { get; private set; }
-        public string Nombre { get; private set; }
-        public string Apellido { get; private set; }
-        public string Email { get; private set; }
-        public string Clave { get; private set; }
-        public string Pais {  get; private set; }
-        public string NombreUsuario { get; private set; }
-       
-        public DateTime FechaAlta { get; private set; }
-        
-        public bool Admin { get; private set; }
-
-        public int? InscripcionId { get; set; }   
-        public Inscripcion Inscripcion { get; set; }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Email { get; set; }
+        public string Clave { get; set; }
+        public string Pais {  get; set; }
+        public string NombreUsuario { get; set; }
+        public DateTime FechaAlta { get; set; }
+        public bool Admin { get; set; }
+        public ICollection<Inscripcion> Inscripciones { get; set; } = new List<Inscripcion>();
+        public ICollection<Equipo> Equipos { get; set; } = new List<Equipo>();
 
         public Usuario(int id, string nombre, string apellido, string email, string clave, string pais, string nombreUsuario, DateTime fechaAlta, bool admin = false)
         {
@@ -29,8 +26,7 @@ namespace Domain.Model
             SetEmail(email);
             SetClave(clave);
             SetPais(pais);
-            SetNombreUsuario(nombreUsuario);
-            
+            SetNombreUsuario(nombreUsuario);       
             SetFechaAlta(fechaAlta);
             SetAdmin(admin);
         }
@@ -40,7 +36,7 @@ namespace Domain.Model
         // - En BD guardamos: ClaveHash y Salt
         // - El Domain Model recibe: password (y lo hashea internamente)
         // Por eso EF necesita este constructor para crear instancias desde la BD
-        private Usuario() { }
+        public Usuario() { }
 
         public void SetId(int id)
         {

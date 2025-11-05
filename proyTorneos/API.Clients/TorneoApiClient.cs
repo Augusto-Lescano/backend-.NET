@@ -109,7 +109,8 @@ namespace API.Clients
             }
         }
 
-        public static async Task UpdateAsync(TorneoDTO torneo) {
+        public static async Task UpdateAsync(TorneoDTO torneo)
+        {
             try {
                 HttpResponseMessage response = await client.PutAsJsonAsync("torneos", torneo);
                 if (!response.IsSuccessStatusCode) {
@@ -126,6 +127,25 @@ namespace API.Clients
                 throw new Exception($"Timeout al actualizar el torneo con Id:{torneo.Id}. Mensaje: {ex.Message}", ex);
             }
         }
+
+        //Solo actualiza fechas 
+        public static async Task UpdateFechasInscripcionAsync(int torneoId, DateTime fechaInicio, DateTime fechaFin)
+        {
+            var dto = new
+            {
+                FechaInicio = fechaInicio,
+                FechaFin = fechaFin
+            };
+
+            var response = await client.PutAsJsonAsync($"torneos/{torneoId}/fechas-inscripcion", dto);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Error al actualizar las fechas de inscripción. Status: {response.StatusCode}, Detalle: {error}");
+            }
+        }
+
 
     }
 }

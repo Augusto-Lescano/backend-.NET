@@ -13,6 +13,7 @@ namespace Domain.Model
         public string Nombre { get; set; }
         public string Descripcion { get; set;  }
 
+        public Juego() { }
 
         public Juego (int id, string nombre, string descripcion)
         {

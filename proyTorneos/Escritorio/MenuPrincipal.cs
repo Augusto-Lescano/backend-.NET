@@ -75,6 +75,15 @@ namespace Escritorio
             {
                 this.usuarioActual = login.usuarioActual;
                 TorneoApiClient.SetUsuarioConectado(usuarioActual.Id);
+
+                //Ocultar menús de administración si no es admin
+                if (!usuarioActual.Admin)
+                {
+                    mnuUsuarios.Visible = false;
+                    mnuTipoDeTorneo.Visible = false;
+                    mnuJuegos.Visible = false;
+                    mnuInscripciones.Visible = false;
+                }
             }
             else
             {
@@ -90,7 +99,7 @@ namespace Escritorio
 
         private void mnuEquipos_Click(object sender, EventArgs e)
         {
-            EquipoLista equipoLista = new EquipoLista(usuarioActual.Admin);
+            EquipoLista equipoLista = new EquipoLista(usuarioActual);
             mostrarFormularios(equipoLista);
         }
     }

@@ -136,5 +136,34 @@ namespace API.Clients
                 throw new Exception($"Timeout al actualizar usuario con Id {usuario.Id}: {ex.Message}", ex);
             }
         }
+
+        public static async Task<IEnumerable<UsuarioDTO>> GetUsuariosDisponiblesAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync("usuarios/disponibles");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<UsuarioDTO>>()
+                           ?? Enumerable.Empty<UsuarioDTO>();
+                }
+                else
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al obtener usuarios disponibles. Status: {response.StatusCode}, Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al obtener usuarios disponibles: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al obtener usuarios disponibles: {ex.Message}", ex);
+            }
+        }
+
+
     }
 }

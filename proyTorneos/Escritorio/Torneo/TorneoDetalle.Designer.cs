@@ -36,7 +36,6 @@
             txtCantJugadores = new TextBox();
             txtReglas = new TextBox();
             txtNombre = new TextBox();
-            labelEstado = new Label();
             labelRegion = new Label();
             labelResultado = new Label();
             labelFechaFinInscripciones = new Label();
@@ -53,13 +52,12 @@
             cmbJuego = new ComboBox();
             labelJuego = new Label();
             cmbRegion = new ComboBox();
-            cmbEstado = new ComboBox();
             SuspendLayout();
             // 
             // dtpFechaFinInscripciones
             // 
             dtpFechaFinInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            dtpFechaFinInscripciones.Location = new Point(182, 262);
+            dtpFechaFinInscripciones.Location = new Point(182, 385);
             dtpFechaFinInscripciones.Name = "dtpFechaFinInscripciones";
             dtpFechaFinInscripciones.Size = new Size(230, 23);
             dtpFechaFinInscripciones.TabIndex = 50;
@@ -67,7 +65,7 @@
             // dtpFechaInicioInscripciones
             // 
             dtpFechaInicioInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            dtpFechaInicioInscripciones.Location = new Point(182, 228);
+            dtpFechaInicioInscripciones.Location = new Point(182, 351);
             dtpFechaInicioInscripciones.Name = "dtpFechaInicioInscripciones";
             dtpFechaInicioInscripciones.Size = new Size(230, 23);
             dtpFechaInicioInscripciones.TabIndex = 49;
@@ -91,7 +89,7 @@
             // txtResultado
             // 
             txtResultado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            txtResultado.Location = new Point(80, 385);
+            txtResultado.Location = new Point(80, 425);
             txtResultado.Name = "txtResultado";
             txtResultado.Size = new Size(332, 23);
             txtResultado.TabIndex = 44;
@@ -120,21 +118,11 @@
             txtNombre.Size = new Size(332, 23);
             txtNombre.TabIndex = 41;
             // 
-            // labelEstado
-            // 
-            labelEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            labelEstado.AutoSize = true;
-            labelEstado.Location = new Point(8, 470);
-            labelEstado.Name = "labelEstado";
-            labelEstado.Size = new Size(42, 15);
-            labelEstado.TabIndex = 40;
-            labelEstado.Text = "Estado";
-            // 
             // labelRegion
             // 
             labelRegion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelRegion.AutoSize = true;
-            labelRegion.Location = new Point(8, 427);
+            labelRegion.Location = new Point(8, 315);
             labelRegion.Name = "labelRegion";
             labelRegion.Size = new Size(44, 15);
             labelRegion.TabIndex = 39;
@@ -144,7 +132,7 @@
             // 
             labelResultado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelResultado.AutoSize = true;
-            labelResultado.Location = new Point(8, 388);
+            labelResultado.Location = new Point(8, 428);
             labelResultado.Name = "labelResultado";
             labelResultado.Size = new Size(59, 15);
             labelResultado.TabIndex = 38;
@@ -154,7 +142,7 @@
             // 
             labelFechaFinInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelFechaFinInscripciones.AutoSize = true;
-            labelFechaFinInscripciones.Location = new Point(8, 268);
+            labelFechaFinInscripciones.Location = new Point(8, 391);
             labelFechaFinInscripciones.Name = "labelFechaFinInscripciones";
             labelFechaFinInscripciones.Size = new Size(143, 15);
             labelFechaFinInscripciones.TabIndex = 37;
@@ -164,7 +152,7 @@
             // 
             labelFechaInicioInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             labelFechaInicioInscripciones.AutoSize = true;
-            labelFechaInicioInscripciones.Location = new Point(8, 234);
+            labelFechaInicioInscripciones.Location = new Point(8, 357);
             labelFechaInicioInscripciones.Name = "labelFechaInicioInscripciones";
             labelFechaInicioInscripciones.Size = new Size(158, 15);
             labelFechaInicioInscripciones.TabIndex = 36;
@@ -222,7 +210,7 @@
             // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(80, 509);
+            btnAceptar.Location = new Point(9, 475);
             btnAceptar.Name = "btnAceptar";
             btnAceptar.Size = new Size(75, 23);
             btnAceptar.TabIndex = 51;
@@ -232,7 +220,7 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(218, 509);
+            btnCancelar.Location = new Point(105, 475);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(75, 23);
             btnCancelar.TabIndex = 52;
@@ -243,7 +231,7 @@
             // labelTipoTorneo
             // 
             labelTipoTorneo.AutoSize = true;
-            labelTipoTorneo.Location = new Point(8, 305);
+            labelTipoTorneo.Location = new Point(8, 231);
             labelTipoTorneo.Name = "labelTipoTorneo";
             labelTipoTorneo.Size = new Size(68, 15);
             labelTipoTorneo.TabIndex = 53;
@@ -252,7 +240,7 @@
             // cmbTipoTorneo
             // 
             cmbTipoTorneo.FormattingEnabled = true;
-            cmbTipoTorneo.Location = new Point(80, 302);
+            cmbTipoTorneo.Location = new Point(80, 228);
             cmbTipoTorneo.Margin = new Padding(3, 2, 3, 2);
             cmbTipoTorneo.Name = "cmbTipoTorneo";
             cmbTipoTorneo.Size = new Size(332, 23);
@@ -261,7 +249,7 @@
             // cmbJuego
             // 
             cmbJuego.FormattingEnabled = true;
-            cmbJuego.Location = new Point(80, 346);
+            cmbJuego.Location = new Point(80, 272);
             cmbJuego.Margin = new Padding(3, 2, 3, 2);
             cmbJuego.Name = "cmbJuego";
             cmbJuego.Size = new Size(332, 23);
@@ -270,7 +258,7 @@
             // labelJuego
             // 
             labelJuego.AutoSize = true;
-            labelJuego.Location = new Point(8, 349);
+            labelJuego.Location = new Point(8, 275);
             labelJuego.Name = "labelJuego";
             labelJuego.Size = new Size(38, 15);
             labelJuego.TabIndex = 56;
@@ -279,25 +267,16 @@
             // cmbRegion
             // 
             cmbRegion.FormattingEnabled = true;
-            cmbRegion.Location = new Point(80, 424);
+            cmbRegion.Location = new Point(80, 312);
             cmbRegion.Name = "cmbRegion";
             cmbRegion.Size = new Size(332, 23);
             cmbRegion.TabIndex = 57;
-            // 
-            // cmbEstado
-            // 
-            cmbEstado.FormattingEnabled = true;
-            cmbEstado.Location = new Point(80, 467);
-            cmbEstado.Name = "cmbEstado";
-            cmbEstado.Size = new Size(332, 23);
-            cmbEstado.TabIndex = 58;
             // 
             // TorneoDetalle
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(433, 574);
-            Controls.Add(cmbEstado);
+            ClientSize = new Size(433, 537);
             Controls.Add(cmbRegion);
             Controls.Add(labelJuego);
             Controls.Add(cmbJuego);
@@ -313,7 +292,6 @@
             Controls.Add(txtCantJugadores);
             Controls.Add(txtReglas);
             Controls.Add(txtNombre);
-            Controls.Add(labelEstado);
             Controls.Add(labelRegion);
             Controls.Add(labelResultado);
             Controls.Add(labelFechaFinInscripciones);
@@ -339,7 +317,6 @@
         private TextBox txtCantJugadores;
         private TextBox txtReglas;
         private TextBox txtNombre;
-        private Label labelEstado;
         private Label labelRegion;
         private Label labelResultado;
         private Label labelFechaFinInscripciones;
@@ -356,6 +333,5 @@
         private ComboBox cmbJuego;
         private Label labelJuego;
         private ComboBox cmbRegion;
-        private ComboBox cmbEstado;
     }
 }

@@ -13,14 +13,23 @@ namespace Escritorio
     public partial class InscripcionLista : Form
     {
         private bool Admin { get; set; }
+        private bool _esIndividual = false;
+        private int _inscripcionIdActual = 0;
         public InscripcionLista(bool admin)
         {
             InitializeComponent();
-
+            if (!admin)
+            {
+                btnActualizar.Visible = false;
+                btnAgregar.Visible = false;
+                btnEliminar.Visible = false;
+            }
+            else
+            {
                 btnActualizar.Visible = true;
                 btnAgregar.Visible = false;
                 btnEliminar.Visible = false;
-
+            }
         }
         public async Task CargarInscripciones()
         {
@@ -28,13 +37,19 @@ namespace Escritorio
             dgvInscripciones.AutoGenerateColumns = true;
             dgvInscripciones.DataSource = inscripciones.ToList();
 
-            //dgvInscripciones.Columns["TorneoId"].Visible = false;
+            // OCULTAR LA COLUMNA TipoTorneoNombre
+            if (dgvInscripciones.Columns["TipoTorneoNombre"] != null)
+            {
+                dgvInscripciones.Columns["TipoTorneoNombre"].Visible = false;
+            }
 
         }
 
         public InscripcionDTO SeleccionarInscripcion()
         {
-            return (InscripcionDTO)dgvInscripciones.SelectedRows[0].DataBoundItem;
+            return dgvInscripciones.SelectedRows.Count > 0
+                ? (InscripcionDTO)dgvInscripciones.SelectedRows[0].DataBoundItem
+                : null;
         }
 
         public async Task AgregarInscripcion()
@@ -95,7 +110,11 @@ namespace Escritorio
         private async void InscripcionLista_Load(object sender, EventArgs e)
         {
             Shared.AjustarDataGridView(dgvInscripciones);
+            Shared.AjustarDataGridView(dgvInscriptos);
+
             dgvInscripciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvInscriptos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
             await CargarInscripciones();
         }
 
@@ -114,5 +133,98 @@ namespace Escritorio
             await BorrarInscripcion();
         }
 
+        private async void dgvInscripciones_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvInscripciones.SelectedRows.Count == 0)
+                return;
+
+            var inscripcionSeleccionada = (InscripcionDTO)dgvInscripciones.SelectedRows[0].DataBoundItem;
+
+            if (inscripcionSeleccionada == null)
+                return;
+
+            _inscripcionIdActual = inscripcionSeleccionada.Id; // Guardar el ID actual
+
+            var inscripcionDetalle = await InscripcionApiClient.GetAsync(inscripcionSeleccionada.Id);
+
+            if (inscripcionDetalle == null)
+            {
+                dgvInscriptos.DataSource = null;
+                return;
+            }
+
+            // Detectar tipo de torneo
+            string tipoTorneo = inscripcionDetalle.TipoTorneoNombre?.ToLower() ?? "";
+            _esIndividual = tipoTorneo.Contains("1v1") || tipoTorneo.Contains("individual") || tipoTorneo.Contains("battle royale individual");
+
+            var usuarios = inscripcionDetalle.Usuarios ?? new List<UsuarioDTO>();
+            var equipos = inscripcionDetalle.Equipos ?? new List<EquipoDTO>();
+
+            if (_esIndividual)
+            {
+                dgvInscriptos.DataSource = usuarios.Select(u => new
+                {
+                    Id = u.Id, // IMPORTANTE: Guardar el ID
+                    NombreUsuario = u.NombreUsuario,
+                    Email = u.Email
+                }).ToList();
+
+                if (dgvInscriptos.Columns.Count > 0)
+                {
+                    dgvInscriptos.Columns["Id"].Visible = false; // Ocultar columna ID
+                    dgvInscriptos.Columns[0].HeaderText = "Nombre de Usuario";
+                    dgvInscriptos.Columns[1].HeaderText = "Email";
+                }
+            }
+            else
+            {
+                dgvInscriptos.DataSource = equipos.Select(e => new
+                {
+                    Id = e.Id, // IMPORTANTE: Guardar el ID
+                    NombreEquipo = e.Nombre,
+                    Lider = e.LiderNombre ?? "Sin líder"
+                }).ToList();
+
+                if (dgvInscriptos.Columns.Count > 0)
+                {
+                    dgvInscriptos.Columns["Id"].Visible = false; // Ocultar columna ID
+                    dgvInscriptos.Columns[0].HeaderText = "Nombre del Equipo";
+                    dgvInscriptos.Columns[1].HeaderText = "Líder";
+                }
+            }
+
+            btnEliminarInscripto.Enabled = dgvInscriptos.Rows.Count > 0;
+        }
+
+        private async void btnEliminarInscripto_Click(object sender, EventArgs e)
+        {
+            if (dgvInscriptos.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Seleccione un participante para eliminar.");
+                return;
+            }
+
+            var selectedRow = dgvInscriptos.SelectedRows[0];
+            int idAEliminar = (int)selectedRow.Cells["Id"].Value;
+
+            try
+            {
+                if (_esIndividual)
+                {
+                    await InscripcionApiClient.EliminarUsuarioDeInscripcionAsync(_inscripcionIdActual, idAEliminar);
+                }
+                else
+                {
+                    await InscripcionApiClient.EliminarEquipoDeInscripcionAsync(_inscripcionIdActual, idAEliminar);
+                }
+
+                MessageBox.Show("Participante eliminado exitosamente.");
+                // Recargar datos...
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
     }
 }

@@ -23,21 +23,53 @@ namespace Escritorio
         private async Task OtorgarAcceso()
         {
             var listaUsuarios = await UsuarioApiClient.GetAllAsync();
+            bool usuarioEncontrado = false;
+
             foreach (var usuario in listaUsuarios)
             {
                 if (txtUsuario.Text == usuario.NombreUsuario && txtClave.Text == usuario.Clave)
                 {
-                    MessageBox.Show("Ingreso exitoso","Aviso de ingreso");
-                    this.usuarioActual=usuario;
+                    usuarioEncontrado = true;
+                    MessageBox.Show("Ingreso exitoso", "Aviso de ingreso");
+                    this.usuarioActual = usuario;
                     DialogResult = DialogResult.OK;
-                    
+                    return;
                 }
+            }
+
+            // Si no encontró el usuario
+            if (!usuarioEncontrado)
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos", "Error de login",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Los controles se rehabilita en el método btnAceptar_Click
             }
         }
 
         private async void btnAceptar_Click(object sender, EventArgs e)
         {
+            // Validar campos vacíos
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtClave.Text))
+            {
+                MessageBox.Show("Por favor, complete todos los campos", "Campos requeridos",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Deshabilitar todos los controles
+            DeshabilitarControles();
+
+            // Cambiar texto del botón
+            btnAceptar.Text = "Entrando...";
+
             await OtorgarAcceso();
+
+            // Rehabilitar controles si falla el login
+            if (this.DialogResult != DialogResult.OK)
+            {
+                HabilitarControles();
+                btnAceptar.Text = "Aceptar";
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -51,6 +83,24 @@ namespace Escritorio
             UsuarioDetalle usuarioDetalle = new UsuarioDetalle(false);
             Shared.AjustarFormMDI(usuarioDetalle);
             usuarioDetalle.ShowDialog();
+        }
+
+        private void DeshabilitarControles()
+        {
+            btnAceptar.Enabled = false;
+            btnCancelar.Enabled = false;
+            txtUsuario.Enabled = false;
+            txtClave.Enabled = false;
+            linkNuevoUsuario.Enabled = false;
+        }
+
+        private void HabilitarControles()
+        {
+            btnAceptar.Enabled = true;
+            btnCancelar.Enabled = true;
+            txtUsuario.Enabled = true;
+            txtClave.Enabled = true;
+            linkNuevoUsuario.Enabled = true;
         }
     }
 }

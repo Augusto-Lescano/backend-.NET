@@ -133,5 +133,90 @@ namespace API.Clients
                 throw new Exception($"Timeout al actualizar el equipo con Id:{equipo.Id}. Mensaje: {ex.Message}", ex);
             }
         }
+
+        public static async Task<List<EquipoDTO>> GetEquiposDelLiderAsync(int usuarioId)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync($"equipos/lider/{usuarioId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var equipos = await response.Content.ReadFromJsonAsync<List<EquipoDTO>>();
+                    if (equipos == null)
+                        throw new Exception($"El servidor devolvió una respuesta vacía para los equipos del líder con Id {usuarioId}.");
+
+                    return equipos;
+                }
+                else
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al obtener los equipos del líder con Id {usuarioId}. " +
+                                        $"Status: {response.StatusCode}, Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al obtener los equipos del líder con Id {usuarioId}: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al obtener los equipos del líder con Id {usuarioId}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al obtener los equipos del líder con Id {usuarioId}: {ex.Message}", ex);
+            }
+        }
+
+        public static async Task<EquipoDTO?> AgregarUsuariosAlEquipoAsync(int equipoId, List<int> usuarioIds)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsJsonAsync($"equipos/{equipoId}/usuarios", usuarioIds);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resultado = await response.Content.ReadFromJsonAsync<EquipoDTO>();
+                    return resultado;
+                }
+                else
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al agregar usuarios al equipo. Status: {response.StatusCode}, Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al agregar usuarios al equipo: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al agregar usuarios al equipo: {ex.Message}", ex);
+            }
+        }
+
+        public static async Task EliminarJugadorDelEquipoAsync(int equipoId, int usuarioId)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(
+                    $"equipos/{equipoId}/jugadores/{usuarioId}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al eliminar jugador del equipo: {response.StatusCode}. Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión al eliminar jugador: {ex.Message}", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new Exception($"Timeout al eliminar jugador: {ex.Message}", ex);
+            }
+        }
     }
 }

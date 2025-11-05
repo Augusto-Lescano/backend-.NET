@@ -12,24 +12,26 @@ namespace Data
             return new TPIContext();
         }
 
-        public void Add(Inscripcion inscripcion)
+        public Inscripcion Add(Inscripcion inscripcion)
         {
-
             using var context = CreateContext();
             context.Inscripciones.Add(inscripcion);
             context.SaveChanges();
+            return inscripcion;
         }
 
         public bool Delete(int id)
         {
             using var context = CreateContext();
             var inscripcion = context.Inscripciones.Find(id);
+
             if (inscripcion != null)
             {
                 context.Inscripciones.Remove(inscripcion);
                 context.SaveChanges();
                 return true;
             }
+
             return false;
         }
 
@@ -39,6 +41,11 @@ namespace Data
 
             return context.Inscripciones
                 .Include(i => i.Torneo)
+                    .ThenInclude(t => t.TipoDeTorneo)
+                .Include(i => i.Usuarios)
+                    .ThenInclude(u => u.Inscripciones)
+                .Include(i => i.Equipos)
+                    .ThenInclude(e => e.Usuarios)
                 .FirstOrDefault(i => i.Id == id);
         }
 
@@ -46,52 +53,117 @@ namespace Data
         {
             using var context = CreateContext();
 
-            //Actualiza estados antes de devolver los datos
-            ActualizarEstados(context);
-
             return context.Inscripciones
-                .Include(i => i.Torneo) //Muestra torneo relacionado
+                .Include(i => i.Torneo)
+                    .ThenInclude(t => t.TipoDeTorneo)
+                .Include(i => i.Usuarios)
+                .Include(i => i.Equipos)
                 .ToList();
         }
 
         public bool Update(Inscripcion inscripcion)
         {
             using var context = CreateContext();
-            var existeInscripcion = context.Inscripciones.Find(inscripcion.Id);
-            if (existeInscripcion != null)
-            {
-                existeInscripcion.FechaApertura = inscripcion.FechaApertura;
-                existeInscripcion.FechaCierre = inscripcion.FechaCierre;
-                existeInscripcion.SetEstado(); 
-                context.SaveChanges();
-                return true;
-            }
-            return false;
+            var existente = context.Inscripciones
+                .Include(i => i.Usuarios)
+                .Include(i => i.Equipos)
+                .FirstOrDefault(i => i.Id == inscripcion.Id);
+
+            if (existente == null)
+                return false;
+
+            existente.FechaApertura = inscripcion.FechaApertura;
+            existente.FechaCierre = inscripcion.FechaCierre;
+            existente.SetEstado();
+
+            context.SaveChanges();
+            return true;
         }
 
-        public void ActualizarEstados(TPIContext context)
+        public Inscripcion? GetInscripcionConDetalles(int inscripcionId)
         {
-            var hoy = DateTime.Now;
-            var inscripciones = context.Inscripciones.ToList();
+            using var context = CreateContext();
 
-            foreach (var insc in inscripciones)
-            {
-                string nuevoEstado;
+            return context.Inscripciones
+                .Include(i => i.Torneo)
+                    .ThenInclude(t => t.TipoDeTorneo)
+                .Include(i => i.Usuarios)
+                .Include(i => i.Equipos)
+                    .ThenInclude(e => e.Usuarios)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+        }
 
-                if (hoy < insc.FechaApertura)
-                    nuevoEstado = "Pronto...";
-                else if (hoy >= insc.FechaApertura && hoy <     insc.FechaCierre)
-                    nuevoEstado = "Abierto";
-                else
-                    nuevoEstado = "Finalizado";
+        
+        public bool AgregarUsuarioAInscripcion(int inscripcionId, int usuarioId)
+        {
+            using var context = CreateContext();
 
-                if (insc.Estado != nuevoEstado)
-                {
-                    insc.Estado = nuevoEstado;
-                    context.Inscripciones.Update(insc);
-                }
-            }
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Usuarios)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var usuario = context.Usuarios.Find(usuarioId);
+
+            if (inscripcion == null || usuario == null)
+                return false;
+
+            inscripcion.Usuarios.Add(usuario);
             context.SaveChanges();
+            return true;
+        }
+
+        public bool AgregarEquipoAInscripcion(int inscripcionId, int equipoId)
+        {
+            using var context = CreateContext();
+
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Equipos)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var equipo = context.Equipos.Find(equipoId);
+
+            if (inscripcion == null || equipo == null)
+                return false;
+
+            inscripcion.Equipos.Add(equipo);
+            context.SaveChanges();
+            return true;
+        }
+
+        public void EliminarUsuarioDeInscripcion(int inscripcionId, int usuarioId)
+        {
+            using var context = CreateContext();
+
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Usuarios)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var usuario = inscripcion.Usuarios.FirstOrDefault(u => u.Id == usuarioId);
+
+            if (usuario != null)
+            {
+                // Esto elimina de la tabla intermedia UsuariosInscripciones
+                inscripcion.Usuarios.Remove(usuario);
+                context.SaveChanges();
+            }
+        }
+
+        public void EliminarEquipoDeInscripcion(int inscripcionId, int equipoId)
+        {
+            using var context = CreateContext();
+
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Equipos)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var equipo = inscripcion.Equipos.FirstOrDefault(e => e.Id == equipoId);
+
+            if (equipo != null)
+            {
+                // Esto elimina de la tabla intermedia EquiposInscripciones
+                inscripcion.Equipos.Remove(equipo);
+                context.SaveChanges();
+            }
         }
     }
 }

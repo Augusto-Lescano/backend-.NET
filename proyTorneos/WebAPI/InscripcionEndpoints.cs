@@ -8,59 +8,45 @@ namespace WebAPI
     {
         public static void MapInscripcionEndpoints(this WebApplication app)
         {
+            //Obtener inscripción por ID
             app.MapGet("/inscripciones/{id}", (int id) =>
             {
-                InscripcionService inscripcionService = new InscripcionService();
-                var inscripcion = inscripcionService.Get(id);
+                var service = new InscripcionService();
+                var inscripcion = service.Get(id);
 
                 if (inscripcion is null)
-                    return Results.NotFound();
+                    return Results.NotFound(new { error = "Inscripción no encontrada." });
 
-                var dtoResult = new InscripcionDTO
-                {
-                    Id = inscripcion.Id,
-                    Estado = inscripcion.Estado,
-                    FechaApertura = inscripcion.FechaApertura,
-                    FechaCierre = inscripcion.FechaCierre
-                };
-                return Results.Ok(dtoResult);
+                return Results.Ok(inscripcion);
             })
             .WithName("GetInscripcion")
             .Produces<InscripcionDTO>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
 
+
+            //Obtener todas las inscripciones
             app.MapGet("/inscripciones", () =>
             {
+                var service = new InscripcionService();
+                var inscripciones = service.GetAll();
 
-                InscripcionService inscripcionService = new InscripcionService();
-                var inscripciones = inscripcionService.GetAll();
                 return Results.Ok(inscripciones);
-                /*
-                InscripcionService inscripcionService = new InscripcionService();
-                var inscripciones = inscripcionService.GetAll();
-
-                var dtosResult = inscripciones.Select(i => new InscripcionDTO
-                {
-                    Id = i.Id,
-                    Estado = i.Estado,
-                    FechaApertura = i.FechaApertura,
-                    FechaCierre = i.FechaCierre
-                }).ToList();
-
-                return Results.Ok(dtosResult);*/
             })
             .WithName("GetAllInscripciones")
             .Produces<IEnumerable<InscripcionDTO>>(StatusCodes.Status200OK)
             .WithOpenApi();
 
+
+            //Crear nueva inscripción
             app.MapPost("/inscripciones", (InscripcionDTO dto) =>
             {
                 try
                 {
-                    InscripcionService inscripcionService = new InscripcionService();
-                    Inscripcion inscripcion = new Inscripcion(dto.Id, dto.Estado, dto.FechaApertura, dto.FechaCierre);
-                    inscripcionService.Add(inscripcion);
+                    var service = new InscripcionService();
+                    var inscripcion = new Inscripcion(dto.Id, dto.Estado, dto.FechaApertura, dto.FechaCierre);
+
+                    service.Add(inscripcion);
 
                     var dtoResult = new InscripcionDTO
                     {
@@ -69,6 +55,7 @@ namespace WebAPI
                         FechaApertura = inscripcion.FechaApertura,
                         FechaCierre = inscripcion.FechaCierre
                     };
+
                     return Results.Created($"/inscripciones/{dtoResult.Id}", dtoResult);
                 }
                 catch (ArgumentException ex)
@@ -81,15 +68,84 @@ namespace WebAPI
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi();
 
+
+            //Inscribir usuario individual
+            app.MapPost("/inscripciones/{inscripcionId}/usuarios/{usuarioId}", (int inscripcionId, int usuarioId) =>
+            {
+                try
+                {
+                    var service = new InscripcionService();
+                    var inscripcion = service.GetInscripcion(inscripcionId);
+
+                    if (inscripcion == null)
+                        return Results.NotFound(new { error = "Inscripción no encontrada." });
+
+                    service.InscribirUsuario(usuarioId, inscripcionId);
+
+                    string nombreTorneo = inscripcion.Torneo?.Nombre ?? "(torneo desconocido)";
+                    return Results.Ok(new { mensaje = $"Te has inscrito al torneo {nombreTorneo}" });
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("InscribirUsuario")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithOpenApi();
+
+
+            // Inscribir equipo (por el líder)
+            app.MapPost("/inscripciones/{inscripcionId}/equipos/{equipoId}", (int inscripcionId, int equipoId) =>
+            {
+                try
+                {
+                    var service = new InscripcionService();
+                    var inscripcion = service.GetInscripcion(inscripcionId);
+
+                    if (inscripcion == null)
+                        return Results.NotFound(new { error = "Inscripción no encontrada." });
+
+                    var equipo = service.InscribirEquipo(inscripcionId, equipoId);
+
+                    string nombreTorneo = inscripcion.Torneo?.Nombre ?? "(torneo desconocido)";
+                    return Results.Ok(new
+                    {
+                        mensaje = $"Tu equipo '{equipo.Nombre}' ha sido inscrito al torneo '{nombreTorneo}'."
+                    });
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("InscribirEquipo")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status404NotFound)
+            .WithOpenApi();
+
+
+            //Actualizar inscripción
             app.MapPut("/inscripciones", (InscripcionDTO dto) =>
             {
                 try
                 {
-                    InscripcionService inscripcionService = new InscripcionService();
-                    var updated = inscripcionService.Update(dto);
+                    var service = new InscripcionService();
+                    bool updated = service.Update(dto);
 
                     if (!updated)
-                        return Results.NotFound();
+                        return Results.NotFound(new { error = "Inscripción no encontrada para actualizar." });
 
                     return Results.NoContent();
                 }
@@ -104,13 +160,15 @@ namespace WebAPI
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi();
 
+
+            //Eliminar inscripción
             app.MapDelete("/inscripciones/{id}", (int id) =>
             {
-                InscripcionService inscripcionService = new InscripcionService();
-                var deleted = inscripcionService.Delete(id);
+                var service = new InscripcionService();
+                bool deleted = service.Delete(id);
 
                 if (!deleted)
-                    return Results.NotFound();
+                    return Results.NotFound(new { error = "Inscripción no encontrada para eliminar." });
 
                 return Results.NoContent();
             })
@@ -118,6 +176,46 @@ namespace WebAPI
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
+
+            // Eliminar usuario de inscripción
+            app.MapDelete("/inscripciones/{inscripcionId}/usuarios/{usuarioId}", (int inscripcionId, int usuarioId) =>
+            {
+                try
+                {
+                    var service = new InscripcionService();
+                    service.EliminarUsuarioDeInscripcion(inscripcionId, usuarioId);
+                    return Results.NoContent();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("EliminarUsuarioDeInscripcion");
+
+            // Eliminar equipo de inscripción
+            app.MapDelete("/inscripciones/{inscripcionId}/equipos/{equipoId}", (int inscripcionId, int equipoId) =>
+            {
+                try
+                {
+                    var service = new InscripcionService();
+                    service.EliminarEquipoDeInscripcion(inscripcionId, equipoId);
+                    return Results.NoContent();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("EliminarEquipoDeInscripcion");
         }
     }
 }

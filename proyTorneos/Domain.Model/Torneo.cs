@@ -13,8 +13,21 @@
         public string Resultado { get; set; }   
         public string Region { get; set; }
         public string Estado { get; set; }
+        public int JuegoId { get; set; }
+        public Juego? Juego { get; set; }
+        public int TipoDeTorneoId { get; set; }
+        public TipoTorneo? TipoDeTorneo { get; set; }
+        public int OrganizadorId { get; set; }
+        public Usuario? Organizador { get; set; }
+        public int InscripcionId { get; set; }
+        public Inscripcion? Inscripcion { get; set; }
 
-        public Torneo(int id, string nombre, string descripcionDeReglas, int cantidadDeJugadores, DateTime fechaInicio, DateTime fechaFin, DateTime fechaInicioDeInscripciones, DateTime fechaFinDeInscripciones, string resultado, string region, string estado) {
+        public Torneo()
+        {
+
+        }
+
+        public Torneo(int id, string nombre, string descripcionDeReglas, int cantidadDeJugadores, DateTime fechaInicio, DateTime fechaFin, DateTime fechaInicioDeInscripciones, DateTime fechaFinDeInscripciones, string resultado, string region) {
             Id = id;
             Nombre = nombre;
             DescripcionDeReglas = descripcionDeReglas;
@@ -30,29 +43,13 @@
 
         public void SetEstado()
         {
-            if (FechaInicio > DateTime.Now && FechaFin > DateTime.Now)
-            {
-                Estado = "Pronto";
-            }
-            else if (FechaFin <= DateTime.Now)
-            {
+            if (DateTime.Now < FechaInicio)
+                Estado = "Pendiente";
+            else if (DateTime.Now >= FechaInicio && DateTime.Now <= FechaFin)
+                Estado = "En curso";
+            else
                 Estado = "Finalizado";
-            }
-            else if (FechaInicio <= DateTime.Now && FechaFin > DateTime.Now)
-            {
-                Estado = "En Curso";
-            }
-
         }
-        public int JuegoId { get; set; }
-        public Juego? Juego { get; set; }
-
-        public int TipoDeTorneoId { get; set; }
-        public TipoTorneo? TipoDeTorneo { get; set; }
-        public int OrganizadorId { get; set; }
-        public Usuario? Organizador { get; set; }
-        public Inscripcion? Inscripcion { get; set; }
-        //public int InscripcionId { get; set; }
 
     }
 }
