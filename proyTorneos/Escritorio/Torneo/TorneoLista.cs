@@ -200,7 +200,7 @@ namespace Escritorio
                         var equipoSeleccionado = seleccionarEquipoForm.EquipoSeleccionado;
 
                         // Inscribir el equipo seleccionado
-                        await InscripcionApiClient.InscribirEquipoAsync(torneo.InscripcionId, usuarioActual.Id);
+                        await InscripcionApiClient.InscribirEquipoAsync(torneo.InscripcionId, equipoSeleccionado.Id);
 
                         MessageBox.Show($"Tu equipo '{equipoSeleccionado.Nombre}' ha sido inscrito al torneo '{torneo.Nombre}'.",
                             "Inscripción exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);

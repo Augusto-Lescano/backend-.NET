@@ -34,6 +34,7 @@
             btnEliminar = new Button();
             btnAgregarJugadores = new Button();
             dgvJugadoresEquipo = new DataGridView();
+            btnEliminarJugador = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvEquipo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvJugadoresEquipo).BeginInit();
             SuspendLayout();
@@ -91,16 +92,27 @@
             // dgvJugadoresEquipo
             // 
             dgvJugadoresEquipo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvJugadoresEquipo.Location = new Point(921, 12);
+            dgvJugadoresEquipo.Location = new Point(819, 12);
             dgvJugadoresEquipo.Name = "dgvJugadoresEquipo";
             dgvJugadoresEquipo.Size = new Size(240, 342);
             dgvJugadoresEquipo.TabIndex = 5;
+            // 
+            // btnEliminarJugador
+            // 
+            btnEliminarJugador.Location = new Point(956, 374);
+            btnEliminarJugador.Name = "btnEliminarJugador";
+            btnEliminarJugador.Size = new Size(103, 23);
+            btnEliminarJugador.TabIndex = 6;
+            btnEliminarJugador.Text = "Eliminar jugador";
+            btnEliminarJugador.UseVisualStyleBackColor = true;
+            btnEliminarJugador.Click += btnEliminarJugador_Click;
             // 
             // EquipoLista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1506, 438);
+            ClientSize = new Size(1071, 438);
+            Controls.Add(btnEliminarJugador);
             Controls.Add(dgvJugadoresEquipo);
             Controls.Add(btnAgregarJugadores);
             Controls.Add(btnEliminar);
@@ -123,5 +135,6 @@
         private Button btnEliminar;
         private Button btnAgregarJugadores;
         private DataGridView dgvJugadoresEquipo;
+        private Button btnEliminarJugador;
     }
 }

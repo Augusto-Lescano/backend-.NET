@@ -9,6 +9,8 @@
         public ICollection<Inscripcion> Inscripciones { get; set; } = new List<Inscripcion>();
         public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 
+        public Equipo() { }
+
         public Equipo(int id, string nombre)
         {
             SetId(id);

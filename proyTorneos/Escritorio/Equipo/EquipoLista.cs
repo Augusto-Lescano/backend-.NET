@@ -88,6 +88,12 @@ namespace Escritorio
         {
             Shared.AjustarDataGridView(dgvEquipo);
             dgvEquipo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvEquipo.MultiSelect = false;
+
+            Shared.AjustarDataGridView(dgvJugadoresEquipo);
+            dgvJugadoresEquipo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvJugadoresEquipo.MultiSelect = false; // Solo una selección a la vez
+
             await CargarEquipos();
         }
 
@@ -118,6 +124,7 @@ namespace Escritorio
             btnActualizar.Visible = esLider;
             btnEliminar.Visible = esLider;
             btnAgregarJugadores.Visible = esLider;
+            btnEliminarJugador.Visible = esLider;
 
             // Cargar jugadores del equipo seleccionado
             await CargarJugadoresDelEquipo(equipoSeleccionado.Id);
@@ -134,9 +141,11 @@ namespace Escritorio
                     dgvJugadoresEquipo.DataSource = equipo.Usuarios
                         .Select(u => new
                         {
+                            u.Id,
                             u.NombreUsuario
                         })
                         .ToList();
+
                 }
                 else
                 {
@@ -191,6 +200,62 @@ namespace Escritorio
 
                 await CargarEquipos(); // refrescar lista
                 await CargarJugadoresDelEquipo(equipoSeleccionado.Id); // refresca jugadores
+            }
+        }
+
+        private async void btnEliminarJugador_Click(object sender, EventArgs e)
+        {
+            if (dgvEquipo.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Seleccione un equipo primero.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (dgvJugadoresEquipo.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Seleccione un jugador para eliminar.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var equipoSeleccionado = (EquipoDTO)dgvEquipo.SelectedRows[0].DataBoundItem;
+            var jugadorSeleccionado = dgvJugadoresEquipo.SelectedRows[0];
+
+            int jugadorId = (int)jugadorSeleccionado.Cells["Id"].Value;
+            string nombreJugador = jugadorSeleccionado.Cells["NombreUsuario"].Value?.ToString() ?? "";
+
+            // Validar que no sea el líder
+            if (jugadorId == equipoSeleccionado.LiderId)
+            {
+                MessageBox.Show("No se puede eliminar al líder del equipo.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                $"¿Está seguro que desea eliminar a '{nombreJugador}' del equipo '{equipoSeleccionado.Nombre}'?",
+                "Confirmar Eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    await EquipoApiClient.EliminarJugadorDelEquipoAsync(equipoSeleccionado.Id, jugadorId);
+
+                    MessageBox.Show("Jugador eliminado exitosamente del equipo.", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Recargar los jugadores del equipo
+                    await CargarJugadoresDelEquipo(equipoSeleccionado.Id);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al eliminar jugador: {ex.Message}", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

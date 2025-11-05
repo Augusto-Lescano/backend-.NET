@@ -25,7 +25,7 @@ namespace WebAPI
                     Usuarios = equipo.Usuarios?.Select(u => new UsuarioDTO
                     {
                         Id = u.Id,
-                        Nombre = u.NombreUsuario
+                        NombreUsuario = u.NombreUsuario
                     }).ToList() ?? new List<UsuarioDTO>()
                 };
                 return Results.Ok(dtoResult);
@@ -117,7 +117,7 @@ namespace WebAPI
 
 
             //Agregar usuarios a un equipo
-            app.MapPost("/equipos/{equipoId}/agregar-usuarios", async (int equipoId, List<int> usuariosIds) =>
+            app.MapPost("/equipos/{equipoId}/usuarios", async (int equipoId, List<int> usuariosIds) =>
             {
                 try
                 {
@@ -174,6 +174,8 @@ namespace WebAPI
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi();
 
+
+
             app.MapDelete("/equipos/{id}", (int id) =>
             {
                 EquipoService equipoService = new EquipoService();
@@ -188,6 +190,32 @@ namespace WebAPI
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
+
+            // Eliminar jugador del equipo
+            app.MapDelete("/equipos/{equipoId}/jugadores/{usuarioId}", (int equipoId, int usuarioId) =>
+            {
+                try
+                {
+                    var service = new EquipoService();
+                    service.EliminarJugadorDelEquipo(equipoId, usuarioId);
+                    return Results.NoContent();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("EliminarJugadorDelEquipo")
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithOpenApi();
+
+
         }
     }
 }

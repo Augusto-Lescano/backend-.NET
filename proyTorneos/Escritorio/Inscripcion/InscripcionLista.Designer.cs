@@ -33,6 +33,7 @@
             btnActualizar = new Button();
             btnEliminar = new Button();
             dgvInscriptos = new DataGridView();
+            btnEliminarInscripto = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvInscripciones).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvInscriptos).BeginInit();
             SuspendLayout();
@@ -52,7 +53,7 @@
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(26, 377);
+            btnAgregar.Location = new Point(176, 377);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(142, 26);
             btnAgregar.TabIndex = 1;
@@ -62,7 +63,7 @@
             // 
             // btnActualizar
             // 
-            btnActualizar.Location = new Point(581, 377);
+            btnActualizar.Location = new Point(12, 377);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(158, 26);
             btnActualizar.TabIndex = 2;
@@ -72,7 +73,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(173, 377);
+            btnEliminar.Location = new Point(324, 377);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(123, 26);
             btnEliminar.TabIndex = 3;
@@ -85,14 +86,25 @@
             dgvInscriptos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvInscriptos.Location = new Point(858, 12);
             dgvInscriptos.Name = "dgvInscriptos";
-            dgvInscriptos.Size = new Size(240, 349);
+            dgvInscriptos.Size = new Size(330, 349);
             dgvInscriptos.TabIndex = 24;
+            // 
+            // btnEliminarInscripto
+            // 
+            btnEliminarInscripto.Location = new Point(1078, 377);
+            btnEliminarInscripto.Name = "btnEliminarInscripto";
+            btnEliminarInscripto.Size = new Size(110, 26);
+            btnEliminarInscripto.TabIndex = 25;
+            btnEliminarInscripto.Text = "Eliminar inscripto";
+            btnEliminarInscripto.UseVisualStyleBackColor = true;
+            btnEliminarInscripto.Click += btnEliminarInscripto_Click;
             // 
             // InscripcionLista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1374, 445);
+            ClientSize = new Size(1204, 445);
+            Controls.Add(btnEliminarInscripto);
             Controls.Add(dgvInscriptos);
             Controls.Add(btnEliminar);
             Controls.Add(btnActualizar);
@@ -113,5 +125,6 @@
         private Button btnActualizar;
         private Button btnEliminar;
         private DataGridView dgvInscriptos;
+        private Button btnEliminarInscripto;
     }
 }

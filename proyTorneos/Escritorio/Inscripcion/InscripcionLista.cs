@@ -13,6 +13,8 @@ namespace Escritorio
     public partial class InscripcionLista : Form
     {
         private bool Admin { get; set; }
+        private bool _esIndividual = false;
+        private int _inscripcionIdActual = 0;
         public InscripcionLista(bool admin)
         {
             InitializeComponent();
@@ -34,6 +36,12 @@ namespace Escritorio
             var inscripciones = await InscripcionApiClient.GetAllAsync();
             dgvInscripciones.AutoGenerateColumns = true;
             dgvInscripciones.DataSource = inscripciones.ToList();
+
+            // OCULTAR LA COLUMNA TipoTorneoNombre
+            if (dgvInscripciones.Columns["TipoTorneoNombre"] != null)
+            {
+                dgvInscripciones.Columns["TipoTorneoNombre"].Visible = false;
+            }
 
         }
 
@@ -135,7 +143,8 @@ namespace Escritorio
             if (inscripcionSeleccionada == null)
                 return;
 
-            // Traer la inscripción completa con usuarios o equipos
+            _inscripcionIdActual = inscripcionSeleccionada.Id; // Guardar el ID actual
+
             var inscripcionDetalle = await InscripcionApiClient.GetAsync(inscripcionSeleccionada.Id);
 
             if (inscripcionDetalle == null)
@@ -146,31 +155,76 @@ namespace Escritorio
 
             // Detectar tipo de torneo
             string tipoTorneo = inscripcionDetalle.TipoTorneoNombre?.ToLower() ?? "";
+            _esIndividual = tipoTorneo.Contains("1v1") || tipoTorneo.Contains("individual") || tipoTorneo.Contains("battle royale individual");
 
-            bool esIndividual = tipoTorneo.Contains("1v1")
-                             || tipoTorneo.Contains("individual")
-                             || tipoTorneo.Contains("battle royale individual");
+            var usuarios = inscripcionDetalle.Usuarios ?? new List<UsuarioDTO>();
+            var equipos = inscripcionDetalle.Equipos ?? new List<EquipoDTO>();
 
-            if (esIndividual)
+            if (_esIndividual)
             {
-                // Mostrar usuarios inscriptos
-                dgvInscriptos.DataSource = inscripcionDetalle.Usuarios?.Select(u => new
+                dgvInscriptos.DataSource = usuarios.Select(u => new
                 {
+                    Id = u.Id, // IMPORTANTE: Guardar el ID
                     NombreUsuario = u.NombreUsuario,
                     Email = u.Email
                 }).ToList();
+
+                if (dgvInscriptos.Columns.Count > 0)
+                {
+                    dgvInscriptos.Columns["Id"].Visible = false; // Ocultar columna ID
+                    dgvInscriptos.Columns[0].HeaderText = "Nombre de Usuario";
+                    dgvInscriptos.Columns[1].HeaderText = "Email";
+                }
             }
             else
             {
-                // Mostrar equipos inscriptos
-                dgvInscriptos.DataSource = inscripcionDetalle.Equipos?.Select(e => new
+                dgvInscriptos.DataSource = equipos.Select(e => new
                 {
+                    Id = e.Id, // IMPORTANTE: Guardar el ID
                     NombreEquipo = e.Nombre,
-                    Lider = e.LiderNombre
+                    Lider = e.LiderNombre ?? "Sin líder"
                 }).ToList();
+
+                if (dgvInscriptos.Columns.Count > 0)
+                {
+                    dgvInscriptos.Columns["Id"].Visible = false; // Ocultar columna ID
+                    dgvInscriptos.Columns[0].HeaderText = "Nombre del Equipo";
+                    dgvInscriptos.Columns[1].HeaderText = "Líder";
+                }
             }
+
+            btnEliminarInscripto.Enabled = dgvInscriptos.Rows.Count > 0;
         }
 
+        private async void btnEliminarInscripto_Click(object sender, EventArgs e)
+        {
+            if (dgvInscriptos.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Seleccione un participante para eliminar.");
+                return;
+            }
 
+            var selectedRow = dgvInscriptos.SelectedRows[0];
+            int idAEliminar = (int)selectedRow.Cells["Id"].Value;
+
+            try
+            {
+                if (_esIndividual)
+                {
+                    await InscripcionApiClient.EliminarUsuarioDeInscripcionAsync(_inscripcionIdActual, idAEliminar);
+                }
+                else
+                {
+                    await InscripcionApiClient.EliminarEquipoDeInscripcionAsync(_inscripcionIdActual, idAEliminar);
+                }
+
+                MessageBox.Show("Participante eliminado exitosamente.");
+                // Recargar datos...
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
     }
 }

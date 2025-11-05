@@ -35,7 +35,25 @@ namespace Domain.Services
                 FechaCierre = inscripcion.FechaCierre,
                 TorneoId = inscripcion.TorneoId,
                 TorneoNombre = inscripcion.Torneo?.Nombre ?? "(sin torneo)",
-                TipoTorneoNombre = inscripcion.Torneo?.TipoDeTorneo?.Nombre ?? "(sin tipo)"
+                TipoTorneoNombre = inscripcion.Torneo?.TipoDeTorneo?.Nombre ?? "(sin tipo)",
+
+                
+                Usuarios = inscripcion.Usuarios?.Select(u => new UsuarioDTO
+                {
+                    Id = u.Id,
+                    NombreUsuario = u.NombreUsuario,
+                    Email = u.Email,
+                    Nombre = u.Nombre,
+                    Apellido = u.Apellido
+                }).ToList() ?? new List<UsuarioDTO>(),
+
+                Equipos = inscripcion.Equipos?.Select(e => new EquipoDTO
+                {
+                    Id = e.Id,
+                    Nombre = e.Nombre,
+                    LiderNombre = e.Lider?.NombreUsuario ?? "(sin líder)"
+                    // incluir otras propiedades que necesites
+                }).ToList() ?? new List<EquipoDTO>()
             };
         }
 
@@ -117,11 +135,12 @@ namespace Domain.Services
             if (totalActual + 1 > inscripcion.Torneo.CantidadDeJugadores)
                 throw new InvalidOperationException("No se puede inscribir, se alcanzó la cantidad máxima de jugadores.");
 
-            inscripcion.Usuarios.Add(usuario);
-            inscripcionRepository.Update(inscripcion);
+            var success = inscripcionRepository.AgregarUsuarioAInscripcion(inscripcionId, usuarioId);
+            if (!success)
+                throw new InvalidOperationException("No se pudo completar la inscripción.");
         }
 
-        public Equipo InscribirEquipo(int inscripcionId, int usuarioId)
+        public Equipo InscribirEquipo(int inscripcionId, int equipoId)
         {
             var inscripcionRepository = new InscripcionRepository();
             var equipoRepository = new EquipoRepository();
@@ -134,13 +153,9 @@ namespace Domain.Services
             if (inscripcion.Estado?.ToLower() != "abierto" && inscripcion.Estado.ToLower() != "abierta")
                 throw new InvalidOperationException("La inscripción no está abierta.");
 
-            //Obtener equipo del líder
-            var equipo = equipoRepository.GetEquipoPorLider(usuarioId)
-                ?? throw new ArgumentException("El usuario no es líder de ningún equipo.");
-
-            //Validar liderazgo
-            if (equipo.LiderId != usuarioId)
-                throw new InvalidOperationException("Solo el líder del equipo puede inscribirlo al torneo.");
+            // Obtener equipo directamente por ID
+            var equipo = equipoRepository.Get(equipoId)
+                ?? throw new ArgumentException("Equipo no encontrado.");
 
             //Validar tipo de torneo
             var tipoTorneo = inscripcion.Torneo?.TipoDeTorneo?.Nombre?.ToLower() ?? "";
@@ -193,9 +208,9 @@ namespace Domain.Services
             if (nuevoTotal > inscripcion.Torneo.CantidadDeJugadores)
                 throw new InvalidOperationException("No se puede inscribir el equipo, se alcanzó la cantidad máxima de jugadores.");
 
-            //Registrar la inscripción
-            inscripcion.Equipos.Add(equipo);
-            inscripcionRepository.Update(inscripcion);
+            var success = inscripcionRepository.AgregarEquipoAInscripcion(inscripcionId, equipo.Id);
+            if (!success)
+                throw new InvalidOperationException("No se pudo completar la inscripción.");
 
             return equipo;
         }
@@ -205,6 +220,44 @@ namespace Domain.Services
         {
             var repo = new InscripcionRepository();
             return repo.Get(inscripcionId);
+        }
+
+        public void EliminarUsuarioDeInscripcion(int inscripcionId, int usuarioId)
+        {
+            var inscripcionRepository = new InscripcionRepository();
+            var usuarioRepository = new UsuarioRepository();
+
+            // Validar que existe la inscripción
+            var inscripcion = inscripcionRepository.Get(inscripcionId);
+            if (inscripcion == null)
+                throw new ArgumentException("Inscripción no encontrada.");
+
+            // Validar que el usuario existe en la inscripción
+            var usuario = inscripcion.Usuarios.FirstOrDefault(u => u.Id == usuarioId);
+            if (usuario == null)
+                throw new ArgumentException("Usuario no encontrado en esta inscripción.");
+
+            // Llamar al repository para eliminar
+            inscripcionRepository.EliminarUsuarioDeInscripcion(inscripcionId, usuarioId);
+        }
+
+        public void EliminarEquipoDeInscripcion(int inscripcionId, int equipoId)
+        {
+            var inscripcionRepository = new InscripcionRepository();
+            var equipoRepository = new EquipoRepository();
+
+            // Validar que existe la inscripción
+            var inscripcion = inscripcionRepository.Get(inscripcionId);
+            if (inscripcion == null)
+                throw new ArgumentException("Inscripción no encontrada.");
+
+            // Validar que el equipo existe en la inscripción
+            var equipo = inscripcion.Equipos.FirstOrDefault(e => e.Id == equipoId);
+            if (equipo == null)
+                throw new ArgumentException("Equipo no encontrado en esta inscripción.");
+
+            // Llamar al repository para eliminar
+            inscripcionRepository.EliminarEquipoDeInscripcion(inscripcionId, equipoId);
         }
     }
 }

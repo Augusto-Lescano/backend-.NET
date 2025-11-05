@@ -16,9 +16,9 @@
         public Inscripcion(int id, string estado, DateTime fechaApertura, DateTime fechaCierre)
         {
             SetId(id);
-            SetEstado();
             FechaApertura = fechaApertura;
             FechaCierre = fechaCierre;
+            SetEstado();
         }
 
         public void SetId(int id)
@@ -30,17 +30,14 @@
 
         public void SetEstado()
         {
-            if(FechaApertura > DateTime.Now && FechaCierre > DateTime.Now)
-            {
-                Estado = "Pronto";
-            }else if (FechaCierre <= DateTime.Now)
-            {
-                Estado = "Finalizado"; 
-            }else if(FechaApertura <= DateTime.Now && FechaCierre > DateTime.Now) 
-            {
-                Estado = "Abierta"; 
-            }
-            
+            var ahora = DateTime.Now;
+
+            if (FechaApertura > ahora)
+                Estado = "Pendiente"; //Inscripción aún no empezó
+            else if (FechaCierre < ahora)
+                Estado = "Cerrada"; //Ya terminó el período
+            else
+                Estado = "Abierta"; //Está en curso
         }
     }
 }

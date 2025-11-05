@@ -93,6 +93,19 @@ namespace WebAPI
             .Produces(StatusCodes.Status400BadRequest)
             .WithOpenApi();
 
+
+            //Actualiza solo las fechas de inscripcion
+            app.MapPut("/torneos/{id}/fechas-inscripcion", (int id, FechasInscripcionDTO dto) =>
+            {
+                var service = new TorneoService();
+                service.ActualizarFechasDeInscripcion(id, dto.FechaInicio, dto.FechaFin);
+                return Results.Ok("Fechas de inscripción actualizadas correctamente.");
+            })
+            .WithName("ActualizarFechasInscripcion")
+            .Produces(StatusCodes.Status200OK)
+            .WithOpenApi();
+
+
             app.MapDelete("/torneos/{id}", (int id) => {
                 TorneoService torneoService = new TorneoService();
                 var deleted = torneoService.Delete(id);

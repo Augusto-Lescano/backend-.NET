@@ -1,5 +1,6 @@
 ﻿using Domain.Model;
 using Microsoft.EntityFrameworkCore;
+
 namespace Data
 {
     public class TorneoRepository
@@ -34,22 +35,6 @@ namespace Data
             context.Torneos.Add(torneo);
             context.SaveChanges();
             return torneo;
-
-
-            // comentado momentaneamente
-            /*Crea inscripción automáticamente
-            var estado = CalcularEstadoInscripcion(torneo.FechaInicioDeInscripciones, torneo.FechaFinDeInscripciones);
-
-            var inscripcion = new Inscripcion
-            {
-                FechaApertura = torneo.FechaInicioDeInscripciones,
-                FechaCierre = torneo.FechaFinDeInscripciones,
-                Estado = estado,
-                TorneoId = torneo.Id
-            };
-
-            context.Inscripciones.Add(inscripcion);
-            context.SaveChanges();*/
         }
 
         public bool Delete(int id)
@@ -91,6 +76,20 @@ namespace Data
             {
                 return false;
             }
+        }
+
+        public void ActualizarSoloFechasInscripcion(int torneoId, DateTime fechaInicio, DateTime fechaFin)
+        {
+            using var context = CreateContext();
+
+            var torneo = context.Torneos.Find(torneoId);
+            if (torneo == null)
+                throw new ArgumentException($"No se encontró el torneo con Id {torneoId}");
+
+            torneo.FechaInicioDeInscripciones = fechaInicio;
+            torneo.FechaFinDeInscripciones = fechaFin;
+
+            context.SaveChanges();
         }
     }
 }

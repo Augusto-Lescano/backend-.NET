@@ -92,5 +92,78 @@ namespace Data
                     .ThenInclude(e => e.Usuarios)
                 .FirstOrDefault(i => i.Id == inscripcionId);
         }
+
+        
+        public bool AgregarUsuarioAInscripcion(int inscripcionId, int usuarioId)
+        {
+            using var context = CreateContext();
+
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Usuarios)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var usuario = context.Usuarios.Find(usuarioId);
+
+            if (inscripcion == null || usuario == null)
+                return false;
+
+            inscripcion.Usuarios.Add(usuario);
+            context.SaveChanges();
+            return true;
+        }
+
+        public bool AgregarEquipoAInscripcion(int inscripcionId, int equipoId)
+        {
+            using var context = CreateContext();
+
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Equipos)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var equipo = context.Equipos.Find(equipoId);
+
+            if (inscripcion == null || equipo == null)
+                return false;
+
+            inscripcion.Equipos.Add(equipo);
+            context.SaveChanges();
+            return true;
+        }
+
+        public void EliminarUsuarioDeInscripcion(int inscripcionId, int usuarioId)
+        {
+            using var context = CreateContext();
+
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Usuarios)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var usuario = inscripcion.Usuarios.FirstOrDefault(u => u.Id == usuarioId);
+
+            if (usuario != null)
+            {
+                // Esto elimina de la tabla intermedia UsuariosInscripciones
+                inscripcion.Usuarios.Remove(usuario);
+                context.SaveChanges();
+            }
+        }
+
+        public void EliminarEquipoDeInscripcion(int inscripcionId, int equipoId)
+        {
+            using var context = CreateContext();
+
+            var inscripcion = context.Inscripciones
+                .Include(i => i.Equipos)
+                .FirstOrDefault(i => i.Id == inscripcionId);
+
+            var equipo = inscripcion.Equipos.FirstOrDefault(e => e.Id == equipoId);
+
+            if (equipo != null)
+            {
+                // Esto elimina de la tabla intermedia EquiposInscripciones
+                inscripcion.Equipos.Remove(equipo);
+                context.SaveChanges();
+            }
+        }
     }
 }

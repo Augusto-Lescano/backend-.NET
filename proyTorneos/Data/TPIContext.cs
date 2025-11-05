@@ -278,6 +278,168 @@ namespace Data
                             j.ToTable("EquipoUsuarios");
                         });
             });
+
+            // DATOS INICIALES
+
+            // Usuarios iniciales
+            modelBuilder.Entity<Usuario>().HasData(
+                new Usuario
+                {
+                    Id = 1,
+                    Nombre = "Emilio",
+                    Apellido = "Certo",
+                    Email = "emicerto@utn.com",
+                    Clave = "emicerto123",
+                    Pais = "Argentina",
+                    NombreUsuario = "emiliokmkz",
+                    FechaAlta = DateTime.Now,
+                    Admin = true
+                },
+                new Usuario
+                {
+                    Id = 2,
+                    Nombre = "Gian Marco",
+                    Apellido = "Mercanzini",
+                    Email = "gianimercan@utn.com",
+                    Clave = "gianmarco123",
+                    Pais = "Argentina",
+                    NombreUsuario = "gianmarco",
+                    FechaAlta = DateTime.Now,
+                    Admin = true
+                },
+                new Usuario
+                {
+                    Id = 3,
+                    Nombre = "Augusto",
+                    Apellido = "Lescano",
+                    Email = "augusles@utn.com",
+                    Clave = "augusto123",
+                    Pais = "Argentina",
+                    NombreUsuario = "augus",
+                    FechaAlta = DateTime.Now,
+                    Admin = true
+                },
+                new Usuario
+                {
+                    Id = 4,
+                    Nombre = "Naruto",
+                    Apellido = "Uzumaki",
+                    Email = "naruzumaki@konoha.com",
+                    Clave = "naruto123",
+                    Pais = "Argentina",
+                    NombreUsuario = "uzumakinaruto",
+                    FechaAlta = DateTime.Now,
+                    Admin = false
+                },
+                new Usuario
+                {
+                    Id = 5,
+                    Nombre = "Sasuke",
+                    Apellido = "Uchiha",
+                    Email = "sasukeuchiha@uchihas.com",
+                    Clave = "sasuke123",
+                    Pais = "Argentina",
+                    NombreUsuario = "uchihasasuke",
+                    FechaAlta = DateTime.Now,
+                    Admin = false
+                }
+            );
+
+            // Juegos iniciales
+            modelBuilder.Entity<Juego>().HasData(
+                new Juego
+                {
+                    Id = 1,
+                    Nombre = "League of Legends",
+                    Descripcion = "Juego de estrategia por equipos 5v5"
+                },
+                new Juego
+                {
+                    Id = 2,
+                    Nombre = "Counter-Strike 2",
+                    Descripcion = "Shooter táctico por equipos 5v5"
+                },
+                new Juego
+                {
+                    Id = 3,
+                    Nombre = "Valorant",
+                    Descripcion = "Shooter táctico con habilidades especiales"
+                },
+                new Juego
+                {
+                    Id = 4,
+                    Nombre = "Fortnite",
+                    Descripcion = "Battle Royale con construcción"
+                },
+                new Juego
+                {
+                    Id = 5,
+                    Nombre = "EA FC 26",
+                    Descripcion = "Simulador de fútbol con licencias oficiales y gameplay realista"
+                },
+                new Juego
+                {
+                    Id = 6,
+                    Nombre = "Street Fighter VI",
+                    Descripcion = "Legendario juego de lucha con combates intensos 1v1"
+                },
+                new Juego
+                {
+                    Id = 7,
+                    Nombre = "Clash royale",
+                    Descripcion = "Estrategia en tiempo real con cartas coleccionables y batallas rápidas"
+                }
+            );
+
+            // Tipos de Torneo iniciales
+            modelBuilder.Entity<TipoTorneo>().HasData(
+                new TipoTorneo
+                {
+                    Id = 1,
+                    Nombre = "1v1",
+                    Descripcion = "Torneo individual donde cada jugador compite por su cuenta"
+                },
+                new TipoTorneo
+                {
+                    Id = 2,
+                    Nombre = "2v2",
+                    Descripcion = "Torneo por equipos de 2 jugadores"
+                },
+                new TipoTorneo
+                {
+                    Id = 3,
+                    Nombre = "5v5",
+                    Descripcion = "Torneo por equipos de 5 jugadores"
+                },
+                new TipoTorneo
+                {
+                    Id = 4,
+                    Nombre = "Battle Royale Individual",
+                    Descripcion = "Torneo Battle Royale individual"
+                },
+                new TipoTorneo
+                {
+                    Id = 5,
+                    Nombre = "Battle Royale Grupal",
+                    Descripcion = "Torneo Battle Royale por equipos de hasta 4 jugadores"
+                }
+            );
+
+            // Equipos iniciales
+            modelBuilder.Entity<Equipo>().HasData(
+                new Equipo
+                {
+                    Id = 1,
+                    Nombre = "Solids Snakes",
+                    LiderId = 2
+                },
+                new Equipo
+                {
+                    Id = 2,
+                    Nombre = "Los dragones",
+                    LiderId = 1
+                }
+            );
         }
     }
 }

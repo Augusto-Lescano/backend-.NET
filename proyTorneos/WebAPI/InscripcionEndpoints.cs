@@ -102,7 +102,7 @@ namespace WebAPI
 
 
             // Inscribir equipo (por el líder)
-            app.MapPost("/inscripciones/{inscripcionId}/equipos/{usuarioId}", (int inscripcionId, int usuarioId) =>
+            app.MapPost("/inscripciones/{inscripcionId}/equipos/{equipoId}", (int inscripcionId, int equipoId) =>
             {
                 try
                 {
@@ -112,7 +112,7 @@ namespace WebAPI
                     if (inscripcion == null)
                         return Results.NotFound(new { error = "Inscripción no encontrada." });
 
-                    var equipo = service.InscribirEquipo(inscripcionId, usuarioId);
+                    var equipo = service.InscribirEquipo(inscripcionId, equipoId);
 
                     string nombreTorneo = inscripcion.Torneo?.Nombre ?? "(torneo desconocido)";
                     return Results.Ok(new
@@ -176,6 +176,46 @@ namespace WebAPI
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithOpenApi();
+
+            // Eliminar usuario de inscripción
+            app.MapDelete("/inscripciones/{inscripcionId}/usuarios/{usuarioId}", (int inscripcionId, int usuarioId) =>
+            {
+                try
+                {
+                    var service = new InscripcionService();
+                    service.EliminarUsuarioDeInscripcion(inscripcionId, usuarioId);
+                    return Results.NoContent();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("EliminarUsuarioDeInscripcion");
+
+            // Eliminar equipo de inscripción
+            app.MapDelete("/inscripciones/{inscripcionId}/equipos/{equipoId}", (int inscripcionId, int equipoId) =>
+            {
+                try
+                {
+                    var service = new InscripcionService();
+                    service.EliminarEquipoDeInscripcion(inscripcionId, equipoId);
+                    return Results.NoContent();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.NotFound(new { error = ex.Message });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
+            })
+            .WithName("EliminarEquipoDeInscripcion");
         }
     }
 }

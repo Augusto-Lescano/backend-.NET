@@ -176,12 +176,12 @@ namespace API.Clients
         }
 
         //Inscribir equipo (solo por líder)
-        public static async Task InscribirEquipoAsync(int inscripcionId, int usuarioId)
+        public static async Task InscribirEquipoAsync(int inscripcionId, int equipoId)
         {
             try
             {
                 HttpResponseMessage response = await client.PostAsync(
-                    $"inscripciones/{inscripcionId}/equipos/{usuarioId}", null);
+                    $"inscripciones/{inscripcionId}/equipos/{equipoId}", null);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -196,6 +196,44 @@ namespace API.Clients
             catch (TaskCanceledException ex)
             {
                 throw new Exception($"Timeout al inscribir equipo: {ex.Message}", ex);
+            }
+        }
+
+        public static async Task EliminarUsuarioDeInscripcionAsync(int inscripcionId, int usuarioId)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(
+                    $"inscripciones/{inscripcionId}/usuarios/{usuarioId}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al eliminar usuario: {response.StatusCode}. Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión: {ex.Message}", ex);
+            }
+        }
+
+        public static async Task EliminarEquipoDeInscripcionAsync(int inscripcionId, int equipoId)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(
+                    $"inscripciones/{inscripcionId}/equipos/{equipoId}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error al eliminar equipo: {response.StatusCode}. Detalle: {errorContent}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception($"Error de conexión: {ex.Message}", ex);
             }
         }
     }
