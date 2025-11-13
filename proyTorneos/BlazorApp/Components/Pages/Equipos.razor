@@ -1,0 +1,47 @@
+﻿@page "/equipos"
+@attribute [StreamRendering]
+@using DTOs
+@using API.Clients
+
+<PageTitle>Lista de equipos</PageTitle>
+
+<h3>Equipos</h3>
+
+@if (equipos == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Usuario del lider</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in equipos)
+            {
+                
+                <tr>
+                    <td>@e.Id</td>
+                    <td>@e.Nombre</td>
+                    <td>@e.LiderNombre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    IEnumerable<EquipoDTO> equipos;
+    protected override async Task OnInitializedAsync()
+    {
+         equipos = await EquipoApiClient.GetAllAsync();
+       
+    }
+
+
+}
