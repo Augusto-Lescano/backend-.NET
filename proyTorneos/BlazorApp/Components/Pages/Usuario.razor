@@ -1,5 +1,57 @@
 ﻿@page "/usuario"
+@attribute [StreamRendering]
+@using DTOs
+@using API.Clients
 
-<h3>Usuario</h3>
+<PageTitle>Lista de usuarios</PageTitle>
+
+<h3>Usuarios</h3>
+
+@if (usuarios == null)
+{
+<p>Cargando...</p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Pais</th>
+            <th>Nombre de usuario</th>
+            <th>Fecha de alta</th>
+            <th>Admin</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in usuarios)
+        {
+            <tr>
+                <td>@u.Id</td>
+                <td>@u.Nombre</td>
+                <td>@u.Apellido</td>
+                <td>@u.Email</td>
+                <td>@u.Pais</td>
+                <td>@u.NombreUsuario</td>
+                <td>@u.FechaAlta</td>
+                <td>@u.Admin</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@code {
+    private IEnumerable<UsuarioDTO>? usuarios;
+
+    protected override async Task OnInitializedAsync()
+    {
+        usuarios = await UsuarioApiClient.GetAllAsync();
+    }
+}
 
 
