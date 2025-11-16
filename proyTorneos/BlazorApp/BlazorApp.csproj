@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastReport.Net.Demo" Version="2026.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\API.Clients\API.Clients.csproj" />
     <ProjectReference Include="..\Domain.Model\Domain.Model.csproj" />
     <ProjectReference Include="..\Domain.Services\Domain.Services.csproj" />

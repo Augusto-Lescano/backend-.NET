@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="11/15/2025 20:10:12" ReportInfo.Modified="11/15/2025 23:47:16" ReportInfo.CreatorVersion="2026.1.2.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqJUrEa/KIcQqhhcfnlqC6PKK8MheP9IEu4gFWCPXnWzFgLjPP39mqhm6WKckRi90qfWFHDc7eZn2VVrd1T5h+hYbEh03ioILIqCGcfgZKnwFk7Ezi6YbujPrvEUEAxYI2sz7w2VlqdOLJVVa3fYi8xikJ2M8dsHeqkq/el0a1LBOR9tc3G7GWSn8zVrttgSCxXNOH5WQTEIWZ80oa567UpA==">
+      <TableDataSource Name="Usuarios" DataType="System.Int32" Enabled="true" TableName="Usuarios">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="Nombre" DataType="System.String"/>
+        <Column Name="Apellido" DataType="System.String"/>
+        <Column Name="Email" DataType="System.String"/>
+        <Column Name="Clave" DataType="System.String"/>
+        <Column Name="Pais" DataType="System.String"/>
+        <Column Name="NombreUsuario" DataType="System.String"/>
+        <Column Name="FechaAlta" DataType="System.DateTime"/>
+        <Column Name="Admin" DataType="System.Boolean" BindableControl="CheckBox"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="699.3" Height="28.35" Text="Cantidad de usuarios por pais" HorzAlign="Center" Font="Arial, 16pt, style=Bold, Italic"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="28.35"/>
+    <DataBand Name="Data1" Top="74.15" Width="718.2" Height="255.15">
+      <MSChartObject Name="MSChart1" Left="103.95" Width="463.05" Height="255.15" CanGrow="true" DataSource="Usuarios" Filter="" AutoSeriesColumn="" ChartData="PENoYXJ0IFNpemU9IjI4OCwgMjMyIiBCb3JkZXJsaW5lQ29sb3I9IkRhcmtHcmF5IiBCb3JkZXJsaW5lV2lkdGg9IjIiIEJvcmRlcmxpbmVEYXNoU3R5bGU9IlNvbGlkIj4NCiAgPFNlcmllcz4NCiAgICA8U2VyaWVzIE5hbWU9IkdyYWZpY28gZGUgYmFycmFzIiBMZWdlbmQ9IkRlZmF1bHQiIFhWYWx1ZVR5cGU9IlN0cmluZyIgWVZhbHVlVHlwZT0iSW50NjQiIENoYXJ0QXJlYT0iRGVmYXVsdCIgTGFiZWw9IiNWQUxZIj4NCiAgICAgIDxQb2ludHM+DQogICAgICAgIDxEYXRhUG9pbnQgWVZhbHVlcz0iMSIgQXhpc0xhYmVsPSJBIiAvPg0KICAgICAgICA8RGF0YVBvaW50IFlWYWx1ZXM9IjMiIEF4aXNMYWJlbD0iQiIgLz4NCiAgICAgICAgPERhdGFQb2ludCBZVmFsdWVzPSIyIiBBeGlzTGFiZWw9IkMiIC8+DQogICAgICAgIDxEYXRhUG9pbnQgWVZhbHVlcz0iNCIgQXhpc0xhYmVsPSJEIiAvPg0KICAgICAgPC9Qb2ludHM+DQogICAgPC9TZXJpZXM+DQogIDwvU2VyaWVzPg0KICA8TGVnZW5kcz4NCiAgICA8TGVnZW5kIE5hbWU9IkRlZmF1bHQiIEVuYWJsZWQ9IkZhbHNlIj4NCiAgICA8L0xlZ2VuZD4NCiAgPC9MZWdlbmRzPg0KICA8VGl0bGVzPg0KICAgIDxUaXRsZSBOYW1lPSJUaXRsZTEiIFZpc2libGU9IkZhbHNlIj4NCiAgICA8L1RpdGxlPg0KICA8L1RpdGxlcz4NCiAgPENoYXJ0QXJlYXM+DQogICAgPENoYXJ0QXJlYSBOYW1lPSJEZWZhdWx0Ij4NCiAgICAgIDxBeGlzWSBUaXRsZT0iQ2FudGlkYWQgZGUgdXN1YXJpb3MiPg0KICAgICAgICA8TWFqb3JHcmlkIExpbmVDb2xvcj0iNjQsIDY0LCA2NCwgNjQiIC8+DQogICAgICA8L0F4aXNZPg0KICAgICAgPEF4aXNYIFRpdGxlPSJQYWlzIj4NCiAgICAgICAgPE1ham9yR3JpZCBMaW5lQ29sb3I9IjY0LCA2NCwgNjQsIDY0IiAvPg0KICAgICAgPC9BeGlzWD4NCiAgICAgIDxBeGlzWDI+DQogICAgICAgIDxNYWpvckdyaWQgTGluZUNvbG9yPSI2NCwgNjQsIDY0LCA2NCIgLz4NCiAgICAgIDwvQXhpc1gyPg0KICAgICAgPEF4aXNZMj4NCiAgICAgICAgPE1ham9yR3JpZCBMaW5lQ29sb3I9IjY0LCA2NCwgNjQsIDY0IiAvPg0KICAgICAgPC9BeGlzWTI+DQogICAgPC9DaGFydEFyZWE+DQogIDwvQ2hhcnRBcmVhcz4NCiAgPEJvcmRlclNraW4gU2tpblN0eWxlPSJFbWJvc3MiIC8+DQo8L0NoYXJ0Pg==">
+        <MSChartSeries Name="Series2" SortBy="XValue" GroupBy="XValue" GroupFunction="Count" XValue="[Usuarios.Pais]" YValue1="[Usuarios.Pais]"/>
+      </MSChartObject>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="333.3" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

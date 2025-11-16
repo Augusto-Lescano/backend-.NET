@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="11/14/2025 17:39:20" ReportInfo.Modified="11/15/2025 20:07:13" ReportInfo.CreatorVersion="2026.1.2.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqJUrEa/KIcQqhhcfnlqC6PKK8MheP9IEu4gFWCPXnWzFgLjPP39mqhm6WKckRi90qfWFHDc7eZn2VVrd1T5h+hYbEh03ioILIqCGcfgZKnwFk7Ezi6YbujPrvEUEAxYI2sz7w2VlqdOLJVVa3fYi8xikJ2M8dsHeqkq/el0a1LBOR9tc3G7GWSn8zVrttgSCxrnNpREpNy0+gCt2IrmNpOQ==">
+      <TableDataSource Name="Torneos" DataType="System.Int32" Enabled="true" TableName="Torneos">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="Nombre" DataType="System.String"/>
+        <Column Name="DescripcionDeReglas" DataType="System.String"/>
+        <Column Name="CantidadDeJugadores" DataType="System.Int32"/>
+        <Column Name="FechaInicio" DataType="System.DateTime"/>
+        <Column Name="FechaFin" DataType="System.DateTime"/>
+        <Column Name="FechaInicioDeInscripciones" DataType="System.DateTime"/>
+        <Column Name="FechaFinDeInscripciones" DataType="System.DateTime"/>
+        <Column Name="Resultado" DataType="System.String"/>
+        <Column Name="Region" DataType="System.String"/>
+        <Column Name="Estado" DataType="System.String"/>
+        <Column Name="JuegoId" DataType="System.Int32"/>
+        <Column Name="TipoDeTorneoId" DataType="System.Int32"/>
+        <Column Name="OrganizadorId" DataType="System.Int32"/>
+        <Column Name="InscripcionId" DataType="System.Int32"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Top="9.45" Width="718.2" Height="18.9" Text="Lista de torneos" HorzAlign="Center" Font="Arial, 16pt, style=Bold, Italic"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="28.35"/>
+    <DataBand Name="Data1" Top="74.15" Width="718.2" Height="217.35" DataSource="Torneos">
+      <TableObject Name="Table1" Left="160.65" Top="9.45" Width="434.71" Height="188.99">
+        <TableColumn Name="Column1" Width="203.18"/>
+        <TableColumn Name="Column2" Width="231.53"/>
+        <TableRow Name="Row1" Height="18.89">
+          <TableCell Name="Cell1" Border.Lines="Left, Top, Bottom" Text="Id" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell2" Border.Lines="Right, Top, Bottom" Text="[Torneos.Id]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell6" Border.Lines="Left, Top, Bottom" Text="Nombre" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell7" Border.Lines="Right, Top, Bottom" Text="[Torneos.Nombre]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3">
+          <TableCell Name="Cell11" Border.Lines="Left, Top, Bottom" Text="Cantidad de jugadores" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell12" Border.Lines="Right, Top, Bottom" Text="[Torneos.CantidadDeJugadores]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Border.Lines="Left, Top, Bottom" Text="Fecha de inicio" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell17" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaInicio]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row5">
+          <TableCell Name="Cell21" Border.Lines="Left, Top, Bottom" Text="Fecha de fin" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell22" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaFin]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row6">
+          <TableCell Name="Cell23" Border.Lines="Left, Top, Bottom" Text="Fecha de inicio de inscripciones" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell24" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaInicioDeInscripciones]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row7">
+          <TableCell Name="Cell25" Border.Lines="Left, Top, Bottom" Text="Fecha de efin de inscripciones" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell26" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaFinDeInscripciones]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row8">
+          <TableCell Name="Cell27" Border.Lines="Left, Top, Bottom" Text="Resultado&#13;&#10;" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell28" Border.Lines="Right, Top, Bottom" Text="[Torneos.Resultado]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row9">
+          <TableCell Name="Cell29" Border.Lines="Left, Top, Bottom" Text="Estado" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell30" Border.Lines="Right, Top, Bottom" Text="[Torneos.Estado]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row10">
+          <TableCell Name="Cell31" Border.Lines="Left, Top, Bottom" Text="Region" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/>
+          <TableCell Name="Cell32" Border.Lines="Right, Top, Bottom" Text="[Torneos.Region]" HorzAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="295.5" Width="718.2" Height="18.9">
+      <TextObject Name="Text2" Left="425.25" Width="283.5" Height="18.9" Text="Pagina [Page#] de [TotalPages#]" HorzAlign="Right" Font="Arial, 10pt, style=Bold, Italic"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

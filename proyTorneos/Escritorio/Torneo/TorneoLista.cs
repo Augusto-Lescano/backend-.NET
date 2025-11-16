@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FastReport;
+using Escritorio.Torneo;
 
 namespace Escritorio
 {
@@ -261,5 +263,32 @@ namespace Escritorio
         private async void btnAgregar_Click(object sender, EventArgs e) => await AgregarTorneo();
         private async void btnActualizar_Click(object sender, EventArgs e) => await ActualizarTorneo();
         private async void btnEliminar_Click(object sender, EventArgs e) => await BorrarTorneo();
+
+        private async void btnGenerarReporte_Click(object sender, EventArgs e)
+        {
+            var torneos = await TorneoApiClient.GetAllAsync();
+
+            Report report = new Report();
+
+            try
+            {
+                report.Load("ReporteTorneo.frx");
+
+                report.RegisterData(torneos, "proyTorneos");
+
+                report.GetDataSource("proyTorneos").Enabled = true;
+
+                report.Prepare();
+                
+                ReporteTorneo visorReporte = new ReporteTorneo(report);
+                visorReporte.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar el reporte: {ex.Message}");
+            }
+            
+        }
     }
+    
 }

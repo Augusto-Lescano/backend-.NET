@@ -1,5 +1,7 @@
-using DTOs;
+using Escritorio.Usuario;
 using API.Clients;
+using DTOs;
+using FastReport;
 using System.Threading.Tasks;
 
 namespace Escritorio
@@ -11,14 +13,16 @@ namespace Escritorio
         {
             InitializeComponent();
             Admin = admin;
-            if (!admin) {
+            if (!admin)
+            {
                 btnAgregar.Visible = false;
                 btnModificar.Visible = false;
                 btnEliminar.Visible = false;
             }
         }
 
-        public async Task TablaSimple(DataGridView usuarios) {
+        public async Task TablaSimple(DataGridView usuarios)
+        {
 
             usuarios.AutoGenerateColumns = false;
 
@@ -37,7 +41,8 @@ namespace Escritorio
         }
         public async Task CargarUsuarios()
         {
-            if (!Admin) {
+            if (!Admin)
+            {
                 await TablaSimple(dgvUsuarios);
             }
             dgvUsuarios.DataSource = await UsuarioApiClient.GetAllAsync();
@@ -129,6 +134,33 @@ namespace Escritorio
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
             await BorrarUsuario();
+        }
+
+        private async void btnGenerarReporte_Click(object sender, EventArgs e)
+        {
+            var usuarios = await UsuarioApiClient.GetAllAsync();
+            
+
+            Report report = new Report();
+
+            try
+            {
+
+                report.Load("ReporteUsuarios.frx");
+
+                report.RegisterData(usuarios, "proyTorneos");
+
+                report.GetDataSource("proyTorneos").Enabled = true;
+
+                report.Prepare();
+
+                ReporteUsuario visorReporte = new ReporteUsuario(report);
+                visorReporte.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar el reporte: {ex.Message}");
+            }
         }
     }
 }
