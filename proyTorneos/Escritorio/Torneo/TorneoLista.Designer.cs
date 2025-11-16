@@ -37,6 +37,7 @@
             labelBuscar = new Label();
             txtBuscar = new TextBox();
             btnInscribirse = new Button();
+            btnGenerarReporte = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvListaTorneos).BeginInit();
             SuspendLayout();
             // 
@@ -132,11 +133,22 @@
             btnInscribirse.UseVisualStyleBackColor = true;
             btnInscribirse.Click += btnInscribirse_Click;
             // 
+            // btnGenerarReporte
+            // 
+            btnGenerarReporte.Location = new Point(675, 12);
+            btnGenerarReporte.Name = "btnGenerarReporte";
+            btnGenerarReporte.Size = new Size(113, 32);
+            btnGenerarReporte.TabIndex = 35;
+            btnGenerarReporte.Text = "Generar Reporte";
+            btnGenerarReporte.UseVisualStyleBackColor = true;
+            btnGenerarReporte.Click += btnGenerarReporte_Click;
+            // 
             // TorneoLista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 316);
+            Controls.Add(btnGenerarReporte);
             Controls.Add(btnInscribirse);
             Controls.Add(txtBuscar);
             Controls.Add(labelBuscar);
@@ -165,5 +177,6 @@
         private Label labelBuscar;
         private TextBox txtBuscar;
         private Button btnInscribirse;
+        private Button btnGenerarReporte;
     }
 }

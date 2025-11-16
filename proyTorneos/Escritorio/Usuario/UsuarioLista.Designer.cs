@@ -40,6 +40,7 @@
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
+            btnGenerarReporte = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             SuspendLayout();
             // 
@@ -158,11 +159,22 @@
             label9.Size = new Size(0, 15);
             label9.TabIndex = 22;
             // 
+            // btnGenerarReporte
+            // 
+            btnGenerarReporte.Location = new Point(652, 5);
+            btnGenerarReporte.Name = "btnGenerarReporte";
+            btnGenerarReporte.Size = new Size(121, 33);
+            btnGenerarReporte.TabIndex = 23;
+            btnGenerarReporte.Text = "Generar Reporte";
+            btnGenerarReporte.UseVisualStyleBackColor = true;
+            btnGenerarReporte.Click += btnGenerarReporte_Click;
+            // 
             // UsuarioLista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnGenerarReporte);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -197,5 +209,6 @@
         private Label label7;
         private Label label8;
         private Label label9;
+        private Button btnGenerarReporte;
     }
 }

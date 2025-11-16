@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="report1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="report1.ReportResourceString" xml:space="preserve">
+    <value>﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Report ScriptLanguage="CSharp" ReportInfo.Created="11/14/2025 17:39:20" ReportInfo.Modified="11/15/2025 19:59:24" ReportInfo.CreatorVersion="2026.1.2.0"&gt;
+  &lt;Dictionary&gt;
+    &lt;MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqJUrEa/KIcQqhhcfnlqC6PKK8MheP9IEu4gFWCPXnWzFgLjPP39mqhm6WKckRi90qfWFHDc7eZn2VVrd1T5h+hYbEh03ioILIqCGcfgZKnwFk7Ezi6YbujPrvEUEAxYI2sz7w2VlqdOLJVVa3fYi8xikJ2M8dsHeqkq/el0a1LBOR9tc3G7GWSn8zVrttgSCxlrZsee6ir2NF3kpWHZ8i5w=="&gt;
+      &lt;TableDataSource Name="Torneos" DataType="System.Int32" Enabled="true" TableName="Torneos"&gt;
+        &lt;Column Name="Id" DataType="System.Int32"/&gt;
+        &lt;Column Name="Nombre" DataType="System.String"/&gt;
+        &lt;Column Name="DescripcionDeReglas" DataType="System.String"/&gt;
+        &lt;Column Name="CantidadDeJugadores" DataType="System.Int32"/&gt;
+        &lt;Column Name="FechaInicio" DataType="System.DateTime"/&gt;
+        &lt;Column Name="FechaFin" DataType="System.DateTime"/&gt;
+        &lt;Column Name="FechaInicioDeInscripciones" DataType="System.DateTime"/&gt;
+        &lt;Column Name="FechaFinDeInscripciones" DataType="System.DateTime"/&gt;
+        &lt;Column Name="Resultado" DataType="System.String"/&gt;
+        &lt;Column Name="Region" DataType="System.String"/&gt;
+        &lt;Column Name="Estado" DataType="System.String"/&gt;
+        &lt;Column Name="JuegoId" DataType="System.Int32"/&gt;
+        &lt;Column Name="TipoDeTorneoId" DataType="System.Int32"/&gt;
+        &lt;Column Name="OrganizadorId" DataType="System.Int32"/&gt;
+        &lt;Column Name="InscripcionId" DataType="System.Int32"/&gt;
+      &lt;/TableDataSource&gt;
+    &lt;/MsSqlDataConnection&gt;
+  &lt;/Dictionary&gt;
+  &lt;ReportPage Name="Page1" Watermark.Font="Arial, 60pt"&gt;
+    &lt;ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8"&gt;
+      &lt;TextObject Name="Text1" Top="9.45" Width="718.2" Height="18.9" Text="Lista de torneos" HorzAlign="Center" Font="Arial, 16pt, style=Bold, Italic"/&gt;
+    &lt;/ReportTitleBand&gt;
+    &lt;PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="28.35"/&gt;
+    &lt;DataBand Name="Data1" Top="74.15" Width="718.2" Height="217.35" DataSource="Torneos"&gt;
+      &lt;TableObject Name="Table1" Left="160.65" Top="9.45" Width="434.71" Height="188.99"&gt;
+        &lt;TableColumn Name="Column1" Width="203.18"/&gt;
+        &lt;TableColumn Name="Column2" Width="231.53"/&gt;
+        &lt;TableRow Name="Row1" Height="18.89"&gt;
+          &lt;TableCell Name="Cell1" Border.Lines="Left, Top, Bottom" Text="Id" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell2" Border.Lines="Right, Top, Bottom" Text="[Torneos.Id]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row2"&gt;
+          &lt;TableCell Name="Cell6" Border.Lines="Left, Top, Bottom" Text="Nombre" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell7" Border.Lines="Right, Top, Bottom" Text="[Torneos.Nombre]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row3"&gt;
+          &lt;TableCell Name="Cell11" Border.Lines="Left, Top, Bottom" Text="Cantidad de jugadores" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell12" Border.Lines="Right, Top, Bottom" Text="[Torneos.CantidadDeJugadores]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row4"&gt;
+          &lt;TableCell Name="Cell16" Border.Lines="Left, Top, Bottom" Text="Fecha de inicio" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell17" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaInicio]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row5"&gt;
+          &lt;TableCell Name="Cell21" Border.Lines="Left, Top, Bottom" Text="Fecha de fin" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell22" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaFin]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row6"&gt;
+          &lt;TableCell Name="Cell23" Border.Lines="Left, Top, Bottom" Text="Fecha de inicio de inscripciones" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell24" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaInicioDeInscripciones]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row7"&gt;
+          &lt;TableCell Name="Cell25" Border.Lines="Left, Top, Bottom" Text="Fecha de efin de inscripciones" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell26" Border.Lines="Right, Top, Bottom" Text="[Torneos.FechaFinDeInscripciones]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row8"&gt;
+          &lt;TableCell Name="Cell27" Border.Lines="Left, Top, Bottom" Text="Resultado&amp;#13;&amp;#10;" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell28" Border.Lines="Right, Top, Bottom" Text="[Torneos.Resultado]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row9"&gt;
+          &lt;TableCell Name="Cell29" Border.Lines="Left, Top, Bottom" Text="Estado" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell30" Border.Lines="Right, Top, Bottom" Text="[Torneos.Estado]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+        &lt;TableRow Name="Row10"&gt;
+          &lt;TableCell Name="Cell31" Border.Lines="Left, Top, Bottom" Text="Region" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+          &lt;TableCell Name="Cell32" Border.Lines="Right, Top, Bottom" Text="[Torneos.Region]" HorzAlign="Center" Font="Arial, 10pt"/&gt;
+        &lt;/TableRow&gt;
+      &lt;/TableObject&gt;
+    &lt;/DataBand&gt;
+    &lt;PageFooterBand Name="PageFooter1" Top="295.5" Width="718.2" Height="18.9"&gt;
+      &lt;TextObject Name="Text2" Left="425.25" Width="283.5" Height="18.9" Text="Pagina [Page#] de [TotalPages#]" HorzAlign="Right" Font="Arial, 10pt, style=Bold, Italic"/&gt;
+    &lt;/PageFooterBand&gt;
+  &lt;/ReportPage&gt;
+&lt;/Report&gt;
+</value>
+  </data>
+</root>

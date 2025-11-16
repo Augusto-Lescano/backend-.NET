@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="report1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="report1.ReportResourceString" xml:space="preserve">
+    <value>﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Report ScriptLanguage="CSharp" ReportInfo.Created="11/15/2025 20:10:12" ReportInfo.Modified="11/15/2025 23:47:28" ReportInfo.CreatorVersion="2026.1.2.0"&gt;
+  &lt;Dictionary&gt;
+    &lt;MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqJUrEa/KIcQqhhcfnlqC6PKK8MheP9IEu4gFWCPXnWzFgLjPP39mqhm6WKckRi90qfWFHDc7eZn2VVrd1T5h+hYbEh03ioILIqCGcfgZKnwFk7Ezi6YbujPrvEUEAxYI2sz7w2VlqdOLJVVa3fYi8xikJ2M8dsHeqkq/el0a1LBOR9tc3G7GWSn8zVrttgSCxjnoDrfjlEZ+fE0CJWy5EBw=="&gt;
+      &lt;TableDataSource Name="Usuarios" DataType="System.Int32" Enabled="true" TableName="Usuarios"&gt;
+        &lt;Column Name="Id" DataType="System.Int32"/&gt;
+        &lt;Column Name="Nombre" DataType="System.String"/&gt;
+        &lt;Column Name="Apellido" DataType="System.String"/&gt;
+        &lt;Column Name="Email" DataType="System.String"/&gt;
+        &lt;Column Name="Clave" DataType="System.String"/&gt;
+        &lt;Column Name="Pais" DataType="System.String"/&gt;
+        &lt;Column Name="NombreUsuario" DataType="System.String"/&gt;
+        &lt;Column Name="FechaAlta" DataType="System.DateTime"/&gt;
+        &lt;Column Name="Admin" DataType="System.Boolean" BindableControl="CheckBox"/&gt;
+      &lt;/TableDataSource&gt;
+    &lt;/MsSqlDataConnection&gt;
+  &lt;/Dictionary&gt;
+  &lt;ReportPage Name="Page1" Watermark.Font="Arial, 60pt"&gt;
+    &lt;ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8"&gt;
+      &lt;TextObject Name="Text1" Left="9.45" Top="9.45" Width="699.3" Height="28.35" Text="Cantidad de usuarios por pais" HorzAlign="Center" Font="Arial, 16pt, style=Bold, Italic"/&gt;
+    &lt;/ReportTitleBand&gt;
+    &lt;PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="28.35"/&gt;
+    &lt;DataBand Name="Data1" Top="74.15" Width="718.2" Height="255.15"&gt;
+      &lt;MSChartObject Name="MSChart1" Left="103.95" Width="463.05" Height="255.15" CanGrow="true" DataSource="Usuarios" Filter="" AutoSeriesColumn="" ChartData="PENoYXJ0IFNpemU9IjI4OCwgMjMyIiBCb3JkZXJsaW5lQ29sb3I9IkRhcmtHcmF5IiBCb3JkZXJsaW5lV2lkdGg9IjIiIEJvcmRlcmxpbmVEYXNoU3R5bGU9IlNvbGlkIj4NCiAgPFNlcmllcz4NCiAgICA8U2VyaWVzIE5hbWU9IkdyYWZpY28gZGUgYmFycmFzIiBMZWdlbmQ9IkRlZmF1bHQiIFhWYWx1ZVR5cGU9IlN0cmluZyIgWVZhbHVlVHlwZT0iSW50NjQiIENoYXJ0QXJlYT0iRGVmYXVsdCIgTGFiZWw9IiNWQUxZIj4NCiAgICAgIDxQb2ludHM+DQogICAgICAgIDxEYXRhUG9pbnQgWVZhbHVlcz0iMSIgQXhpc0xhYmVsPSJBIiAvPg0KICAgICAgICA8RGF0YVBvaW50IFlWYWx1ZXM9IjMiIEF4aXNMYWJlbD0iQiIgLz4NCiAgICAgICAgPERhdGFQb2ludCBZVmFsdWVzPSIyIiBBeGlzTGFiZWw9IkMiIC8+DQogICAgICAgIDxEYXRhUG9pbnQgWVZhbHVlcz0iNCIgQXhpc0xhYmVsPSJEIiAvPg0KICAgICAgPC9Qb2ludHM+DQogICAgPC9TZXJpZXM+DQogIDwvU2VyaWVzPg0KICA8TGVnZW5kcz4NCiAgICA8TGVnZW5kIE5hbWU9IkRlZmF1bHQiIEVuYWJsZWQ9IkZhbHNlIj4NCiAgICA8L0xlZ2VuZD4NCiAgPC9MZWdlbmRzPg0KICA8VGl0bGVzPg0KICAgIDxUaXRsZSBOYW1lPSJUaXRsZTEiIFZpc2libGU9IkZhbHNlIj4NCiAgICA8L1RpdGxlPg0KICA8L1RpdGxlcz4NCiAgPENoYXJ0QXJlYXM+DQogICAgPENoYXJ0QXJlYSBOYW1lPSJEZWZhdWx0Ij4NCiAgICAgIDxBeGlzWSBUaXRsZT0iQ2FudGlkYWQgZGUgdXN1YXJpb3MiPg0KICAgICAgICA8TWFqb3JHcmlkIExpbmVDb2xvcj0iNjQsIDY0LCA2NCwgNjQiIC8+DQogICAgICA8L0F4aXNZPg0KICAgICAgPEF4aXNYIFRpdGxlPSJQYWlzIj4NCiAgICAgICAgPE1ham9yR3JpZCBMaW5lQ29sb3I9IjY0LCA2NCwgNjQsIDY0IiAvPg0KICAgICAgPC9BeGlzWD4NCiAgICAgIDxBeGlzWDI+DQogICAgICAgIDxNYWpvckdyaWQgTGluZUNvbG9yPSI2NCwgNjQsIDY0LCA2NCIgLz4NCiAgICAgIDwvQXhpc1gyPg0KICAgICAgPEF4aXNZMj4NCiAgICAgICAgPE1ham9yR3JpZCBMaW5lQ29sb3I9IjY0LCA2NCwgNjQsIDY0IiAvPg0KICAgICAgPC9BeGlzWTI+DQogICAgPC9DaGFydEFyZWE+DQogIDwvQ2hhcnRBcmVhcz4NCiAgPEJvcmRlclNraW4gU2tpblN0eWxlPSJFbWJvc3MiIC8+DQo8L0NoYXJ0Pg=="&gt;
+        &lt;MSChartSeries Name="Series2" SortBy="XValue" GroupBy="XValue" GroupFunction="Count" XValue="[Usuarios.Pais]" YValue1="[Usuarios.Pais]"/&gt;
+      &lt;/MSChartObject&gt;
+    &lt;/DataBand&gt;
+    &lt;PageFooterBand Name="PageFooter1" Top="333.3" Width="718.2" Height="18.9"/&gt;
+  &lt;/ReportPage&gt;
+&lt;/Report&gt;
+</value>
+  </data>
+</root>
