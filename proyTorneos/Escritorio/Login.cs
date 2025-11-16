@@ -22,6 +22,7 @@ namespace Escritorio
 
         private async Task OtorgarAcceso()
         {
+            /*
             var listaUsuarios = await UsuarioApiClient.GetAllAsync();
             bool usuarioEncontrado = false;
 
@@ -39,6 +40,21 @@ namespace Escritorio
 
             // Si no encontró el usuario
             if (!usuarioEncontrado)
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos", "Error de login",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Los controles se rehabilita en el método btnAceptar_Click
+            }
+            */
+            UsuarioDTO usuario = await UsuarioApiClient.ValidarInicioSesion(txtUsuario.Text, txtClave.Text);
+            if (usuario!=null) {
+                
+                MessageBox.Show("Ingreso exitoso", "Aviso de ingreso");
+                this.usuarioActual = usuario;
+                DialogResult = DialogResult.OK;
+                return;
+            }
+            else
             {
                 MessageBox.Show("Usuario o contraseña incorrectos", "Error de login",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
