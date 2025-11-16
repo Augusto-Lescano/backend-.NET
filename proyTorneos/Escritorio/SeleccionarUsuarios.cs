@@ -67,25 +67,8 @@ namespace Escritorio
 
         private async void SeleccionarUsuarios_Load(object sender, EventArgs e)
         {
-            try
-            {
-                var usuariosDisponibles = await UsuarioApiClient.GetUsuariosDisponiblesAsync();
 
-                clbUsuarios.Items.Clear();
-                foreach (var usuario in usuariosDisponibles)
-                {
-                    clbUsuarios.Items.Add(usuario, false);
-                }
-
-                clbUsuarios.DisplayMember = "Nombre";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error al cargar usuarios disponibles", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
-
-
     }
 }
 

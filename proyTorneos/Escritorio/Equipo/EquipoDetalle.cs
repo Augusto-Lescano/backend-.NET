@@ -40,13 +40,13 @@ namespace Escritorio
             if (btnAceptar.Text == "Actualizar")
             {
                 dto.Id = EquipoDTO.Id;
-                await API.Clients.EquipoApiClient.UpdateAsync(dto);
+                await EquipoApiClient.UpdateAsync(dto);
                 MessageBox.Show("Equipo actualizado exitosamente", "Éxito al actualizar");
             }
             else
             {
                 dto.LiderId = usuarioConectadoId;
-                await API.Clients.EquipoApiClient.AddAsync(dto);
+                await EquipoApiClient.AddAsync(dto);
                 MessageBox.Show("Equipo agregado exitosamente", "Éxito al agregar");
             }
 
