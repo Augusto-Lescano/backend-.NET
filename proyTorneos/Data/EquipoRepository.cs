@@ -12,13 +12,6 @@ namespace Data
             return new TPIContext();
         }
 
-        /*public void Add(Equipo equipo)
-        {
-            using var context = CreateContext();
-            context.Equipos.Add(equipo);
-            context.SaveChanges();
-        }*/
-
         public void Add(Equipo equipo)
         {
             using var context = CreateContext();
@@ -37,14 +30,23 @@ namespace Data
         public bool Delete(int id)
         {
             using var context = CreateContext();
-            var equipo = context.Equipos.Find(id);
-            if (equipo != null)
-            {
-                context.Equipos.Remove(equipo);
-                context.SaveChanges();
-                return true;
-            }
-            return false;
+
+            var equipo = context.Equipos
+                .Include(e => e.Usuarios)  // Cargar los usuarios asociados
+                .FirstOrDefault(e => e.Id == id);
+
+            if (equipo == null)
+                return false;
+
+            // Eliminar relaciones en la tabla intermedia EquipoUsuarios
+            equipo.Usuarios.Clear();
+            context.SaveChanges();
+
+            // Ahora si, eliminar el equipo
+            context.Equipos.Remove(equipo);
+            context.SaveChanges();
+
+            return true;
         }
 
         public Equipo? Get(int id)

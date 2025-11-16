@@ -130,34 +130,75 @@ namespace Escritorio
             await CargarJugadoresDelEquipo(equipoSeleccionado.Id);
         }
 
+
         private async Task CargarJugadoresDelEquipo(int equipoId)
         {
             try
             {
                 var equipo = await EquipoApiClient.GetAsync(equipoId);
 
-                if (equipo.Usuarios != null && equipo.Usuarios.Any())
-                {
-                    dgvJugadoresEquipo.DataSource = equipo.Usuarios
-                        .Select(u => new
-                        {
-                            u.Id,
-                            u.NombreUsuario
-                        })
-                        .ToList();
-
-                }
-                else
+                if (equipo == null)
                 {
                     dgvJugadoresEquipo.DataSource = null;
+                    dgvJugadoresEquipo.Columns.Clear();
+                    return;
                 }
+
+                // Construir lista de jugadores + líder
+                var lista = new List<object>();
+
+                // Agregar líder (solo si existe nombre)
+                if (!string.IsNullOrEmpty(equipo.LiderNombre))
+                {
+                    lista.Add(new
+                    {
+                        Id = equipo.LiderId,
+                        NombreUsuario = $"{equipo.LiderNombre} (Líder)"
+                    });
+                }
+
+                // Agregar usuarios, evitando duplicar al líder
+                if (equipo.Usuarios != null)
+                {
+                    lista.AddRange(
+                        equipo.Usuarios
+                              .Where(u => u.Id != equipo.LiderId)
+                              .Select(u => new
+                              {
+                                  u.Id,
+                                  NombreUsuario = u.NombreUsuario
+                              })
+                    );
+                }
+
+                // Configurar columnas
+                dgvJugadoresEquipo.AutoGenerateColumns = false;
+                dgvJugadoresEquipo.Columns.Clear();
+
+                dgvJugadoresEquipo.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = "ID",
+                    DataPropertyName = "Id",
+                    Name = "colId"
+                });
+
+                dgvJugadoresEquipo.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = "Nombre",
+                    DataPropertyName = "NombreUsuario",
+                    Name = "colNombreUsuario",
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                });
+
+                dgvJugadoresEquipo.DataSource = lista;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar jugadores: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar jugadores: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private async void btnAgregarJugadores_Click(object sender, EventArgs e)
         {
@@ -170,8 +211,10 @@ namespace Escritorio
 
             var equipoSeleccionado = (EquipoDTO)dgvEquipo.SelectedRows[0].DataBoundItem;
 
-            // Traer lista de usuarios disponibles
-            var usuarios = await UsuarioApiClient.GetUsuariosDisponiblesAsync();
+            var usuarios = (await UsuarioApiClient.GetUsuariosDisponiblesAsync())
+                .Where(u => u.Id != equipoSeleccionado.LiderId)
+                .ToList();
+
 
             if (usuarios == null || !usuarios.Any())
             {
@@ -220,10 +263,10 @@ namespace Escritorio
             }
 
             var equipoSeleccionado = (EquipoDTO)dgvEquipo.SelectedRows[0].DataBoundItem;
-            var jugadorSeleccionado = dgvJugadoresEquipo.SelectedRows[0];
+            dynamic jugador = dgvJugadoresEquipo.SelectedRows[0].DataBoundItem;
 
-            int jugadorId = (int)jugadorSeleccionado.Cells["Id"].Value;
-            string nombreJugador = jugadorSeleccionado.Cells["NombreUsuario"].Value?.ToString() ?? "";
+            int jugadorId = jugador.Id;
+            string nombreJugador = jugador.NombreUsuario;
 
             // Validar que no sea el líder
             if (jugadorId == equipoSeleccionado.LiderId)

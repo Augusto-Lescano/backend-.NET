@@ -28,14 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnAgregar = new Button();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label6 = new Label();
             dgvUsuarios = new DataGridView();
-            btnModificar = new Button();
             btnEliminar = new Button();
             label7 = new Label();
             label8 = new Label();
@@ -43,17 +41,6 @@
             btnGenerarReporte = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             SuspendLayout();
-            // 
-            // btnAgregar
-            // 
-            btnAgregar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAgregar.Location = new Point(513, 390);
-            btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(85, 34);
-            btnAgregar.TabIndex = 0;
-            btnAgregar.Text = "Agregar";
-            btnAgregar.UseVisualStyleBackColor = true;
-            btnAgregar.Click += btnAgregar_Click;
             // 
             // label1
             // 
@@ -109,17 +96,6 @@
             dgvUsuarios.RowHeadersWidth = 51;
             dgvUsuarios.Size = new Size(740, 332);
             dgvUsuarios.TabIndex = 15;
-            // 
-            // btnModificar
-            // 
-            btnModificar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnModificar.Location = new Point(604, 390);
-            btnModificar.Name = "btnModificar";
-            btnModificar.Size = new Size(89, 34);
-            btnModificar.TabIndex = 16;
-            btnModificar.Text = "Modificar";
-            btnModificar.UseVisualStyleBackColor = true;
-            btnModificar.Click += btnActualizar_Click;
             // 
             // btnEliminar
             // 
@@ -179,14 +155,12 @@
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(btnEliminar);
-            Controls.Add(btnModificar);
             Controls.Add(dgvUsuarios);
             Controls.Add(label6);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(btnAgregar);
             Name = "UsuarioLista";
             Text = "Usuarios";
             Load += Usuarios_Load;
@@ -196,15 +170,12 @@
         }
 
         #endregion
-
-        private Button btnAgregar;
         private Label label1;
         private Label label2;
         private Label label3;
         private Label label4;
         private Label label6;
         private DataGridView dgvUsuarios;
-        private Button btnModificar;
         private Button btnEliminar;
         private Label label7;
         private Label label8;

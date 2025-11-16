@@ -15,33 +15,80 @@ namespace Escritorio
             Admin = admin;
             if (!admin)
             {
-                btnAgregar.Visible = false;
-                btnModificar.Visible = false;
                 btnEliminar.Visible = false;
             }
         }
 
+
         public async Task TablaSimple(DataGridView usuarios)
         {
-
             usuarios.AutoGenerateColumns = false;
+            usuarios.Columns.Clear();
 
-            DataGridViewTextBoxColumn colNickName = new DataGridViewTextBoxColumn();
-            colNickName.HeaderText = "NickName";
-            colNickName.DataPropertyName = "NombreUsuario";
-            usuarios.Columns.Add(colNickName);
+            // Id
+            usuarios.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "ID",
+                DataPropertyName = "Id"
+            });
 
-            DataGridViewTextBoxColumn colEmail = new DataGridViewTextBoxColumn();
-            colEmail.HeaderText = "Email";
-            colEmail.DataPropertyName = "Email";
-            usuarios.Columns.Add(colEmail);
+            // NickName
+            usuarios.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "NombreUsuario",
+                DataPropertyName = "NombreUsuario"
+            });
+
+            // Email
+            usuarios.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Email",
+                DataPropertyName = "Email"
+            });
+
+            // Nombre
+            usuarios.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Nombre",
+                DataPropertyName = "Nombre"
+            });
+
+            // Apellido
+            usuarios.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Apellido",
+                DataPropertyName = "Apellido"
+            });
+
+            // País
+            usuarios.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "País",
+                DataPropertyName = "Pais"
+            });
+
+            // Fecha Alta
+            usuarios.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Fecha Alta",
+                DataPropertyName = "FechaAlta",
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "dd/MM/yyyy" }
+            });
+
+            // Admin (checkbox)
+            usuarios.Columns.Add(new DataGridViewCheckBoxColumn
+            {
+                HeaderText = "Admin",
+                DataPropertyName = "Admin"
+            });
 
             usuarios.DataSource = await UsuarioApiClient.GetAllAsync();
-
         }
+
+
         public async Task CargarUsuarios()
         {
-            if (!Admin)
+            if (Admin)
             {
                 await TablaSimple(dgvUsuarios);
             }
@@ -55,35 +102,6 @@ namespace Escritorio
             return dto;
         }
 
-        public async Task AgregarUsuario()
-        {
-            UsuarioDetalle detalle = new UsuarioDetalle(true);
-            Shared.AjustarFormMDI(detalle);
-
-            if (detalle.ShowDialog() == DialogResult.OK)
-            {
-                await CargarUsuarios();
-            }
-        }
-
-        public async Task ActualizarUsuario()
-        {
-            var usuario = SeleccionarUsuario();
-            if (usuario == null)
-            {
-                MessageBox.Show("No puede modificar un usuario sin haber seleccionado uno anteriormente", "Error al modificar usuario");
-                return;
-            }
-            else
-            {
-                var detalle = new UsuarioDetalle(usuario, true);
-                Shared.AjustarFormMDI(detalle);
-                if (detalle.ShowDialog() == DialogResult.OK)
-                {
-                    await CargarUsuarios();
-                }
-            }
-        }
 
         public async Task BorrarUsuario()
         {
@@ -119,16 +137,6 @@ namespace Escritorio
             Shared.AjustarDataGridView(dgvUsuarios);
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             await CargarUsuarios();
-        }
-
-        private async void btnAgregar_Click(object sender, EventArgs e)
-        {
-            await AgregarUsuario();
-        }
-
-        private async void btnActualizar_Click(object sender, EventArgs e)
-        {
-            await ActualizarUsuario();
         }
 
         private async void btnEliminar_Click(object sender, EventArgs e)
