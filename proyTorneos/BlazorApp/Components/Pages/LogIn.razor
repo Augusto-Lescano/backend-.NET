@@ -1,0 +1,101 @@
+﻿@page "/"
+@layout LoginLayout
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+@using API.Clients
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Inicio de sesion</PageTitle>
+
+<h3>Inicio de sesion</h3>
+
+@if (inicioCorecto)
+{
+    <div class="alert alert-success" role="alert">
+        <strong>
+            Has iniciado sesión correctamente.
+            Redirigiendo...
+        </strong>
+    </div>
+}
+else if (inicioIncorrecto)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> Usuario o contraseña incorrectos.
+    </div>
+}
+
+
+
+<EditForm Model="@usuario" OnValidSubmit="@ValidaInicio">
+
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label>Usuario:</label>
+        <InputText class="form-control" @bind-Value="usuario.NombreUsuario" />
+        <ValidationMessage For="() => usuario.NombreUsuario" />
+    </div>
+
+    <div class="form-group">
+        <label>Clave:</label>
+        <InputText type="password" class="form-control" @bind-Value="usuario.Clave" />
+        <ValidationMessage For="() => usuario.Clave" />
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary mt-3" disabled="@cargando">
+        @if (cargando)
+        {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span> Verificando...</span>
+        }
+        else
+        {
+            <span>Iniciar sesion</span>
+        }
+    </button>
+</EditForm>
+
+@code {
+    public class UsuarioVerificar()
+    {
+        [Required(ErrorMessage ="Debe ingresar su nombre de usuario")]
+        public string NombreUsuario { set; get; }
+
+        [Required(ErrorMessage = "Debe ingresar su clave")]
+        public string Clave { set; get; }
+    }
+
+    Boolean inicioCorecto = false;
+    Boolean inicioIncorrecto = false;
+    Boolean cargando = false;
+
+    UsuarioVerificar usuario = new UsuarioVerificar();
+    public async Task ValidaInicio()
+    {
+        
+            cargando = true;
+
+            StateHasChanged();
+
+            var user = await UsuarioApiClient.ValidarInicioSesion(usuario.NombreUsuario, usuario.Clave);
+
+            if (user!=null)
+            {
+                inicioCorecto = true;
+                StateHasChanged();
+                await Task.Delay(2000);
+                NavManager.NavigateTo("/home");
+            }
+            else
+            {
+                inicioIncorrecto = true;
+                cargando = false;
+                StateHasChanged();
+            }
+
+
+        
+    }
+}

@@ -164,6 +164,14 @@ namespace API.Clients
             }
         }
 
+        public static async Task<UsuarioDTO> ValidarInicioSesion(string nombreUsuario, string clave) {
+            var usuarios = await UsuarioApiClient.GetAllAsync();
+            var usuario = from u in usuarios
+                          where u.NombreUsuario == nombreUsuario && u.Clave == clave
+                          select u;
+            var usuarioActual = usuario.FirstOrDefault();
+            return usuarioActual;
+        }
 
     }
 }
