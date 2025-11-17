@@ -29,6 +29,7 @@ namespace Escritorio
                 btnActualizar.Visible = false;
                 btnAgregar.Visible = false;
                 btnEliminar.Visible = false;
+                btnGenerarReporte.Visible = false;
             }
 
             cmbFiltro.Items.AddRange(new[] { "Nombre Torneo", "Juego", "Organizador", "Region", "Estado" });
