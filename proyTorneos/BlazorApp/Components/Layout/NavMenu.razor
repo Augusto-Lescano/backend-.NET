@@ -1,12 +1,19 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject UserSession UserSession
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Gestion de Torneos</a>
+        <a class="navbar-brand">Gestion de Torneos</a>
+        <span class="text-white">
+            @(UserSession.UsuarioActual?.NombreUsuario ?? "Invitado")
+        </span>
     </div>
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+<div class="nav-scrollable">
     <nav class="flex-column">
 
 
@@ -17,34 +24,37 @@
         </div>
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="usuario">
-                <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Usuario
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
             <NavLink class="nav-link" href="torneo">
                 <span class="bi bi-joystick-nav-menu" aria-hidden="true"></span> Torneo
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="tipoTorneo">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Tipo de Torneos
-            </NavLink>
-        </div>
+        @if (UserSession.IsAdmin)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="usuario">
+                    <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Usuario
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="juegos">
-                <span class="bi bi-joystick-nav-menu" aria-hidden="true"></span> Juegos
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="tipoTorneo">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Tipo de Torneos
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="inscripciones">
-                <span class="bi bi-book-fill-nav-menu" aria-hidden="true"></span> Incripciones
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="juegos">
+                    <span class="bi bi-joystick-nav-menu" aria-hidden="true"></span> Juegos
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="inscripciones">
+                    <span class="bi bi-book-fill-nav-menu" aria-hidden="true"></span> Incripciones
+                </NavLink>
+            </div>
+        }
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="equipos">
@@ -53,11 +63,36 @@
         </div>
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="actualizarPerfil">
+            <NavLink class="nav-link" href="ActualizarPerfil">
                 <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Actualizar Perfil
             </NavLink>
         </div>
 
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="logout">
+                <span class="bi bi-door-closed-fill" aria-hidden="true"></span> Cerrar sesión
+            </NavLink>
+        </div>
+
+
     </nav>
 </div>
 
+@code {
+    protected override void OnInitialized()
+    {
+        // Suscribirse a los cambios del UserSession
+        UserSession.OnChange += OnUserSessionChanged;
+    }
+
+    private void OnUserSessionChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        // Importante: desuscribirse para evitar memory leaks
+        UserSession.OnChange -= OnUserSessionChanged;
+    }
+}

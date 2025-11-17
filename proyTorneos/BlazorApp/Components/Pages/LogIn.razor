@@ -1,9 +1,11 @@
 ﻿@page "/"
 @layout LoginLayout
 @inject NavigationManager NavManager
+@inject UserSession UserSession
 @rendermode InteractiveServer
 @using API.Clients
 @using System.ComponentModel.DataAnnotations
+@using DTOs
 
 <PageTitle>Inicio de sesion</PageTitle>
 
@@ -43,7 +45,7 @@ else if (inicioIncorrecto)
         <ValidationMessage For="() => usuario.Clave" />
     </div>
 
-    
+
     <button type="submit" class="btn btn-primary mt-3" disabled="@cargando">
         @if (cargando)
         {
@@ -58,13 +60,13 @@ else if (inicioIncorrecto)
 </EditForm>
 
 @code {
-    public class UsuarioVerificar()
+    public class UsuarioVerificar
     {
-        [Required(ErrorMessage ="Debe ingresar su nombre de usuario")]
-        public string NombreUsuario { set; get; }
+        [Required(ErrorMessage = "Debe ingresar su nombre de usuario")]
+        public string NombreUsuario { set; get; } = string.Empty;
 
         [Required(ErrorMessage = "Debe ingresar su clave")]
-        public string Clave { set; get; }
+        public string Clave { set; get; } = string.Empty;
     }
 
     Boolean inicioCorecto = false;
@@ -72,21 +74,39 @@ else if (inicioIncorrecto)
     Boolean cargando = false;
 
     UsuarioVerificar usuario = new UsuarioVerificar();
+
+    protected override void OnInitialized()
+    {
+        // Si ya hay un usuario en sesión, redirigir al home
+        if (UserSession.UsuarioActual != null)
+        {
+            NavManager.NavigateTo("/home", forceLoad: true);
+        }
+    }
+
     public async Task ValidaInicio()
     {
-        
-            cargando = true;
+        cargando = true;
+        inicioIncorrecto = false;
+        StateHasChanged();
 
-            StateHasChanged();
-
+        try
+        {
             var user = await UsuarioApiClient.ValidarInicioSesion(usuario.NombreUsuario, usuario.Clave);
 
-            if (user!=null)
+            if (user != null)
             {
+
+                // Establecer la sesión del usuario
+                UserSession.SetUser(user);
+
                 inicioCorecto = true;
                 StateHasChanged();
+
                 await Task.Delay(2000);
-                NavManager.NavigateTo("/home");
+
+
+                NavManager.NavigateTo("/home", forceLoad: true);
             }
             else
             {
@@ -94,8 +114,12 @@ else if (inicioIncorrecto)
                 cargando = false;
                 StateHasChanged();
             }
-
-
-        
+        }
+        catch (Exception ex)
+        {
+            inicioIncorrecto = true;
+            cargando = false;
+            StateHasChanged();
+        }
     }
 }
